@@ -1,0 +1,152 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="main.subscription_type_id != 2 || main.subscription_type_id != 3">
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <header-component></header-component>
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg {{$state.current.name}}">
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Alcohol Sub Categories</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="admin.inventoryCategories">
+                        <a>Inventory</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Alcohol Categories</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary"  onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div ng-if="main.permissions['36'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="alcohol.newAlcoholOrder">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Order Alcohol</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['37'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="alcohol.orderSummary">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Confirm Delivery</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-click="main.beginAlcoholInventoryCount()" ng-if="main.permissions['38'].r" class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Begin Count (old)</a>
+                                        </div>
+                                    </div>
+                                </div>
+								<div ng-click="main.showAuditOptions(2, 'tablet')" ng-if="main.permissions['59'].r" class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Begin Count</a>
+                                        </div>
+                                    </div>
+                                </div>
+								<!--<div ng-click="main.beginAlcoholInventoryCountTablet()" ng-if="main.permissions['59'].r" class="col-sm-12 col-md-6 col-lg-4">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Begin Count</a>
+                                        </div>
+                                    </div>
+                                </div>-->
+                                <div ng-if="main.permissions['39'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="alcoholSetup.vendor">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Add/Edit Vendor</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['40'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="alcoholSetup.menu">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Menu/Recipe</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['41'].r" class="col-sm-12 col-md-6 col-lg-4"  ui-sref="alcoholSetup.delivery">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Order Schedule</a>
+                                        </div>
+                                    </div>
+                                </div>
+								<!-- set par permissions later if we want module specific permissions-->
+								<div ng-if="main.permissions['36'].r" class="col-sm-12 col-md-6 col-lg-4"  ui-sref="alcoholSetup.setPar">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Par</a>
+                                        </div>
+                                    </div>
+                                </div>
+								<div ng-if="main.permissions['62'].r" class="col-sm-12 col-md-6 col-lg-4"  ui-sref="alcoholSetup.inventoryMerge">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Merge/Edit/Delete Items</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <h4>Helpful Tip</h4>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="full-height-scroll" full-scroll>
+                                            <p class="padding-top-5 font-14">
+                                                Note: Checkout our new 'Set Par' feature. Under 'Set Par' you’ll see our suggested par values which you can change to meet your custom preference. If no changes are made, the system will automatically default to our suggested pars. If you don’t want to see the suggestions for any specific item you can simply change that specific item's suggested value to zero and save it.
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

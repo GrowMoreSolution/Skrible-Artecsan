@@ -1,0 +1,306 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+	<header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+	<!-- Page wraper -->
+	<!-- ng-class with current state name give you the ability to extended customization your view -->
+	<div id="page-wrapper" class="white-bg {{$state.current.name}}">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Type</label>
+										<div class="input-group date">
+											<select ng-model="$ctr.inventory_category" ng-change="$ctr.getRestuarants(-1)" class="form-control">
+												<option value="Liquor">Liquor</option>
+												<option value="Bottle Beer">Bottle Beer</option>
+												<option value="Draft Beer">Draft Beer</option>
+												<option value="Draft Wine">Draft Wine</option>
+												<option value="Wine">Wine</option>
+												<option value="Total Alcohol">Total Alcohol</option>
+												<option value="Food">Food</option>
+												<option value="Total Sales">Total Sales</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Restaurant(s)</label>
+										<div class="input-group date">
+											
+											<div ng-dropdown-multiselect="" options="$ctr.restaurantsList" selected-model="$ctr.selectedRestaurants" extra-settings="$ctr.multiSelectSettings">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Period</label>
+										<div class="input-group date">
+											<select ng-model="$ctr.period" class="form-control">
+												<option value="Daily">Daily</option>
+												<option value="Monthly">Monthly</option>
+												<option value="Yearly">Yearly</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Begin</label>
+										<div class="input-group date">
+											<input type="date" class="form-control" ng-model="$ctr.begin_date" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">End</label>
+										<div class="input-group date">
+											<input type="date" class="form-control" ng-model="$ctr.end_date" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<div class="form-group">
+										<label class="col-form-label">&nbsp;</label>
+										<div class="input-group date">
+											<button ng-if="$ctr.loading == 4" type="button" class="btn btn-info" ng-click="$ctr.loadGraphAndTable()">Search</button>
+											<button ng-if="$ctr.loading < 4" class="btn btn-primary" disabled>Loading...</button>
+										</div>
+									</div>
+								</div>
+							</div>
+														
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="clearfix">
+										<h5 class="text-center">Sales by Restaurant</h5>
+									</div>
+									<div class="clearfix">
+										<div id="compare_chart"></div>
+									</div>
+								</div>
+							</div>
+							<hr/>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="clearfix">
+										<h5 class="text-center">Sales and Spendings</h5>
+									</div> 
+									<div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th></th>
+														<th>Total Sales</th>
+														<th>Total Purchases</th>
+														<th>Purchase % of Sales</th>
+														<th>Avg Unit Sales</th>
+														<th ng-if="$ctr.is_total_sales">Avg Sales / Table</th>
+														<th ng-if="$ctr.is_total_sales">Avg Sales / Seat</th>
+														<th ng-if="$ctr.is_total_sales">Avg Sales / SqFt</th>										
+													</tr>														
+												</thead>
+												<tbody ng-repeat="r in $ctr.sns_result">
+													<tr class="text-center">
+														<td class="text-left">{{r.restaurant_name}}</td>
+														<td>${{r.total_sales || 0}}</td>
+														<td>${{r.total_purchase || 0}}</td>
+														<td>{{r.percent_sales || 0}}%</td>
+														<td>${{r.avg_sales_per_ticket || 0}}</td>
+														<td ng-if="$ctr.is_total_sales">${{r.avg_sales_per_table || 0}}</td>
+														<td ng-if="$ctr.is_total_sales">${{r.avg_sales_per_seat || 0}}</td>
+														<td ng-if="$ctr.is_total_sales">${{r.avg_sales_per_sqft || 0}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+							<hr/>
+							<!--<div class="row">	
+								<div ng-if="$ctr.food_exists" class="col-lg-6">
+									<div class="clearfix">
+										<h5 class="text-center">Food Performance Score</h5>
+									</div>
+									<div class="clearfix">
+										<div id="food_donut"></div>
+									</div>
+								</div>								
+								<div ng-if="$ctr.alcohol_exists" class="col-lg-6">
+									<div class="clearfix">
+										<h5 class="text-center">Alcohol Performance Score</h5>
+									</div>
+									<div class="clearfix">
+										<div id="alcohol_donut"></div>
+									</div>
+								</div>
+							</div>-->
+							<div class="row">	
+								<div class="col-lg-6">
+									<div class="clearfix">
+										<h5 class="text-center">Sales</h5>
+									</div>
+									<div class="clearfix">
+										<div id="sales_donut"></div>
+									</div>
+								</div>								
+								<div class="col-lg-6">
+									<div class="clearfix">
+										<h5 class="text-center">Purchases</h5>
+									</div>
+									<div class="clearfix">
+										<div id="purchases_donut"></div>
+									</div>
+								</div>
+							</div>
+							<hr/>
+							<!-- BOTTOM REPORTS START HERE -->
+
+
+							<div class="row" style="padding-top: 20px;">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Type</label>
+										<div class="input-group date">
+											<select ng-model="$ctr.inventory_category_b" ng-change="$ctr.getRestuarants(1)" class="form-control">
+												<option value="Liquor">Liquor</option>
+												<option value="Bottle Beer">Bottle beer</option>
+												<option value="Draft Beer">Draft Beer</option>
+												<option value="Draft Wine">Draft Wine</option>
+												<option value="Wine">Wine</option>
+												<option value="Total Alcohol">Total Alcohol</option>
+												<option value="Food">Food</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Restaurant(s)</label>
+										<div class="input-group date">
+											
+											<div ng-dropdown-multiselect="" options="$ctr.restaurantsList_b" selected-model="$ctr.selectedRestaurants_b" extra-settings="$ctr.multiSelectSettings_b">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Select Report</label>
+										<div class="input-group date">
+											<select ng-model="$ctr.select_report" ng-change="$ctr.reset_table()" class="form-control">
+												<option value="Unit Cost">Unit Cost</option>
+												<option value="Units Purchased">Units Purchased</option>
+												<option value="Total Purchases">Total $ Purchases</option>
+												<option value="Unit Sales">Unit Sales</option>
+											</select>
+										</div>
+									</div>
+								</div>
+								<div ng-if="$ctr.select_report != 'Unit Cost'" class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Begin</label>
+										<div class="input-group date">
+											<input type="date" class="form-control" ng-model="$ctr.begin_date_b" required>
+										</div>
+									</div>
+								</div>
+								<div ng-if="$ctr.select_report != 'Unit Cost'" class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">End</label>
+										<div class="input-group date">
+											<input type="date" class="form-control" ng-model="$ctr.end_date_b" required>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-1">
+									<div class="form-group">
+										<label class="col-form-label">&nbsp;</label>
+										<div class="input-group date">
+											<button ng-if="$ctr.detailsloading == 1" type="button" class="btn btn-info" ng-click="$ctr.loadDetailsTable()">Search</button>
+											<button ng-if="$ctr.detailsloading < 1" class="btn btn-primary" disabled>Loading...</button>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2 float-right">
+									<div class="form-group" style="text-align:right;">
+										<label class="col-form-label">Items Missing?</label>
+										<div>
+											<a ng-click="$ctr.updateMapping()" class="btn btn-warning btn-circle" title="Click this and Search again" ng-if="$ctr.updmaploading == 0"><i class="fa fa-refresh"></i></a>
+											<a class="btn btn-danger btn-circle" title="Updating..." ng-if="$ctr.updmaploading == 1"><i class="fa fa-refresh fa-spin" disabled></i></a>
+										</div>
+									</div>
+								</div>
+							</div>
+							
+							<div class="row" style="padding-bottom: 50px;">
+								<div class="col-lg-12">
+									<div class="clearfix">
+										<h5 class="text-center">{{$ctr.select_report}}</h5>
+									</div>
+									<div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th ng-if="$ctr.select_report != 'Unit Sales'" colspan="4"></th>
+														<th ng-if="$ctr.inventory_category_b != 'Food' && $ctr.select_report == 'Unit Sales'" colspan="2"></th>
+														<th ng-if="$ctr.inventory_category_b == 'Food' && $ctr.select_report == 'Unit Sales'" colspan="3"></th>
+														<th colspan="{{$ctr.columns.length}}">{{$ctr.select_report}}</th>
+													</tr>
+													<tr>
+														<th>Item</th>
+														<th ng-if="$ctr.inventory_category_b != 'Food' && $ctr.select_report != 'Unit Sales'">Size</th>
+														<th ng-if="$ctr.inventory_category_b == 'Food'">Category</th>
+														<th ng-if="$ctr.select_report != 'Unit Sales'">Vendor</th>
+														<th ng-if="$ctr.select_report == 'Unit Cost'">Cost per</th>
+														<th ng-if="$ctr.select_report != 'Unit Cost' && $ctr.select_report != 'Unit Sales'">Unit</th>
+														<th ng-if="$ctr.select_report == 'Unit Sales'">Size</th>
+														<th ng-repeat="r in $ctr.columns">{{r.label}}</th>
+													</tr>
+												</thead>
+												<tbody ng-repeat="btr in $ctr.bottom_table_result">
+													<tr>
+														<td class="text-left">{{btr.item_name}}</td>
+														<td ng-if="$ctr.select_report != 'Unit Sales' || ($ctr.select_report == 'Unit Sales' && $ctr.inventory_category_b == 'Food')" class="text-center">{{btr.size}}</td>
+														<td ng-if="$ctr.select_report != 'Unit Sales'" class="text-center">{{btr.vendor}}</td>
+														<td class="text-center">{{btr.cost_per}}</td>
+														
+														<td ng-if="$ctr.select_report == 'Unit Cost'" class="text-center" ng-repeat="r_data in $ctr.columns">{{btr.unit_cost[r_data.id] || '-'}}</td>
+														<td ng-if="$ctr.select_report == 'Units Purchased'" class="text-center" ng-repeat="r_data in $ctr.columns">{{btr.units_purchased[r_data.id] || '-'}}</td>
+														<td ng-if="$ctr.select_report == 'Total Purchases'" class="text-center" ng-repeat="r_data in $ctr.columns">{{btr.total_purchase[r_data.id] || '-'}}</td>
+														<td ng-if="$ctr.select_report == 'Unit Sales'" class="text-center" ng-repeat="r_data in $ctr.columns">{{btr.units_sold[r_data.id] || '-'}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+									
+							<!-- BOTTOM REPORTS END HERE -->
+							
+						</div>				
+					</div>
+				</div>
+			</div>
+		</div>
+		
+		<!-- Footer -->
+		<div ng-include="'views/common/footer.html'"></div>
+	</div>
+</div>
+<!-- End page wrapper-->

@@ -1,0 +1,62 @@
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-12" style="padding: 30px; text-align: center">
+      <form class="form-inline">
+        <div
+          class="row"
+          style="margin-top: 10px"
+        >
+          <div class="col-sm-6 col-md-6">
+			<h3 class="text-center">Full / Location</h3>
+            <div class="form-group"  ng-repeat="field in $ctr.entries.full track by field.id" style="margin-top: 10px">
+              <input
+                style="width: 25%"
+				type="number"
+                ng-model="field.value"
+                class="form-control"
+                placeholder="Full"
+              />
+			  <select style="width: 55%" class="form-control" ng-model="field.locn_id"
+				ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+			  </select>
+			  <span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField('full', $index)" aria-hidden="true"></span>
+            </div>
+          </div>
+          <div class="col-sm-6 col-md-6">
+				<h3 class="text-center">Partial / Location</h3>
+                <div class="form-group"  ng-repeat="field in $ctr.entries.partial track by field.id" style="margin-top: 10px">
+                  <input
+					style="width: 25%"
+                    type="number"
+                    ng-model="field.value"
+                    class="form-control"
+                    placeholder="Partial"
+					ng-blur="$ctr.checkPartial($index, field.value)"
+                  />
+				  <select style="width: 55%" class="form-control" ng-model="field.locn_id"
+					ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+				  </select>
+                  <span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField('partial', $index)" aria-hidden="true"></span>
+                </div>
+            </div>
+        </div>
+        <button
+          ng-click="$ctr.addField()"
+          type="button"
+          class="btn btn-primary btn-xs"
+          style="margin-top: 20px"
+        >
+          Add more...
+        </button>
+        <button
+          ng-click="$ctr.save()"
+          type="button"
+          class="btn btn-warning btn-xs"
+          style="margin-top: 20px"
+        >
+          Save/Close...
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

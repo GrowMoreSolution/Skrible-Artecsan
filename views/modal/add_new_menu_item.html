@@ -1,0 +1,118 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <h4 class="modal-title" ng-if="!vm.isEdit">Create Menu Item</h4>
+        <h4 class="modal-title" ng-if="vm.isEdit">Edit Menu Item</h4>
+    </div>
+    <!--<div class="modal-body max-height-340">-->
+    <div class="modal-body">
+        <form class="form-horizontal" name="form" ng-model="menuItem" novalidate="" role="form">
+            <fieldset>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <label>Menu Item Name</label>
+                        <input type="text" placeholder="Menu Item Name" class="form-control" ng-model="menuItem.name">
+                    </div>
+                    <div class="col-sm-3">
+                        <label>Price($)</label>
+                        <input type="text" placeholder="$0.00" class="form-control" ng-model="menuItem.price">
+                    </div>
+                    <div class="col-sm-3">
+                        <label>Cost %</label>
+                        <input type="number" placeholder="10%" class="form-control" ng-model="menuItem.cost_percentage">
+                    </div>
+                    <div class="col-sm-2">
+                        <label>Cost($)</label>
+                        <input type="text" placeholder="$0.00" class="form-control" ng-model="menuItem.cost">
+                    </div>
+                </div>
+
+
+                <br>
+                    <div class="col-md-3 no-padding">
+                        <h3>Recipe/Inventory</h3>
+                    </div>
+                <div class="col-md-9 no-padding">
+                    <hr>
+                </div>
+
+                <div class="form-group">
+                    <table class="table ng-scope" ng-if="recipeInventories.length>0">
+                        <thead>
+                        <tr>
+                            <th>Recipe/Inventory Name</th>
+                            <!--<th>Measurement Type</th>-->
+                            <!--<th class="width-150">Measure Like</th>-->
+                            <!--<th>Unit of Measurement</th>-->
+                            <!--<th class="width-80">Amount</th>-->
+                            <th class="width-80">Cost</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                    <tbody>
+                        <tr ng-repeat="recipeInventory in recipeInventories" class="ng-scope">
+                            <td>
+                                <select class="form-control" ng-model="recipeInventory.name">
+                                    <option value="? undefined:undefined ?"></option>
+                                   <option value="test" class="ng-binding ng-scope">Recipe: test</option>
+                                </select>
+
+                            </td>
+                            <!--<td>-->
+                                <!--<select class="form-control" ng-model="ingredient.measurement_type">-->
+                                    <!--<option value="? undefined:undefined ?"></option>-->
+                                    <!--<option value="Dry Measurements">Dry Measurements</option>-->
+                                    <!--<option value="Liquid Measurements">Liquid Measurements</option>-->
+                                <!--</select>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<select class="form-control" ng-model="ingredient.measure_like">-->
+                                    <!--<option value="? undefined:undefined ?"></option>-->
+                                    <!--<option value="Dry Measurements">Butter</option>-->
+                                    <!--<option value="Dry Measurements">Parsley</option>-->
+                                    <!--<option value="Dry Measurements">Nuts</option>-->
+                                    <!--<option value="Dry Measurements">Sugar</option>-->
+                                <!--</select>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<select class="form-control" ng-model="recipeInventory.unit">-->
+                                    <!--<option value="? undefined:undefined ?"></option>-->
+                                    <!--<option value="">Ounces</option>-->
+                                    <!--<option value="">Grams</option>-->
+                                    <!--<option value="">Liters</option>-->
+                                <!--</select>-->
+                            <!--</td>-->
+                            <!--<td>-->
+                                <!--<input type="text" placeholder="00" class="form-control" ng-model="recipeInventory.servings">-->
+                            <!--</td>-->
+                            <td>
+                                <input type="text" placeholder="$0.00" class="form-control" ng-model="recipeInventory.cost">
+                            </td>
+                            <td class="text-right">
+                                <button class="btn btn-danger btn-circle" type="button" ng-click="vm.remove($index)"><i class="fa fa-times"></i>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                    <div class="row">
+                        <div class="col-md-12 text-right">
+                            <button id="btnAddRecipe" name="btnAddRecipe" class="btn btn-info" ng-click="vm.addRecipeInventory()"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-md-3">Comments</label>
+                    <div class="col-md-9 no-padding">
+                        <textarea class="form-control" ng-model="model.menuItem.comments">Comments</textarea>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ok(menuItem)">Save</button>
+    </div>
+</div>
+

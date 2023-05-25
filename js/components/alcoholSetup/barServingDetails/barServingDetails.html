@@ -1,0 +1,76 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['15'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Bar Serving Details</h2>
+                <!--<p class="padding-top-5"></p>-->
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <form novalidate autocomplete="off" name="$ctr.from" ng-submit="$ctr.next($ctr.from)">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group" ng-repeat="item in $ctr.bar_serving_details_types track by $index">
+                                    <label for="id_{{$index}}">{{item.name}}</label>
+                                    <div class="input-group width-150">
+                                        <input type="number" class="form-control" id="id_{{$index}}" placeholder="6" min="0" required step="0.1" ng-model="$ctr.m[item.id]">
+                                        <div class="input-group-addon">Oz</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+                                <button scroll-top class="btn btn-primary" ui-sref="alcoholSetup.inventory">&lt;&lt; Back</button>
+                            </div>
+                            <div class="col-xs-6">
+                                <button ng-if="!SetUpStatus" scroll-top type="submit"
+                                        class="btn btn-primary block m-b float-right">Next - Create Menu Item
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

@@ -1,0 +1,64 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg navigation-hide"
+         ng-class="{'navigation-hide' : !main.isFoodSetup && main.isRegistration}">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Disclaimer and Confidentiality Agreement</h2>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                   <p ng-bind-html="$ctr.settings.default_confidentiality_agreement"></p>
+                                </div>
+                            </div>
+                            <form novalidate autocomplete="off" name="$ctr.form" ng-submit="$ctr.submit($ctr.form)">
+                                <div class="row">
+                                     <div class="col-xs-12">
+                                         <div class="checkbox">
+                                             <label ng-class="{'bg-danger': !$ctr.agree  && $ctr.form.$submitted}">
+                                                 <input type="checkbox" ng-model="$ctr.agree" required> I accept the Artecsan Confidentiality Agreement
+                                                 <span class="text-danger">*</span>
+                                             </label>
+                                         </div>
+                                     </div>
+                                </div>
+                                <div class="row padding-top-20">
+                                    <div class="col-xs-6 text-left">
+                                        <button type="button" class="btn btn-primary" ng-click="$ctr.back()">&lt;&lt; Back</button>
+                                    </div>
+                                    <div class="col-xs-6">
+                                        <button type="submit" class="btn btn-primary block float-right m-b">Start Subscription and Begin User Setup <span ng-show="$ctr.inRequest">...</span></button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

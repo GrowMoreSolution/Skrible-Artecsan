@@ -1,0 +1,327 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <!-- <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Sales Report</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="reports.reportsCategory">
+                        <a>Reports</a>
+                    </li>&nbsp;/&nbsp;
+                    <li ui-sref="reports.alcohol.alcoholDetail">
+                        <a>Alcohol Detail Report</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Sales Report</a>
+                    </li>
+                </ol> 
+            </div>
+            <div class="col-lg-2">
+                <h5>Sales Report</h5>
+            </div>
+        </div> -->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <!--<div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+            <div class="row" ng-if="!$ctr.load_lock">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content overflow-x-auto ir">
+							<div class="row">
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date From</label>
+                                        <input type="date" ng-model="$ctr.start_date"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date To</label>
+                                        <input type="date" ng-model="$ctr.end_date"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Total Size</label>
+										<select class="form-control" ng-model="$ctr.size" ng-options="li.name as li.name for li in $ctr.filters_list">
+											<option style="display:none" value="">{{$ctr.size}}</option>
+										</select>
+                                    </div>
+                                </div>
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Geography</label>
+										<select class="form-control" ng-model="$ctr.geography" ng-options="li.name as li.name for li in $ctr.filters_list">
+											<option style="display:none" value="">{{$ctr.geography}}</option>
+										</select>
+                                    </div>
+                                </div>
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Location</label>
+										<select class="form-control" ng-model="$ctr.location" ng-options="li.name as li.name for li in $ctr.location_list">
+											<option style="display:none" value="">{{$ctr.location}}</option>
+										</select>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 search-button">
+                                    <div class="form-group">
+                                            <button class="btn btn-primary" ng-click="$ctr.loadSalesData()">Search</button>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6 ir">
+									<div class="clearfix">
+										<h5 class="text-center">My Restaurant Sales vs. Compgroup Avg Sales</h5>
+									</div>
+									<div class="clearfix">
+										<div id="sales_avg_line_graph" class='rChart uvcharts'></div>
+									</div>
+								</div>
+								<div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Holiday Report</h5>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div id="holiday_report"></div>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Daily Sales Compgroup</h5>
+                                    </div>
+                                    <div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th></th>
+														<th class="width-100" ng-repeat="r2_d in $ctr.r2_dates">{{r2_d}}</th>
+													</tr>
+												</thead>
+												<tbody class="text-center">
+													<tr>
+														<td class="text-left">My Restaurant</td>
+														<td ng-repeat="r2_ele in $ctr.r2_result">{{r2_ele.my_sales | currency : '$' : 0}}</td>
+													</tr>
+													<tr>
+														<td class="text-left">Compgroup High</td>
+														<td ng-repeat="r2_ele in $ctr.r2_result">{{r2_ele.compset_high_sales | currency : '$' : 0}}</td>
+													</tr>
+													<tr>
+														<td class="text-left">Compgroup Avg</td>
+														<td ng-repeat="r2_ele in $ctr.r2_result">{{r2_ele.compset_avg_sales | currency : '$' : 0}}</td>
+													</tr>
+													<tr>
+														<td class="text-left">Compgroup Low</td>
+														<td ng-repeat="r2_ele in $ctr.r2_result">{{r2_ele.compset_low_sales | currency : '$' : 0}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                </div>
+								
+								<div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Shared Budget %</h5>
+                                    </div>
+                                    <div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th></th>
+														<th class="width-100">My Budget</th>
+														<th class="width-100">Compgroup Budget</th>
+														<th class="width-100">Variance</th>
+													</tr>
+												</thead>
+												<tbody class="text-center">
+													<tr>
+														<td class="width-100 text-left">Actual Rent Cost %</td>
+														<td>{{$ctr.r6_my_budget.actual_rent_cost_percent | number : 2}}<span ng-if="$ctr.r6_my_budget.actual_rent_cost_percent">%</span></td>
+														<td>{{$ctr.r6_compset_budget.actual_rent_cost_percent | number : 2}}<span ng-if="$ctr.r6_my_budget.actual_rent_cost_percent">%</span></td>
+														<td>{{($ctr.r6_my_budget.actual_rent_cost_percent - $ctr.r6_compset_budget.actual_rent_cost_percent) | number : 2}}<span ng-if="$ctr.r6_my_budget.actual_rent_cost_percent">%</span></td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Food Cost Budget</td>
+														<td>{{$ctr.r6_my_budget.food_cost_budget}}</td>
+														<td>{{$ctr.r6_compset_budget.food_cost_budget}}</td>
+														<td>{{$ctr.r6_my_budget.food_cost_budget - $ctr.r6_compset_budget.food_cost_budget}}</td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Liquor Cost Budget</td>
+														<td>{{$ctr.r6_my_budget.liq_cost_budget}}</td>
+														<td>{{$ctr.r6_compset_budget.liq_cost_budget}}</td>
+														<td>{{$ctr.r6_my_budget.liq_cost_budget - $ctr.r6_compset_budget.liq_cost_budget}}</td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Beer Cost Budget</td>
+														<td>{{$ctr.r6_my_budget.beer_cost_budget}}</td>
+														<td>{{$ctr.r6_compset_budget.beer_cost_budget}}</td>
+														<td>{{$ctr.r6_my_budget.beer_cost_budget - $ctr.r6_compset_budget.beer_cost_budget}}</td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Wine Cost Budget</td>
+														<td>{{$ctr.r6_my_budget.wine_cost_budget}}</td>
+														<td>{{$ctr.r6_compset_budget.wine_cost_budget}}</td>
+														<td>{{$ctr.r6_my_budget.wine_cost_budget - $ctr.r6_compset_budget.wine_cost_budget}}</td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Labor Cost Budget</td>
+														<td>{{$ctr.r6_my_budget.labor_budget}}</td>
+														<td>{{$ctr.r6_compset_budget.labor_budget}}</td>
+														<td>{{$ctr.r6_my_budget.labor_budget - $ctr.r6_compset_budget.labor_budget}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+							
+							<div class="row">
+								<div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Day of Week Avg Sales</h5>
+                                    </div>
+                                    <div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th></th>
+														<th class="width-100" ng-repeat="r3_d in $ctr.r3_days">{{r3_d.substring(0,3)}}</th>
+													</tr>
+												</thead>
+												<tbody class="text-center">
+													<tr>
+														<td class="text-left">My Restaurant</td>
+														<td ng-repeat="r3_ele in $ctr.r3_result">{{r3_ele.my_sales | currency : '$' : 0}}</td>
+													</tr>
+													<tr>
+														<td class="text-left">Compgroup Sales Avg</td>
+														<td ng-repeat="r3_ele in $ctr.r3_result">{{r3_ele.compset_avg_sales | currency : '$' : 0}}</td>
+													</tr>
+													<tr>
+														<td class="text-left">Variance</td>
+														<td ng-repeat="r3_ele in $ctr.r3_result">{{r3_ele.variance | currency : '$' : 0}}</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                </div>
+								
+								<div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Projected Summary</h5>
+                                    </div>
+                                    <div class="clearfix">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th class="width-100"></th>
+														<th class="width-100" ng-repeat="r5_ele in $ctr.r5_result">{{r5_ele.type}}</th>
+														<th class="width-100">Next Week</th>
+													</tr>
+												</thead>
+												<tbody class="text-center">
+													<tr>
+														<td class="width-100 text-left">Actual</td>
+														<td ng-repeat="r5_ele in $ctr.r5_result">{{r5_ele.my_sales | currency : '$' : 0}}</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Predicted</td>
+														<td></td>
+														<td></td>
+														<td></td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Variance</td>
+														<td ng-repeat="r5_ele in $ctr.r5_result">{{r5_ele.my_sales | currency : '$' : 0}}</td>
+														<td></td>
+													</tr>
+													<tr>
+														<td class="width-100 text-left">Compgroup Sales Avg</td>
+														<td ng-repeat="r5_ele in $ctr.r5_result">{{r5_ele.compset_sales | currency : '$' : 0}}</td>
+														<td></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+                                    </div>
+                                </div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir select, .ir input {
+    height: 35px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.ir button {
+    border-color: #0078d7;
+    background-color: #0078d7;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+	position: relative;
+    top: -3px;
+}
+</style>

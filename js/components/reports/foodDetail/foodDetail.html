@@ -1,0 +1,315 @@
+<!-- Wrapper-->
+<div id="wrapper">
+    <style>
+        .cu {
+            font-weight: bolder;
+        }
+        .cu table tr td {
+            padding: 20px 15px;
+        }
+         @media (min-width: 992px ) {
+             .cu .ma .panel-heading{
+                 min-height: 80px;
+             }
+        }
+        .cu .panel-heading h3 {
+            color: #282828;
+            font-weight: bolder;
+        }
+        .cu .panel-heading h2 {
+            font-weight: bolder;
+        }
+        .cu .panel-heading .btn {
+            background: #282828;
+        }
+        .cu .modal-content {
+            box-shadow: 0 3px 30px rgb(0 0 0 / 20%);
+            padding-bottom: 0;
+        }
+        .cu select {
+            border: 0;
+            outline: 0;
+        }
+        .text-primary {
+            color: #7A65CE !important;
+        }
+    </style>
+    <header-component></header-component>
+    <navigation-component></navigation-component>
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+        <!-- Main view  -->
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Food Detail Report</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="reports.reportsCategory">
+                        <a>Reports</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Food Detail Report</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content animated fadeInRight cu" scroll-top>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back
+                                    </button>
+                                    <button class="btn btn-primary active">Overview</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodCostOfSummary">Inventory Count
+                                    </button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodOnHand">On-Hand</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodSalesReport">Sales</button>
+                                    <button class="btn btn-primary" ui-sref="reports.batchReport">Batches</button>
+                                    <button class="btn btn-primary"
+                                            ui-sref="reports.analytics({typeInventory: 'food'})">Usage
+                                    </button>
+                                    <button class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'food'})">
+                                        PMIX
+                                    </button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodCostChangeReport">Cost Change
+                                    </button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodUsageVsPurchase">Purchases
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row ma">
+                <div class="col-sm-12 col-md-4"
+                     ng-if="subscription_type_id != 2 && subscription_type_id != 6">
+                    <div class="panel modal-content padding-20" style="border-radius: 20px">
+                        <div class="panel-heading display-flex">
+                            <h3>Food Sales Projected vs Actual</h3>
+                            <div class="margin-left-auto">
+                                <label>
+                                    <select name="name" ng-model="spa"
+                                            ng-options="option.id as option.name for option in seoption"></select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="row" ng-if="spa==1">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Last_week.predicted_sales | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.Last_week.actual_sales | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{sns_data.Food.Last_week.actual_sales - sns_data.Food.Last_week.predicted_sales | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==2">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.This_week.predicted_sales | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.This_week.actual_sales | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{sns_data.Food.This_week.actual_sales - sns_data.Food.This_week.predicted_sales | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==3">
+                                <div class="col-sm-12">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Next_week.predicted_sales | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4"
+                     ng-if="subscription_type_id != 2 && subscription_type_id != 6">
+                    <div class="panel modal-content padding-20" style="border-radius: 20px">
+                        <div class="panel-heading display-flex">
+                            <h3>Food Purchases Target vs Actual</h3>
+                            <div class="margin-left-auto">
+                                <label>
+                                    <select name="name" ng-model="spa"
+                                            ng-options="option.id as option.name for option in seoption"></select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="row" ng-if="spa==1">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Last_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.Last_week.actual_purchases | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{sns_data.Food.Last_week.actual_purchases - sns_data.Food.Last_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==2">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.This_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.This_week.actual_purchases | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{sns_data.Food.This_week.actual_purchases - sns_data.Food.This_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==3">
+                                <div class="col-sm-12">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Next_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-4"
+                     ng-if="subscription_type_id != 2 && subscription_type_id != 6">
+                    <div class="panel modal-content padding-20" style="border-radius: 20px">
+                        <div class="panel-heading display-flex">
+                            <h3>Gross Margin</h3>
+                            <div class="margin-left-auto">
+                                <label>
+                                    <select name="name" ng-model="spa"
+                                            ng-options="option.id as option.name for option in seoption"></select>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="panel-body text-center">
+                            <div class="row" ng-if="spa==1">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Last_week.predicted_sales - sns_data.Food.Last_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.Last_week.actual_sales - sns_data.Food.Last_week.actual_purchases | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{(sns_data.Food.Last_week.actual_sales - sns_data.Food.Last_week.actual_purchases) - (sns_data.Food.Last_week.predicted_sales - sns_data.Food.Last_week.suggested) | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==2">
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.This_week.predicted_sales - sns_data.Food.This_week.suggested | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-green">Actual</h4>
+                                    <h2 class="text-green">
+                                        {{sns_data.Food.This_week.actual_sales - sns_data.Food.This_week.actual_purchases | currency: undefined : 0}}</h2>
+                                </div>
+                                <div class="col-xs-4 col-sm-4">
+                                    <h4 class="text-danger">Variance</h4>
+                                    <h2 class="text-danger">
+                                        {{(sns_data.Food.This_week.predicted_sales - sns_data.Food.This_week.suggested) - (sns_data.Food.This_week.actual_sales - sns_data.Food.This_week.actual_purchases) | currency: undefined : 0}}</h2>
+                                </div>
+                            </div>
+                            <div class="row" ng-if="spa==3">
+                                <div class="col-sm-12">
+                                    <h4 class="text-primary">Proj. Target</h4>
+                                    <h2 class="text-primary">
+                                        {{sns_data.Food.Next_week.predicted_sales - sns_data.Food.Next_week.suggested | currency: undefined : 0:undefined}}</h2>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 col-md-6">
+                    <div class="panel modal-content padding-20" style="border-radius: 20px">
+                        <div class="panel-heading display-flex">
+                            <h3>Suggested Orders (Updated daily @ 09:45)</h3>
+                            <div class="margin-left-auto">
+                                <a class="btn btn-primary btn-sm" style="border-radius: 10px"
+                                   ng-click="more_navigation('suggested')"><span class="nav-label">{{ 'More' }}</span> </a>
+                            </div>
+                        </div>
+                        <div ng-if="more_loading" class="panel-body text-center">
+                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                        </div>
+                        <div ng-if="!more_loading" class="panel-body">
+                            <table class="table">
+                                <tr ng-repeat="item in summary_items_data">
+                                    <td>
+                                        {{item.suggested.item_name != 'N/A' ? (item.suggested.item_name + ' (' + item.suggested.suggested_amount + ' ' + item.suggested.suggested_order_type + ')') : item.suggested.item_name}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12 col-md-6">
+                    <div class="panel modal-content padding-20" style="border-radius: 20px">
+                        <div class="panel-heading display-flex">
+                            <h3>Missing Recipe</h3>
+                            <div class="margin-left-auto">
+                                <a class="btn btn-primary btn-sm" style="border-radius: 10px"
+                                   ng-click="more_navigation('missing_recipes')"><span class="nav-label">{{ 'More' }}</span> </a>
+                            </div>
+                        </div>
+                        <div ng-if="more_loading" class="panel-body text-center">
+                            <p><i class="fa fa-spin fa-spinner"></i> Loading...</p>
+                        </div>
+                        <div ng-if="!more_loading" class="panel-body">
+                            <table class="table">
+                                <tr ng-repeat="item in summary_items_data">
+                                    <td>
+                                        {{item.missing_recipes.menu_item_name}}
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+    </div>
+    <!-- End page wrapper-->
+</div>
+<!-- End wrapper-->

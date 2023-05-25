@@ -1,0 +1,90 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+	<header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+	<!-- Page wraper -->
+	<!-- ng-class with current state name give you the ability to extended customization your view -->
+	<div id="page-wrapper" class="white-bg {{$state.current.name}}">
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Type</label>
+										<div class="input-group date">
+											<select ng-model="$ctr.inventory_category" ng-change="$ctr.getRestuarants(false)" class="form-control" required>
+												<option value="Liquor">Liquor</option>
+												<option value="Bottle Beer">Bottle Beer</option>
+												<option value="Draft Beer">Draft Beer</option>
+												<option value="Draft Wine">Draft Wine</option>
+												<option value="Wine">Wine</option>
+												<option value="Food">Food</option>
+											</select>
+										</div>
+									</div>
+								</div>							
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="col-form-label">Restaurant(s)</label>
+										<div class="input-group date">
+											
+											<div ng-dropdown-multiselect="" options="$ctr.restaurantsList" selected-model="$ctr.selectedRestaurants" extra-settings="$ctr.multiSelectSettings">
+											</div>
+										</div>
+									</div>
+								</div>			
+								<div class="col-sm-1">
+									<div class="form-group">
+										<label class="col-form-label">&nbsp;</label>
+										<div class="input-group date">
+											<button ng-if="$ctr.loading == 0" type="button" class="btn btn-info" ng-click="$ctr.retriveMergedMapping()">Search</button>
+											<button ng-if="$ctr.loading == 1" class="btn btn-primary" disabled>Loading...</button>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="row">
+								<div class="col-lg-12">
+									<div class="clearfix">
+										<h5 class="text-center">Mapping Page for Merged Reporting</h5>
+									</div> 
+									<div class="clearfix">
+										<div class="table-responsive" style="overflow-x: scroll;">
+											<table class="table table-bordered">
+												<thead class="th-text-center">
+													<tr>
+														<th ng-repeat="r in $ctr.columns"> {{r.label}}</th>
+														<th>Save</th>
+													</tr>
+												</thead>
+												<tbody ng-repeat="it in $ctr.mapping_arr">
+													<tr class="text-center">
+														<td class="width-150" ng-repeat="r in $ctr.columns">
+															<select class="form-control" ng-change="$ctr.validate(r.id, it)" ng-model="it.grid[r.id]" ng-options="v.id as v.item_name for v in $ctr.getSkuItems(it, r.id)">
+																<option value=""></option>
+															</select>
+														</td>
+														<td class="width-80"><button ng-if="it.need_save" class="btn btn-primary" ng-click="$ctr.saveMapping(it)">Save</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>	
+						</div>
+					</div>
+				</div>
+			</div>
+		
+		<!-- Footer -->
+		<div ng-include="'views/common/footer.html'"></div>
+	</div>
+</div>
+<!-- End page wrapper-->

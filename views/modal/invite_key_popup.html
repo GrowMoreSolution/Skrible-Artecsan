@@ -1,0 +1,47 @@
+<div class="inmodal">
+    <form name="form" novalidate autocomplete="off" role="form" ng-submit="$ctr.submit(form)">
+        <div class="modal-header">
+            <h4 class="modal-title">Invitation</h4>
+        </div>
+        <div class="modal-body">
+            <div>
+               <div class="row">
+                    <p style="padding-left: 15px;">
+                        Dear {{$ctr.user.first_name}} {{$ctr.user.last_name}}, <br>
+
+                        You have been invited to be {{$ctr.user.role}} of <br>
+                        Restaurant: {{$ctr.user.restaurant}} <br>
+                        Restaurant Address: {{$ctr.user.address}} {{$ctr.user.city_name}}, {{$ctr.user.state}} {{$ctr.user.zip}} <br>
+
+                        To confirm your inviting and get started, please set password and click Accept, otherwise - Decline
+                    </p>
+
+
+                   <div class="col-xs-12 form-group" ng-if="$ctr.user.is_new_user">
+                       <label ng-click="void(0)">
+                           Password
+                           <span class="q-2"
+                                 uib-tooltip="Password should be minimum 8 characters and contain at least 1 uppercase letter and 1 digit">
+                                </span>
+                           <span class="text-danger">*</span></label>
+                       <input name="password" type="password" placeholder="********" class="form-control" ng-model="$ctr.user.password" ac-password>
+                   </div>
+                   <div class="col-xs-12 form-group" ng-if="$ctr.user.is_new_user" ng-class="{'has-error': (form.$submitted && $ctr.user.password !== $ctr.user.password_confirm) && form.password_confirm.$dirty}">
+                       <label>Confirm password <span class="text-danger">*</span></label>
+                       <input ac-password compare-to="$ctr.user.password" type="password" name="password_confirm" placeholder="********" class="form-control" ng-model="$ctr.user.password_confirm" ng-pattern="$ctr.password">
+                   </div>
+                   <div class="col-xs-12 form-group" ng-show="(form.$submitted && $ctr.user.password !== $ctr.user.password_confirm) && form.password_confirm.$dirty">
+                       <div class="m-t-xs animated fadeInRight">
+                           <small class="text-danger">Passwords not match.</small>
+                       </div>
+                   </div>
+               </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" ng-click="$ctr.decline()">Decline</button>
+            <button type="submit" class="btn btn-primary">Accept</button>
+        </div>
+    </form>
+</div>
+

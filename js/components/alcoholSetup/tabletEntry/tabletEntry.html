@@ -1,0 +1,565 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['59'].r">
+  <header-component></header-component>
+  <!-- Page wraper -->
+  <div id="page-wrapper" class="gray-bg" style="margin: unset">
+    <!-- Main view  -->
+
+    <div class="row wrapper border-bottom white-bg page-heading">
+      <div class="col-lg-12">
+        <h2>Alcohol Inventory Audit Pad</h2>
+      </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+      <!------------------------------- Main content --------------------------------->
+      <div class="container-fluid tablet-entry-container">
+        <div class="row">
+          <!------------------ Navigation - Item Name - Search box --------------------------->
+          <div class="col-md-12">
+            <div class="row">
+              <div class="col-xs-3 col-md-3 pull-left">
+                <a
+                  ng-click="$ctr.back()"
+                  ><span aria-hidden="true">&larr;</span> Back
+                </a>
+              </div>
+              <div class="col-xs-5 col-md-5">
+				<div class="row">
+					<div class="col-xs-3 col-md-3">
+						<button
+							ng-click="$ctr.navigate('previous')"
+							ng-class="{disabled: $ctr.currentDrinkIndex === 0}"
+							
+							class="btn btn-primary">
+							<<<
+						</button>
+					</div>
+					<div class="col-xs-6 col-md-6">
+						<h3>
+							<span ng-class='{COS_red_alert : true}'>{{ $ctr.model.current_item.inventory_item + ' ('+$ctr.model.current_item.vendor_name+')'}}</span><span ng-if="$ctr.model.current_item.substitute_for != null" class="t-e-label-flag">{{'Substitute'}}</span>
+						</h3>
+					</div>
+					<div class="col-xs-3 col-md-3">
+						<button
+							ng-click="$ctr.navigate('next')"
+                            ng-class="{disabled: $ctr.currentDrinkIndex === $ctr.model.inventory.length - 1}"
+							
+							class="btn btn-primary">
+							>>>
+						</button>
+					</div>
+				</div>
+              </div>
+			  <div class="col-xs-1 col-sm-1 col-md-1 pull-right">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+              </div>
+              <div class="col-xs-3 col-sm-3 col-md-3 pull-right search-box">
+                <form ng-submit="$ctr.handleSearch($ctr.model.search_query)">
+                  <div class="input-group input-group-sm">
+                    <input
+                      type="text"
+                      class="form-control"
+                      ng-model="$ctr.model.search_query"
+                      placeholder="Search for..."
+                    />
+                    <span class="input-group-btn">
+                      <button class="btn btn-primary btn-sm" type="submit">
+                        Go!
+                      </button>
+                    </span>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+          <!------------------ Category list - Subcategory list - Quicksearch --------------------------->
+          <div class="col-xs-4 col-sm-4 col-md-4 col-lg-3">
+            <div class="row">
+              <div class="col-xs-10 col-sm-10 col-md-10 col-lg-9">
+                <div class="list-group category-box">
+                  <a class="list-group-item active sticky">
+                    Categories
+                  </a>
+                  <button
+                    type="button"
+                    ng-click="$ctr.handleCategoryClick(i);"
+                    class="list-group-item"
+                    ng-class="{'active': $ctr.selected_category.category === i.category}"
+                    ng-repeat="i in $ctr.model.categories"
+                  >
+                    {{ i.category }}
+					<i ng-if="$ctr.loadingCOS && $ctr.selected_category.category === i.category" class="fa fa-refresh fa-spin float-right" disabled></i>
+                  </button>
+                </div>
+                <div class="list-group sub-category-box">
+                  <a class="list-group-item active sticky">
+                    Subcategories
+                  </a>
+                  <button
+					ng-if="$ctr.selected_category.category == 'Shelf to Sheet'"
+                    type="button"
+                    ng-click="$ctr.handleSubcatClick(i)"
+                    class="list-group-item"
+                    ng-class="{'active': $ctr.selected_subcategory.category === i.category}"
+                    ng-repeat="i in $ctr.model.subcategories"
+                  >
+				    {{ i.category }}
+                  </button>
+				  <button
+					ng-if="$ctr.selected_category.category != 'Shelf to Sheet'"
+                    type="button"
+                    ng-click="$ctr.handleSubcatClick(i)"
+                    class="list-group-item"
+                    ng-class="{'active': $ctr.selected_subcategory.sub_category == i.sub_category}"
+                    ng-repeat="i in $ctr.model.subcategories"
+                  >
+                    {{ i.sub_category }}
+                  </button>
+                </div>
+              </div>
+              <div
+                class="col-xs-2 col-sm-2 col-md-2 col-lg-2"
+				ng-if="$ctr.selected_category.category != 'Shelf to Sheet'"
+              >
+                <div class="list-group quick-search">
+                  <button
+                    type="button"
+                    ng-click="$ctr.jumpToLetter(i)"
+                    class="list-group-item"
+                    style="display: inline-flex;
+                    justify-content: center;"
+					ng-class="{'active': $ctr.model.current_item.inventory_item[0].toUpperCase() == i}"
+                    ng-repeat="i in $ctr.model.quick_search_keys"
+                  >
+                    <u>{{ i }}</u>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!------------------ Table container --------------------------->
+          <div class="col-xs-8 col-sm-8 col-md-8 col-lg-9">
+            <div class="row">
+              <!------------------ Forms --------------------------->
+              <div class="col-md-12">
+                <div class="row">
+                  <div class="col-md-12">
+                    <!------------------ Table first row --------------------------->
+                    <table class="table table-bordered">
+					  <tr>
+                        <!------------------ Locations row --------------------------->
+						<form
+						  class="form-inline"
+						  id="subcat-form"
+						  novalidate
+						  autocomplete="off"
+						  ng-submit="$ctr.handleSubmitSubcategory()"
+						>
+						  <td>Location</td>
+						  <td>
+							<div class="input-group">
+								<select class="form-control" ng-model="$ctr.selected_location"
+									ng-change="$ctr.changeLocation()" ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+								</select>
+							</div>
+						  </td>
+						  <td>Subcategory</td>
+						  <td>
+							<div class="input-group">
+								<select class="form-control" ng-model="$ctr.model.current_item.vendor_sub_cat_id" ng-disabled="!$ctr.model.subcat_enabled" ng-options="sc.id as sc.sub_category for sc in $ctr.refbooks.vendor_sub_cat | filter: {vendor_cat_id: $ctr.model.current_item.vendor_cat_id}" required></select>
+								<span
+									class="input-group-addon"
+								  >
+									<input
+									  type="checkbox"
+									  ng-model="$ctr.model.subcat_enabled"
+									/>
+								</span>
+							</div>
+						  </td>
+						  <td class="t-e-table-td-sm">
+							<button
+							  type="submit"
+							  form="subcat-form"
+							  class="btn btn-primary full-width"
+							>
+							  Save
+							</button>
+						  </td>
+						</form>
+                      </tr>
+					  
+                      <tr>
+                        <!------------------ Forms first row --------------------------->
+                        <form
+                          class="form-inline"
+                          id="size-form"
+                          novalidate
+                          autocomplete="off"
+                          ng-submit="$ctr.handleSubmitSize()"
+                        >
+                          <td>Item size</td>
+                          <td>
+                            <div class="input-group">
+								<select 
+								class="form-control"
+                                form="size-form"
+                                ng-model="$ctr.model.current_item.tare_type_id"
+								ng-disabled="!$ctr.model.size_enabled || $ctr.model.current_item.category === 'Bottle Beer' || $ctr.model.current_item.category === 'Draft Beer' || $ctr.model.current_item.category === 'Draft Wine'"
+                                ng-options="i.tare_type_id as i.name for i in $ctr._getItemSizes($ctr.model.current_item.vendor_cat_id, $ctr.model.current_item.vendor_sub_cat_id)"></select>
+                              <span
+                                class="input-group-addon"
+                                ng-if="$ctr.model.current_item.category !== 'Bottle Beer' && $ctr.model.current_item.category !== 'Draft Beer' && $ctr.model.current_item.category !== 'Draft Wine'"
+                              >
+                                <input
+                                  type="checkbox"
+                                  ng-model="$ctr.model.size_enabled"
+                                />
+                              </span>
+                            </div>
+                          </td>
+                          <td>Full Weight</td>
+                          <td>
+                            <div class="input-group">
+                              <input
+                                type="number"
+                                class="form-control"
+                                form="size-form"
+                                ng-if="$ctr.model.current_item.category !== 'Bottle Beer' && $ctr.model.current_item.category !== 'Draft Beer' && $ctr.model.current_item.category !== 'Draft Wine'"
+                                ng-model="$ctr.model.current_item.full_weight"
+                                ng-disabled="!$ctr.model.weight_enabled"
+                              />
+                              <span
+                                class="input-group-addon"
+                                ng-if="$ctr.model.current_item.category !== 'Bottle Beer' && $ctr.model.current_item.category !== 'Draft Beer' && $ctr.model.current_item.category !== 'Draft Wine'"
+                              >
+                                <input
+                                  type="checkbox"
+                                  ng-model="$ctr.model.weight_enabled"
+                                />
+                              </span>
+                              <span
+                                class="input-group-btn"
+                                style="width:5px;"
+                              ></span>
+                              <input
+                                type="number"
+                                form="size-form"
+                                class="form-control"
+                                placeholder="{{
+                                  $ctr.model.current_item.uom_name
+                                }}"
+                                disabled
+                              />
+                            </div>
+                          </td>
+                          <td class="t-e-table-td-sm">
+                            <button
+                              type="submit"
+                              form="size-form"
+                              class="btn btn-primary full-width"
+                            >
+                              Save
+                            </button>
+                          </td>
+                        </form>
+                      </tr>
+                      <tr>
+                        <!------------------ Forms second row --------------------------->
+                        <form
+                          class="form-inline"
+                          id="entriesForm"
+                          novalidate
+                          name="entriesForm"
+                          autocomplete="off"
+                          ng-submit="$ctr.handleSubmitEntries()"
+                        >
+                          <td>Full</td>
+                          <td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              form="entriesForm"
+                              name="full"
+							  min="1"
+                              ng-model="$ctr.model.current_item.packs_qty_inp"
+                              id="full"
+                              placeholder="Full"
+                            />
+                          </td>
+                          <td>Partial</td>
+                          <!--<td>
+                            <input
+                              type="number"
+                              class="form-control"
+                              form="entriesForm"
+                              name="partial"
+                              partial-weight-validator
+                              current-item="{{$ctr.model.current_item}}"
+                              ng-model="$ctr.model.current_item.item_qty_inp"
+                              id="partial"
+                              placeholder="Partial"
+							  ng-disabled="$ctr.model.current_item.category == 'Bottle Beer'"
+                            />
+                          </td>-->
+						  <td>
+							<div class="input-group">
+								<select ng-disabled="$ctr.model.current_item.category == 'Bottle Beer'" class="form-control" ng-model="$ctr.model.current_item.selected_partial_input_mode" ng-options="value as value for value in $ctr.get_partial_input_modes($ctr.model.current_item.category)" ng-change="$ctr.set_gloabl_partial_input_mode()">
+								</select>
+								<span
+								  class="input-group-btn"
+								  style="width:5px;"
+								></span>
+								<input
+								  type="number"
+								  class="form-control"
+								  form="entriesForm"
+								  name="partial"
+								  partial-weight-validator
+								  current-item="{{$ctr.model.current_item}}"
+								  ng-model="$ctr.model.current_item.item_qty_inp"
+								  id="partial"
+								  placeholder="Partial"
+								  ng-disabled="$ctr.model.current_item.category == 'Bottle Beer'"
+								/>
+							</div>
+						  </td>
+                          <td class="t-e-table-td-sm">
+                            <button
+                              type="submit"
+                              form="entriesForm"
+							  ng-disabled="$ctr.loadingCOS"
+                              class="btn btn-primary full-width"
+                            >
+                              Save
+							  <i ng-if="$ctr.loadingCOS" class="fa fa-refresh fa-spin" disabled></i>
+                            </button>
+                          </td>
+                        </form>
+                      </tr>
+                      <tr>
+                        <td>Total Full</td>
+                        <td>
+                          <h4 style="text-align: center">
+                            <strong>{{ $ctr.model.current_item.full_total }}</strong>
+                          </h4>
+                        </td>
+                        <td>Total Partial</td>
+                        <td>
+                          <div class="input-group">
+                            <input
+                              type="text"
+                              class="form-control input-sm"
+                              placeholder="{{ $ctr.model.current_item.n_partial_entries }}"
+                              disabled
+                            />
+                            <span
+                              class="input-group-btn"
+                              style="width:5px;"
+                            ></span>
+                            <input
+                              type="text"
+                              class="form-control input-sm"
+                              placeholder="{{ $ctr.model.current_item.partial_total }}"
+                              disabled
+                            />
+                          </div>
+                        </td>
+                        <td>
+                          <button
+                            type="submit"
+                            ng-click="$ctr.addUniqueItems()"
+                            class="btn btn-primary full-width"
+                          >
+                            View/Edit
+                          </button>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3">
+                          <strong>
+                            Previous:
+                            <a
+                              ng-click="$ctr.navigate('previous')"
+                              ng-class="{disabled: $ctr.currentDrinkIndex === 0}"
+                            >
+                              {{
+                                $ctr.model.prev_item
+                                  .inventory_item + ' ('+$ctr.model.prev_item.vendor_name+')'
+                              }}</a
+                            >
+                          </strong>
+                        </td>
+                        <td colspan="3">
+                          <strong>
+                            Next:
+                            <a
+                              ng-click="$ctr.navigate('next')"
+                              ng-class="{disabled: $ctr.currentDrinkIndex === $ctr.model.inventory.length - 1}"
+                            >
+                              {{
+                                $ctr.model.next_item
+                                  .inventory_item + ' ('+$ctr.model.next_item.vendor_name+')'
+                              }}
+                            </a>
+                          </strong>
+                        </td>
+                      </tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!------------------ Product Info - Generate report cta --------------------------->
+            <div class="row">
+              <div class="col-md-12">								
+                <div class="row" ng-if="$ctr.showCOSDetails">
+                  <div class="col-xs-6 col-sm-6 col-md-12">
+                    <div class="item-info">
+                      <h2 class="pull-left">
+                        Theoretical OH
+                        <span class="label label-primabtn-primary t-e-label"
+                          >{{$ctr.model.current_item.substitute_for == null ? ($ctr.model.current_item.OH | number : 2) : 'N/A'}}</span
+                        >
+                      </h2>
+                      <h2 class="pull-right">
+                        Item Variance
+                        <span class="label label-primabtn-primary t-e-label"
+                          >{{$ctr.model.current_item.substitute_for == null ? ($ctr.model.current_item.unit_variance | number : 2) : 'N/A'}}</span
+                        >
+                      </h2>
+                    </div>
+                  </div>
+                </div>
+				
+                <div class="row">
+				  <div class="col-md-3">
+					<div class="form-inline date-wrapper-mobile">
+						<div ng-if="$ctr.user.user_type_id != 9 && $ctr.user.user_type_id != 10" class="form-control no-borders auto-height form-control-date float-left">
+							<div class="input-group">
+								<button
+								  type="button"
+								  class="btn btn-danger pull-left"
+								  ng-click="$ctr.deleteCurrentInventoryAudit()"
+								>
+								  {{$ctr.is_sug_aud == 'false' ? 'Clear Audit' : 'Clear Suggested Audit'}}
+								</button>
+							</div>
+						</div>
+					</div>
+                  </div>
+				  
+                  <div class="col-md-5">
+					<div class="form-inline date-wrapper-mobile">
+						<div class="form-control no-borders auto-height form-control-date">
+							<label for="begin_date">Audit Date</label>
+							<div class="input-group">
+								<input ng-disabled="!$ctr.pickers.beginDate.open || !$ctr.showCOSDetails" type="text" class="form-control" id="begin_date"
+									   datetime-picker="MM/dd/yyyy HH:mm"
+									   ng-model="$ctr.pickers.beginDate.date"
+									   is-open="$ctr.pickers.beginDate.open"
+									   datepicker-append-to-body="true">
+								<span class="input-group-btn">
+									<button ng-disabled="!$ctr.showCOSDetails" class="btn btn-default" type="button"
+											ng-click="$ctr.openCalendar($event, 'beginDate')">
+										<span class="glyphicon glyphicon-edit"></span>
+									</button>
+								</span>
+								<button
+									  type="button"
+									  ng-disabled="!$ctr.showCOSDetails"
+									  class="btn btn-primary pull-right"
+									  ng-click="$ctr.changeAuditDate()"
+								>
+									  Save Date
+								</button>
+							</div>
+						</div>
+					</div>
+                  </div>
+				  
+				  <div class="col-md-4">
+					<div class="form-inline date-wrapper-mobile">
+						<div class="form-control no-borders auto-height form-control-date float-right">
+							<div class="input-group">
+								<button
+								  type="button"
+								  class="btn btn-primary pull-right"
+								  ng-click="$ctr.viewReport()"
+								  ng-if="$ctr.is_sug_aud != 'true' && $ctr.SetUpStatus != 0"
+								>
+								  View Report
+								</button>
+								<button
+								  type="button"
+								  class="btn btn-primary pull-right"
+								  ng-click="$ctr.finalSaveAudit('suggested')"
+								  ng-if="$ctr.is_sug_aud == 'true'"
+								>
+								  Final Save
+								</button>
+								<button
+								  type="button"
+								  class="btn btn-primary pull-right"
+								  ng-click="$ctr.finalSaveAudit('first_audit')"
+								  ng-if="$ctr.SetUpStatus == 0"
+								>
+								  Final Save
+								</button>
+							</div>
+						</div>
+					</div>
+                  </div>
+				  
+
+                </div>
+					
+				<div class="row">
+					<div class="col-md-12">
+							<button
+							  type="button"
+							  class="btn btn-primary float-right"
+							  ng-click="$ctr.hideShowSubstitutes(true)"
+							  ng-if="$ctr.hide_subs"
+							>
+							  Show Substitute Items
+							</button>
+							<button
+							  type="button"
+							  class="btn btn-primary float-right"
+							  ng-click="$ctr.hideShowSubstitutes(true)"
+							  ng-if="!$ctr.hide_subs"
+							>
+							  Hide Substitute Items
+							</button>
+					</div>
+				</div>
+				
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div ng-include="'views/common/footer.html'"></div>
+  </div>
+  <!-- End page wrapper-->
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

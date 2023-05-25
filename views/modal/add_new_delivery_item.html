@@ -1,0 +1,61 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <h4 class="modal-title">Order Schedule</h4>
+    </div>
+    <div class="modal-body max-height-340">
+        <form class="form-horizontal ng-pristine ng-untouched ng-invalid ng-invalid-required" name="form" ng-model="delivery" novalidate="" role="form">
+            <fieldset>
+                <div class="row">
+                    <div class="col-md-4">
+                        <label>Inventory Category: </label>
+                    </div>
+                    <div class="col-md-8">
+                        <select class="form-control" ng-model="delivery.inventoryCategory">
+                            <option value="? undefined:undefined ?"></option>
+                            <option value="Produce">Produce</option>
+                            <option value="Meat">Meat</option>
+                            <option value="Poultry">Poultry</option>
+                            <option value="Dairy">Dairy</option>
+                            <option value="Canned &amp; Dry">Canned &amp; Dry</option>
+                            <option value="Oil &amp; Vinegar">Oil &amp; Vinegar</option>
+                            <option value="Grocery">Grocery</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row padding-top-20">
+                    <div class="col-md-4">
+                        <label>Delivery Days: </label>
+                    </div>
+                    <div class="col-md-8">
+                        <label>
+                            <input type="checkbox" checklist-value="'Sun'"> Sun
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Mon'"> Mon
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Tue'"> Tue
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Wed'"> Wed
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Thur'"> Thur
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Fri'"> Fri
+                        </label>
+                        <label>
+                            <input type="checkbox" checklist-value="'Sat'"> Sat
+                        </label>
+                    </div>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ok()">Save</button>
+    </div>
+</div>
+

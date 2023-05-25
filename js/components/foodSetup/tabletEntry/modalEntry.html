@@ -1,0 +1,90 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-md-12" style="padding: 30px; text-align: center">
+			<form class="form-inline">
+				<div ng-if="$ctr.mode == 'inv'" class="row" style="margin-top: 10px">
+					<div class="col-sm-4 col-md-4">
+						<h3 class="text-center">Full</h3>
+						<div class="form-group" ng-repeat="field in $ctr.entries.full track by field.id" style="margin-top: 10px">
+							<input style="width: 25%" type="number" ng-model="field.value" class="form-control" placeholder="Full" />
+							<select style="width: 55%" class="form-control" ng-model="field.locn_id"
+								ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+							</select>
+							<span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField($index, 'full')" aria-hidden="true"></span>
+						</div>
+					</div>
+          
+					<div class="col-sm-4 col-md-4">
+						<h3 class="text-center">Partial</h3>
+						<div class="form-group" ng-repeat="field in $ctr.entries.partial track by field.id" style="margin-top: 10px">
+							<input style="width: 25%" type="number" ng-model="field.value" class="form-control" placeholder="Partial" />
+							<select style="width: 55%" class="form-control" ng-model="field.locn_id"
+								ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+							</select>
+							<span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField($index, 'partial')" aria-hidden="true"></span>
+						</div>
+					</div>
+					
+					<div class="col-sm-4 col-md-4">
+						<h3 class="text-center">Units</h3>
+						<div class="form-group" ng-repeat="field in $ctr.entries.pack track by field.id" style="margin-top: 10px">
+							<input style="width: 25%" type="number" ng-model="field.value" class="form-control" placeholder="Units" />
+							<select style="width: 55%" class="form-control" ng-model="field.locn_id"
+								ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+							</select>
+							<span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField($index, 'pack')" aria-hidden="true"></span>
+						</div>
+					</div>
+				</div>
+				
+				<div ng-if="$ctr.mode == 'batches'" class="row" style="margin-top: 10px">
+					<div class="table-responsive">
+                        <table class="table ng-scope footable-sort">
+                            <thead class="th-text-center th-vertical-align-middle">
+                            <tr>
+                            	<th>
+                                    <span class="no-wrap cursor-pointer">Batch Created On</span>
+                                </th>
+                                <th>
+                                    <span class="no-wrap cursor-pointer">Full Qty</span>
+                                </th>                      
+                                <th>
+                                    <span class="no-wrap cursor-pointer">Partial Qty (%)</span>
+                                </th>
+								<th>
+                                    <span class="no-wrap cursor-pointer"></span>
+                                </th>
+                            </tr>
+                            </thead>                            
+                            <tbody ng-repeat="item in $ctr.entries">
+                                <tr ng-if="item.visible" class="text-center">
+                                	<td>
+										<input type="date" ng-model="item.recipe_created_on" placeholder="Created On" required />
+									</td>
+                                    <td>
+										<input type="number" ng-model="item.full" placeholder="Full" />
+									</td>
+                                    <td>
+										<input type="number" ng-model="item.partial" placeholder="Partial" />
+									</td>
+									<td>
+										<span class="glyphicon glyphicon-remove-circle btn" ng-click="$ctr.removeField($index)" aria-hidden="true"></span>
+									</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+					
+				</div>
+        
+				<button ng-click="$ctr.addField()" type="button" class="btn btn-primary btn-xs" style="margin-top: 20px">
+					Add more...
+				</button>
+        
+				<button ng-click="$ctr.save()" type="button" class="btn btn-warning btn-xs" style="margin-top: 20px">
+					Save/Close...
+				</button>
+			</form>
+		</div>
+	</div>
+</div>

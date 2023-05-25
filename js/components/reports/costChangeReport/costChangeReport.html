@@ -1,0 +1,338 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <!-- <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Sales Report</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="reports.reportsCategory">
+                        <a>Reports</a>
+                    </li>&nbsp;/&nbsp;
+                    <li ui-sref="reports.alcohol.alcoholDetail">
+                        <a>Alcohol Detail Report</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Sales Report</a>
+                    </li>
+                </ol> 
+            </div>
+            <div class="col-lg-2">
+                <h5>Sales Report</h5>
+            </div>
+        </div> -->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+                                    <button class="btn btn-primary" ui-sref="reports.alcohol.alcoholDetail">Overview</button>
+                                    <button class="btn btn-primary" ui-sref="reports.alcoholCostOfSummary">Inventory Count</button>
+                                    <button class="btn btn-primary" ui-sref="reports.dailyOnHand">On-Hand</button>
+                                    <button class="btn btn-primary" ui-sref="reports.salesReport">Sales</button>
+									<button class="btn btn-primary" ui-sref="reports.analytics({typeInventory: 'alcohol'})">Usage</button>
+									<button class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'alcohol'})">PMIX</button>
+                                    <button class="btn btn-primary active" ui-sref="reports.costChangeReport">Cost Change</button>
+                                    <button class="btn btn-primary" ui-sref="reports.usageVsPurchase">Purchases</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox-content text-center">
+						<label class="font-noraml"><b>Show:</b></label>
+						<button class="btn btn-danger" ng-click="$ctr.changeMode('details')">Details</button>
+						<button class="btn btn-danger" ng-click="$ctr.changeMode('summary')">Summary</button>
+					</div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content overflow-x-auto ir">
+							<div ng-if="$ctr.mode == 'summary'" class="row">
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date From</label>
+                                        <input type="date" ng-model="$ctr.start_date"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date To</label>
+                                        <input type="date" ng-model="$ctr.end_date"/>
+                                    </div>
+                                </div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="font-noraml">Vendor(s)</label>
+										<div class="input-group date">
+											<div ng-dropdown-multiselect="" options="$ctr.vendorsList" selected-model="$ctr.selectedVendors" extra-settings="$ctr.multiSelectSettings" events="$ctr.vmsEvents">
+											</div>
+										</div>
+									</div>
+								</div>
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Category</label>
+										<select ng-model="$ctr.category" ng-options="item as item for item in $ctr.currentCategories" ng-disabled="!$ctr.selectedVendors.length" ng-change="$ctr.selectCategory()"></select>
+                                    </div>
+                                </div>
+								<div class="col-sm-2">
+									<div class="form-group">
+										<label class="font-noraml">Item(s)</label>
+										<div class="input-group date">
+											<div ng-dropdown-multiselect="" options="$ctr.currentItems" selected-model="$ctr.selectedItems" extra-settings="$ctr.multiSelectSettings">
+											</div>
+										</div>
+									</div>
+								</div>
+                                <div class="col-sm-1 search-button">
+                                    <div class="form-group">
+                                            <button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.loadCostChangeData()">Search</button>
+											<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+                                    </div>
+                                </div>
+							</div>
+							<div ng-if="$ctr.mode == 'details'" class="row">
+								<div class="col-sm-12 ir" style="text-align: center">
+									<select ng-model="$ctr.details_mode" ng-options="item as item.name for item in $ctr.details_modes_list" required>
+									</select>
+									<label ng-if="$ctr.details_mode.type == 'most_recent'" class="font-noraml">Date</label>
+                                    <input ng-if="$ctr.details_mode.type == 'most_recent'" type="date" ng-model="$ctr.details_start_date"/>
+									<select ng-model="$ctr.details_category" ng-options="item as item.category for item in $ctr.categories" ng-change="$ctr.changeCat()" required>
+									</select>
+									<select ng-if="$ctr.details_category.id != -1" ng-model="$ctr.subcategory" ng-options="item as item.sub_category for item in $ctr.subcategories" ng-change="$ctr.changeSubCat()" required>
+									</select>
+									<select ng-if="$ctr.subcategory.id != -1" ng-model="$ctr.item" style="width: 104px;" ng-options="item as item.item_name for item in $ctr.temp_items" required>
+									</select>
+									<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.loadCostChangeData()">Search</button>
+									<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+									<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.downloadCSV()" ng-if="!$ctr.export_loading">Export Report
+									</button>
+									<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+									</button>
+								</div>
+							</div>
+							<div class="row" ng-if="$ctr.mode == 'summary'">
+								<div class="col-lg-12">
+									<div class="clearfix">
+										<div id="cc_graph" class='rChart uvcharts'></div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+			
+			<!--<div class="row" id="top-section" ng-if="$ctr.mode == 'details'" style="margin-right :-7px;margin-left: -10px;">-->
+			<div class="row" ng-if="$ctr.mode == 'details'" style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -61px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<td>Menu Item Name</td>
+												<td style="width:8%">Menu Price</td>
+												<td style="width:8%">Prior Menu Cost</td>
+												<td style="width:8%">Prior Cost %</td>
+												<td style="width:8%">Current Menu Cost</td>
+												<td style="width:8%">Current Cost %</td>
+												<td style="width:8%">Total Cost Change</td>
+												<td style="width:10%">Total Cost Menu Change %</td>
+											</tr>
+										</thead> 
+										<tbody ng-repeat="item in $ctr.cc_details_menus">
+											<tr>
+												<td>{{item.menu_item_name}}</td>
+												<td style="width:8%">{{item.price | number : 2}}</td>
+												<td style="width:8%">{{item.affected_cost | number : 2}}</td>
+												<td style="width:8%">{{item.affected_cost_margin | number : 2}}</td>
+												<td style="width:8%">{{item.cost | number : 2}}</td>
+												<td style="width:8%">{{item.cost_margin | number : 2}}</td>
+												<td style="width:8%">{{item.cost - item.affected_cost | number : 2}}</td>
+												<td style="width:8%">{{item.cost_margin - item.affected_cost_margin | number : 2}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row">
+					<div class="ibox float-e-margins" style="padding-left: 0px; padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 0px;">
+								<thead>
+									<tr>
+										<td style="width:18%">Vendor</td>
+										<td>Item Name</td>
+										<td style="width:6%">Delivery Unit</td>
+										<td style="width:9%">Prior Purchase Date</td>
+										<td style="width:8%">Prior Purchase $</td>
+										<td style="width:9%">Current Purchase Date</td>
+										<td style="width:8%">Current Purchase $</td>
+										<td style="width:6%">$ Change</td>
+										<td style="width:6%">% Change</td>
+									</tr>
+								</thead>
+								<tbody ng-repeat="item in $ctr.cc_details_items">
+									<tr>
+										<td style="width:18%">{{item.vendor_name}}</td>
+										<td>{{item.item_name}}</td>
+										<td style="width:6%">{{item.uod}}</td>
+										<td style="width:8%">{{item.prior_purchase_date == null ? '-' : item.prior_purchase_date}}</td>
+										<td style="width:8%">{{item.prior_purchase_cost == null ? '-' : '$'+(item.prior_purchase_cost | number : 2)}}</td>
+										<td style="width:9%">{{item.current_purchase_date == null ? '-' : item.current_purchase_date}}</td>
+										<td style="width:8%">{{item.current_purchase_cost == null ? '-' : '$'+(item.current_purchase_cost | number : 2)}}</td>
+										<td style="width:6%" ng-class="{red_text : item.cost_change > 0}">{{item.cost_change == '-' ? item.cost_change : (item.cost_change | number : 2)}}</td>
+										<td style="width:6%" ng-class="{red_text : item.cost_change_percent > 0}">{{item.cost_change_percent == '-' ? item.cost_change_percent : (item.cost_change_percent | number : 2)}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				
+				<!--<div class="row" style="margin-top: -61px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<td style="width:18%">Vendor</td>
+												<td>Item Name</td>
+												<td style="width:6%">Delivery Unit</td>
+												<td style="width:9%">Last Purchase Date</td>
+												<td style="width:8%">Last Purchase $</td>
+												<td style="width:9%">Current Purchase Date</td>
+												<td style="width:8%">Current Purchase $</td>
+												<td style="width:6%">$ Change</td>
+												<td style="width:6%">% Change</td>
+											</tr>
+										</thead> 
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>-->
+			</div>
+			
+			<!--<div class="row" ng-if="$ctr.mode == 'details'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row"  id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -59px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+										<tbody ng-repeat="item in $ctr.cc_details_items">
+											<tr>
+												<td style="width:18%">{{item.vendor_name}}</td>
+												<td>{{item.item_name}}</td>
+												<td style="width:6%">{{item.uod}}</td>
+												<td style="width:9%">{{item.last_purchase_date == null ? '-' : item.last_purchase_date}}</td>
+												<td style="width:8%">{{item.last_purchase_cost == null ? '-' : '$'+(item.last_purchase_cost | number : 2)}}</td>
+												<td style="width:9%">{{item.current_purchase_date == null ? '-' : item.current_purchase_date}}</td>
+												<td style="width:8%">{{item.current_purchase_cost == null ? '-' : '$'+(item.current_purchase_cost | number : 2)}}</td>
+												<td style="width:6%" ng-class="{red_text : item.cost_change > 0}">{{item.cost_change == '-' ? item.cost_change : (item.cost_change | number : 2)}}</td>
+												<td style="width:6%" ng-class="{red_text : item.cost_change_percent > 0}">{{item.cost_change_percent == '-' ? item.cost_change_percent : (item.cost_change_percent | number : 2)}}</td>
+											</tr>
+										</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>-->
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir select, .ir input {
+    height: 35px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+.ir button {
+    border-color: #0078d7;
+    background-color: #0078d7;
+    display: inline-block;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    color: #fff;
+	position: relative;
+    top: -3px;
+}
+
+#content-table-section {
+max-height: 55vh;
+overflow-y: scroll;
+}
+
+.adjust-pad {
+	padding-right: 2px;
+	padding-top: 0
+}
+
+#top-section {
+	position: absolute;
+}
+
+.bottomless {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            var height = document.getElementById('top-section').clientHeight;
+            $('#content-table-section').css('margin-top', height + 'px');
+        }, 2000);
+    });
+</script>

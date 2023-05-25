@@ -1,0 +1,149 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Inventory Usage Report</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="reports.reportsCategory">
+                        <a>Reports</a>
+                    </li>
+                    &nbsp;/&nbsp;
+
+                    <li ui-sref="reports.alcohol.alcoholDetail" ng-show="!$ctr.isFood">
+                        <a>Alcohol Detail Report</a>
+                    </li>
+                    <li ui-sref="reports.food.foodDetail" ng-show="$ctr.isFood">
+                        <a>Food Detail Report</a>
+                    </li>
+                    &nbsp;/&nbsp;
+
+
+                    <li class="active-page">
+                        <a>Inventory Usage Report</a>
+                    </li>
+                </ol>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content overflow-x-auto">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ng-show="!$ctr.isFood"
+                                            ui-sref="reports.alcohol.alcoholDetail">&lt;&lt; Back
+                                    </button>
+                                    <button class="btn btn-primary" ng-show="$ctr.isFood"
+                                            ui-sref="reports.food.foodDetail">&lt;&lt; Back
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <form novalidate autocomplete="off" name="$ctr.form" ng-submit="$ctr.search($ctr.form)">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="font-noraml">Date From</label>
+
+                                            <div class="input-group date">
+                                                <input type="datetime" class="form-control" date-time
+                                                       ng-model="$ctr.searchModel.date_from" view="date"
+                                                       auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="font-noraml">Date To</label>
+
+                                            <div class="input-group date">
+                                                <input type="datetime" class="form-control" date-time
+                                                       ng-model="$ctr.searchModel.date_to" view="date" auto-close="true"
+                                                       min-view="date" format="YYYY-MM-DD">
+                                                <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 search-button">
+                                        <button type="submit" class="btn btn-primary">Search</button>
+                                    </div>
+                                </form>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="table table-bordered">
+                                    <thead class="th-text-center th-vertical-align-middle">
+                                    <tr>
+                                        <th rowspan="2" class="min-width-115">Vendor Name</th>
+                                        <th colspan="4">Inventory Item</th>
+                                        <th colspan="7">Inventory</th>
+                                    </tr>
+                                    <tr>
+                                        <th class="width-80">Type</th>
+                                        <th class="width-100">Description</th>
+                                        <th class="width-80">Individual Cost</th>
+                                        <th class="width-80">Pkg Unit Type</th>
+                                        <th class="width-80">Beginning Amount</th>
+                                        <th class="width-80">Purchased this Period</th>
+                                        <th class="width-100">Counted this Period</th>
+                                        <th class="width-100">Quantity On-hand this Period</th>
+                                        <th class="width-100">POS Sales this Period</th>
+                                        <th class="width-100">Over/ Short this Period</th>
+                                        <th class="width-100">Cost of Over/ Short this Period</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="i in $ctr.data track by $index">
+                                        <td class="performance-table-color"><strong>{{i.vendor_name}}</strong></td>
+                                        <td>{{$ctr.refbooks['inventory_types'] | recipeTypeFilter : i.inventory_type_id }}</td>
+                                        <td>{{i.description}}</td>
+                                        <td class="text-center">{{i.unit_cost || 0 | currency: '$'}}</td>
+                                        <td>{{i.package_order_type}}</td>
+                                        <td class="text-center">{{i.last_counted || 0}}</td>
+                                        <td class="text-center">{{i.purchased_this_period || 0}}</td>
+                                        <td class="text-center">{{i.is_there_audit_inside_report_period || i.counted_this_period}}</td>
+                                        <td class="text-center">{{i.total_in_uom_of_delivery_final_in_units || 0}}</td>
+                                        <!--<td class="text-center">{{i.qty_used_this_period || 0}}</td>-->
+                                        <td class="text-center">{{i.pos_sales_this_period || 0}}</td>
+                                        <td class="text-danger text-center">{{i.is_there_audit_inside_report_period || i.over_this_period}}</td>
+                                        <td class="performance-table-color text-center">{{i.is_there_audit_inside_report_period || i.cost_of_over_this_period || 0 | currency: '$'}}</td>
+                                    </tr>
+                                    <tr class="text-bold-total">
+                                        <td class="text-right" colspan="3"><strong>TOTAL</strong></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td class="text-center">{{$ctr.totals.last_counted | number : 2}}</td>
+                                        <td class="text-center">{{$ctr.totals.purchased_this_period | number : 2}}</td>
+                                        <td class="text-center">{{$ctr.totals.counted_this_period | number : 2}}</td>
+                                        <td class="text-center">{{$ctr.totals.qty_used_this_period | number : 2}}</td>
+                                        <td class="text-center">{{$ctr.totals.pos_sales_this_period | number : 2}}</td>
+                                        <td class="text-danger text-center">({{$ctr.totals.over_this_period | number : 2}})</td>
+                                        <td class="performance-table-color text-center">({{$ctr.totals.cost_of_over_this_period | number : 2}})</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

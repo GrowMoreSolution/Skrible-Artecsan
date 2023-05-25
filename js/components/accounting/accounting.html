@@ -1,0 +1,206 @@
+<!-- Wrapper-->
+<div id="wrapper">       <!-- Change permission when establish a number for this-->
+
+    <!--<header-component></header-component>
+
+    <navigation-component></navigation-component>-->
+
+    <!-- Page wraper -->
+    <!--<div id="page-wrapper" class="gray-bg">-->
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Account</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="top-headingbar">
+                    <div id="collapseExample" class="collapse in" style="width: 100%;">
+                        <div class="title-heading" >
+                            <div class="action-filter">
+                                <div class="form-group">
+                                    <label class="col-form-label">View Report Type</label>
+                                    <select class="form-control">
+                                        <option value="Liquor">All</option>
+                                        <option value="Liquor">Profit & Loss</option>
+                                        <option value="Bottle Beer">Balance Sheet</option>
+                                        <option value="Draft Beer">Custom Names</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label class="col-form-label">View Category</label>
+                                    <select class="form-control">
+                                        <option value="Liquor">Alcohol</option>
+                                        <option value="Bottle Beer">Food</option>
+                                        <option value="Draft Beer">Other etc</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="action-btn">
+                                <a href="#/!" class="btn">Add New</a>
+                                <a href="#/!" class="btn">Export</a>
+                                <!-- <a href="#/!" class="btn">Print</a> -->
+                                <button class="btn" ng-click="$ctr.printDiv()">Print</button>
+                                <!-- <button ng-click="printDiv()">Print</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="down-arrow">
+                        <button type="button" class="triangle " data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"></button>
+                    </div>
+                </div>
+            </div>
+            <div id="divToPrint" class="col-lg-12">
+                <div class="restaurant-table">
+                    <div class="restaurant-title text-center" style="text-align: center;">
+                        <h2 style="font-weight: 700;
+                        color: #30404f;
+                        margin-bottom: 6px;
+                        font-size: 22px; margin-top: 20px;">Restaurant Name</h2>
+                        <p style="    font-size: 14px;
+                        font-weight: 400;
+                        margin-bottom: 28px; margin: 0 0 10px;">Chart of Accounts</p>
+                    </div>
+                    <div class="table-responsive re">
+                        <table style="font-size: 13px; color: #676a6c;" class="footable footable-custom table-stripped table">
+                            <thead>
+                                <tr>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Grouping</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Category</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Account Name</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Parent Account</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Active/InActive</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Edit</th>
+                                    <th style="font-weight: bold; border-bottom: 1px solid #DDDDDD;">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Assets</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Cash</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Bank Account</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Assets</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Inventory</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Liquor</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Bottle Beer Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Liabilities</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Current Liabilities</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Sales Tax</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Bottle Beer Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Revenue</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Food</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Non Alcohol</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Revenue</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Other Revenue</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Miscellaneous</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Draft Beer Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Inventory Cost</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Alcohol Cost</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Beer Cost</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Draft Beer Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Labor Cost</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Back of House</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Runner</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Operating Expense</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">1099 Labor & Services</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Other Services</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Liquor Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Operating Expense</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Building & Maintenance</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">CAM Fees</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Liquor Sales</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Operating Expense</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Supplies/Small Equipment</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Paper Goods/Plasticware</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                                <tr>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Operating Expense</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Taxes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Use Tax</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Wine Sale</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;">Yes</td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"><input type="checkbox" class=""/></td>
+                                    <td style="border-top: 1px solid #e7eaec; line-height: 1.42857; padding: 8px; vertical-align: top;"> n/a</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    <!--</div>-->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir canvas {
+    height: 400px !important;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+</style>

@@ -1,0 +1,645 @@
+<!-- Wrapper-->
+<div id="wrapper">
+    <style>
+        .ir select {
+            height: 35px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        .input-group {
+            margin: auto;
+        }
+
+        .btn.btn-danger {
+            border-radius: 14px;
+        }
+
+        .ir button {
+            border-color: #0078d7;
+            background-color: #0078d7;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 0;
+            font-size: 14px;
+            font-weight: 400;
+            line-height: 1.42857143;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            -ms-touch-action: manipulation;
+            touch-action: manipulation;
+            cursor: pointer;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 14px;
+            color: #fff;
+            position: relative;
+        }
+
+        .cu {
+            font-weight: bolder;
+        }
+
+        .text-black {
+            color: black;
+        }
+
+        .cu .modal-content {
+            box-shadow: 0 3px 30px rgb(0 0 0 / 20%);
+            padding: 20px;
+            border-radius: 20px;
+        }
+
+        .cu .modal-content .table-responsive {
+            border-radius: 20px !important;
+            border: 1px solid #c9c9c9 !important;
+        }
+
+        .cu .modal-content thead {
+            background: #f5f5f6;
+        }
+
+        .cu .modal-content .table td, .cu .modal-content .table th {
+            padding: 10px 17px;
+        }
+
+        .cu .modal-content table tr td:first-child, .cu .modal-content table tr th:first-child {
+            border-right: 1px solid #c9c9c9 !important;
+        }
+
+        .cu .modal-content table th:first-of-type {
+            border-top-left-radius: 20px;
+            border-top: 0 !important;
+        }
+
+        .cu .modal-content table th:last-of-type {
+            border-top-right-radius: 20px;
+        }
+
+        .cu .modal-content table tr:last-of-type td:first-of-type {
+            border-bottom-left-radius: 20px;
+        }
+
+        .cu .modal-content table tr:last-of-type td:last-of-type {
+            border-bottom-right-radius: 20px;
+        }
+
+		.cu select {
+			border-radius: 16px;
+			background: #f5f5f6 !important;
+			border-color: #f5f5f6;
+			outline: 0;
+		}
+		.cu select:focus {
+			border-color: #1ab394;
+		}
+
+        .text-primary {
+            color: #7A65CE !important;
+        }
+
+        .ibox {
+            margin-bottom: 0 !important;
+        }
+		.footer{
+			display: none;
+		}
+		.text-end{
+			text-align: end;
+		}
+    </style>
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg" scroll-top>
+
+        <div class="wrapper wrapper-content animated fadeInRight" style="padding-top:0 ">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-xs-12">
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.alcohol.alcoholDetail">Overview</button>
+									<button class="btn btn-primary active" ui-sref="reports.alcoholCostOfSummary">Inventory Count</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.dailyOnHand">On-Hand</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.salesReport">Sales</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.analytics({typeInventory: 'alcohol'})">Usage</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'alcohol'})">PMIX</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.costChangeReport">Cost Change</button>
+									<button ng-if="$ctr.user.user_type_id <= 4" class="btn btn-primary" ui-sref="reports.usageVsPurchase">Purchases</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox-content text-center" style="padding:0 ">
+						<label class="font-noraml"><b>Show:</b></label>
+						<button class="btn btn-danger" ng-disabled="$ctr.lock_buttons" ng-click="$ctr.changeMode('summary')">Summary</button>
+						<button class="btn btn-danger" ng-disabled="$ctr.lock_buttons" ng-click="$ctr.changeMode('details')">Details</button>
+						<button class="btn btn-danger" ng-disabled="$ctr.lock_buttons || $ctr.end_date_is_suggested" ng-click="$ctr.changeMode('review')">Locations</button>
+						<button class="btn btn-danger" ng-disabled="$ctr.lock_buttons" ng-click="$ctr.changeMode('trend')">Trend</button>
+					</div>
+				</div>
+			</div>
+			<div class="row cu ir">
+				<!--				<div class="panel">-->
+				<!--						<div class="panel-heading text-end">-->
+				<!--							<button type="button" class="btn btn-primary" data-toggle="collapse" data-target="#filter-panel">-->
+				<!--								<span class="glyphicon glyphicon-cog"></span> Advanced Search-->
+				<!--							</button>-->
+				<!--						</div>-->
+				<!--						<div id="filter-panel" class="collapse filter-panel panel-body">-->
+				<div class="col-xs-12 display-flex text-center" style="flex-wrap: wrap">
+					<div ng-if="$ctr.mode != 'trend' && !$ctr.end_date_is_suggested" class="">
+						<div class="form-group" style="margin:5px 12px">
+							<label class="font-noraml">Date From</label>
+							<div class="input-group date">
+								<select ng-model="$ctr.start_date"
+										ng-options="item as item.aud_title for item in $ctr.audit_dates_f"
+										required></select>
+							</div>
+						</div>
+					</div>
+					<div ng-if="$ctr.mode != 'trend'" class="">
+						<div class="form-group" style="margin:5px 12px">
+							<label class="font-noraml">Date To</label>
+							<div class="input-group date">
+								<select ng-model="$ctr.end_date"
+										ng-options="item as item.aud_title for item in $ctr.audit_dates_t"
+										ng-change="$ctr.checkEndDate()"
+										required></select>
+							</div>
+						</div>
+					</div>
+					<div class="">
+						<div class="form-group" style="margin:5px 12px">
+							<label class="font-noraml">Category</label>
+							<div class="input-group date">
+								<select ng-model="$ctr.category"
+										ng-options="item.category as item.category for item in $ctr.categories"
+										required></select>
+							</div>
+						</div>
+					</div>
+					<!--<div class="col-sm-2">
+                        <div class="form-group margin-0-auto">
+                            <label class="font-noraml">Sub Category</label>
+                            <div class="input-group date">
+                                <select ng-model="$ctr.subcategory" ng-options="item.name as item.name for item in $ctr.temp_subcats" required></select>
+                            </div>
+                        </div>
+                    </div>-->
+					<div class=" search-button">
+						<div class="form-group" style="margin:5px 12px">
+							<div class="input-group date">
+								<button ng-if="!$ctr.loading" class="btn btn-primary"
+										ng-disabled="$ctr.mode == 'review' && $ctr.end_date_is_suggested"
+										ng-click="$ctr.mode != 'review' ? $ctr.mode == 'trend' ? $ctr.loadTrendReport() : $ctr.loadCOS() : $ctr.loadLocationsReport()">
+									Search
+								</button>
+								<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...
+								</button>
+							</div>
+						</div>
+					</div>
+					<div class=" search-button">
+						<div class="form-group" style="margin:5px 12px">
+							<button scroll-top class="btn btn-primary margin-right-10"
+									ng-click="$ctr.exportReport($ctr.mode)"
+									ng-disabled="$ctr.mode == 'review' && $ctr.end_date_is_suggested"
+									ng-if="!$ctr.export_loading && $ctr.mode != 'summary'">Export Report
+							</button>
+							<button scroll-top class="btn btn-primary margin-right-10"
+									ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">
+								Exporting...
+							</button>
+						</div>
+					</div>
+
+					<div class=" search-button" ng-if="$ctr.mode == 'details'">
+						<div class="form-group" style="margin:5px 12px">
+							<button ng-if="!$ctr.loading && $ctr.showFinalSaveButton && $ctr.mode == 'details' && $ctr.end_date.is_suggested == 0"
+									ng-disabled="$ctr.disable_final_save" class="btn btn-danger"
+									ng-click="$ctr.finalSaveAudit()">Final Save Audit
+							</button>
+							<button ng-if="$ctr.loading && $ctr.showFinalSaveButton && $ctr.mode == 'details' && $ctr.end_date.is_suggested == 0"
+									class="btn btn-primary" disabled>Loading...
+							</button>
+						</div>
+					</div>
+				</div>
+				<!--						</div>-->
+				<!--					</div>-->
+			</div>
+			<div class="row cu" ng-if="!$ctr.blindMode && $ctr.mode == 'summary'">
+				<div class="col-lg-6">
+					<div class="modal-content">
+						<div class="table-responsive">
+							<table class="table" style="margin: 0">
+								<thead class="th-text-center text-black">
+								<tr>
+									<th style="text-align: left;">{{$ctr.display_category}} Summary</th>
+									<th class="width-100">Amount</th>
+								</tr>
+								</thead>
+								<tbody>
+								<tr>
+									<td>Gross Sales</td>
+									<td class="text-center">${{$ctr.gross_sales | number}}</td>
+								</tr>
+								<tr>
+									<td class="border-bottom-td">Discounts/Comps</td>
+									<td class="border-bottom-td text-center">${{$ctr.discounts | number}}
+									</td>
+								</tr>
+								<tr class="text-black">
+									<td class="border-bottom-td">Total Sales</td>
+									<td class="border-bottom-td text-center">
+										${{$ctr.total_sales | number}}
+									</td>
+								</tr>
+								<tr>
+									<td>Inventory Value Last Period ({{$ctr.last_type}})</td>
+									<td class="text-center">${{$ctr.value_last_period | number}}</td>
+								</tr>
+								<tr>
+									<td>Value of Purchased Inventory</td>
+									<td class="text-center">${{$ctr.purchase_value | number}}</td>
+								</tr>
+								<tr>
+									<td class="border-bottom-td">Inventory Value this Period
+										({{$ctr.this_type}})
+									</td>
+									<td class="border-bottom-td text-center">
+										${{$ctr.value_this_period | number}}
+									</td>
+								</tr>
+								<tr class="text-black">
+									<td class="border-bottom-td">Value of Inventory Used</td>
+									<td class="border-bottom-td text-center">${{$ctr.value_used | number}}
+									</td>
+								</tr>
+								<tr>
+									<td>Cost Percentage</td>
+									<td class="text-center">{{$ctr.cost_percent}}%</td>
+								</tr>
+								<tr>
+									<td>Target Cost Percentage</td>
+									<td class="text-center">{{$ctr.target_cost_percent}}%</td>
+								</tr>
+								<tr>
+									<td>Over/Short Percentage Variance</td>
+									<td class="text-center">{{$ctr.os_percent_variance}}%</td>
+								</tr>
+								<tr>
+									<td>Avg Pour in Oz</td>
+									<td class="text-center">{{$ctr.avg_pour_cat}}</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6">
+					<div class="modal-content">
+						<div class="clearfix">
+							<h4 class="text-center">Item Variance Report</h4>
+						</div>
+						<div class="clearfix">
+							<div id="uv-div1" class='rChart uvcharts'></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="$ctr.mode == 'review'" style="margin-right :-16px;margin-left: -10px;">
+				<div class="col-lg-12" style="padding-right: 49px;padding-left: 31px;">
+					<div class="table-responsive">
+						<table class="table table-bordered"
+							   style="table-layout: fixed;margin-top: 0px;margin-bottom: 0px;">
+							<thead class="th-text-center">
+							<tr>
+								<th style="width: 193px;"></th>
+								<th colspan="2" ng-repeat="r in $ctr.locations">{{r.location_name}}</th>
+								<th colspan="2">Unassigned</th>
+								<th ng-if="!$ctr.blindMode"></th>
+							</tr>
+							<tr>
+								<th style="width: 193px;">Item</th>
+								<th ng-repeat-start="r in $ctr.locations">{{$ctr.l_start_date}}</th>
+								<th ng-repeat-end>{{$ctr.l_end_date}}</th>
+								<th>{{$ctr.l_start_date}}</th>
+								<th>{{$ctr.l_end_date}}</th>
+								<th ng-if="!$ctr.blindMode">Var.</th>
+							</tr>
+							</thead>
+						</table>
+					</div>
+				</div>
+			</div>
+			<div class="row" id="top-section1" ng-if="$ctr.mode == 'details'"
+				 style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir"
+								 style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div>
+									<table class="table table-bordered table-sm"
+										   style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+										<tr>
+											<th style="cursor: pointer;width: 90px;" data-sort-ignore="true"
+												ng-click="$ctr.search('id')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'id' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'id' && $ctr.m.order_way == 'ASC')}">
+												SKU
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th style="cursor: pointer;width: 260px;" data-sort-ignore="true"
+												ng-click="$ctr.search('name')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'name' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'name' && $ctr.m.order_way == 'ASC')}">
+												Item
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode && !$ctr.begin_date_available" style="cursor: pointer;width: 70px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Item Cost
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode && $ctr.begin_date_available" style="cursor: pointer;width: 70px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Begin Date
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 87px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Beginning Inv
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 79px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Purchases
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th style="cursor: pointer;width: 76px;" data-sort-ignore="true"
+												ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Ending Inv
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 83px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												Inv Units Sold
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 102px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												POS Units Sold
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 79px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												+/-Unit Variance
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th ng-if="!$ctr.blindMode" style="cursor: pointer;width: 86px;"
+												data-sort-ignore="true" ng-click="$ctr.search('address')"
+												ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+												+/-Cost Variance
+												<span class="footable-sort-indicator"></span>
+											</th>
+										</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" id="top-section" ng-if="!$ctr.blindMode && $ctr.mode == 'trend'"
+				 style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir"
+								 style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div>
+									<table class="table table-bordered table-sm"
+										   style="margin-top: 10px;table-layout: fixed;">
+										<thead class="th-text-center">
+										<tr>
+											<th style="cursor: pointer;width: 90px;"></th>
+											<th></th>
+											<th style="cursor: pointer;width: 540px;"
+												colspan="{{$ctr.trend_dates.length}}">Variance
+											</th>
+										</tr>
+										<tr>
+											<th style="cursor: pointer;width: 90px;">
+												SKU
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th>
+												Item
+												<span class="footable-sort-indicator"></span>
+											</th>
+											<th style="width: 90px;" ng-repeat="r in $ctr.trend_dates">{{r.audit_dates.substring(0, 10)}}
+											</th>
+										</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="$ctr.mode == 'details'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row" id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+								<tbody ng-repeat="item in $ctr.cos_table_data | orderBy:'item_name'">
+								<!--<tr ng-repeat="restaurant in $ctr.restaurantsList">-->
+								<tr>
+									<td style="width: 90px">{{item.vendor_sku}}</td>
+									<td style="width: 260px;">{{item.item_name}}</td>
+									<td style="width: 70px;" ng-if="!$ctr.blindMode && !$ctr.begin_date_available">{{item.wauc | number: 2}}</td>
+									<td style="width: 70px;" ng-if="!$ctr.blindMode && $ctr.begin_date_available">{{item.begin_date}}</td>
+									<td style="width: 87px;" ng-if="!$ctr.blindMode">{{item.beg_oz | number: 2}}</td>
+									<td style="width: 79px;" ng-if="!$ctr.blindMode">{{item.purchases | number: 2}}</td>
+									<td style="width: 76px;">{{item.end_oz | number: 2}}</td>
+									<td style="width: 83px;" ng-if="!$ctr.blindMode">{{item.theor_sales | number: 2}}
+									</td>
+									<td style="width: 102px;" ng-if="!$ctr.blindMode">{{item.sales | number: 2}}</td>
+									<td style="width: 79px;" ng-if="!$ctr.blindMode"
+										ng-class='{COS_red_alert : item.red_alert}'>{{item.unit_variance | number: 2}}
+									</td>
+									<td style="width: 86px;" ng-if="!$ctr.blindMode">
+										{{item.cost_variance | number: 2}}
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="$ctr.mode == 'review'" style="margin-left: -15px;margin-right: -9px;">
+				<div class="row" id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -86px;">
+						<div class="ibox-content ir adjust-pad" style="padding-left:51px;padding-right: 49px;">
+							<table class="table table-bordered table-sm" style="table-layout: fixed; margin-top: 90px;">
+								<tbody ng-repeat="cd in $ctr.l_cos_data">
+								<tr class="text-center">
+									<td style="width: 193px;">{{cd.item_name}}</td>
+									<td ng-repeat-start="r in $ctr.locations">
+										{{cd[r.sr_no].beg | number: 2}}
+									</td>
+									<td ng-repeat-end>
+										{{cd[r.sr_no].end | number: 2}}
+									</td>
+									<td>
+										{{cd['-1'].beg | number: 2}}
+									</td>
+									<td>
+										{{cd['-1'].end | number: 2}}
+									</td>
+									<td ng-if="!$ctr.blindMode" ng-class='{COS_red_alert : cd.red_alert}'>
+										{{cd.unit_variance | number: 2}}
+									</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="!$ctr.blindMode && $ctr.mode == 'trend'"
+				 style="margin-left: -11px;margin-right: -8px;">
+				<div class="row" id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 90px;">
+								<tbody ng-if="$ctr.trend_data.length"
+									   ng-repeat="t_item in $ctr.trend_data | orderBy: 'item_name'">
+								<tr class="text-center">
+									<td style="width: 90px">{{t_item.vendor_sku}}</td>
+									<td class="text-left">{{t_item.item_name}}</td>
+									<td style="width: 90px;" ng-repeat="iv in t_item.variances track by $index">{{iv}}
+									</th>
+								</tr>
+								</tbody>
+								<tbody ng-if="!$ctr.trend_data.length">
+								<tr class="text-center">
+									<td colspan="{{$ctr.trend_dates.length + 2}}">No data</td>
+								</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<!-- Footer -->
+		<div ng-include="'views/common/footer.html'"></div>
+	</div>
+	<!-- End page wrapper-->
+</div>
+<!-- End wrapper-->
+<style>
+	#content-table-section {
+		max-height: 55vh;
+		overflow-y: scroll;
+	}
+
+	.adjust-pad {
+		padding-right: 2px;
+		padding-top: 0
+	}
+
+	#top-section1,#top-section {
+		position: absolute;
+	}
+
+	.bottomless {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+</style>
+
+<script type="text/ng-template" id="admin_final_save.html">
+	<div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{$ctr.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="$ctr.q_texts"></div>
+			</fieldset>
+
+			<div ng-if="$ctr.pg_no == 3">
+				<div class="form-group margin-0-auto">
+					<label ng-if="$ctr.audit_type == 'full'" class="font-noraml">Date From</label>
+					<div ng-if="$ctr.audit_type == 'full'" class="input-group date">
+						<select ng-model="$ctr.start_date_compare" ng-options="item as item.aud_title for item in $ctr.audit_dates_f" required></select>
+					</div>
+
+					<fieldset>
+						<div style="font-size:15px;" ng-bind-html="$ctr.q_additional_texts"></div>
+					</fieldset>
+					<textarea style="resize: none;" ng-model="$ctr.additional_notes" rows="5" cols="50" maxlength="5000"></textarea>
+				</div>
+			</div>
+		</div>
+
+		<div ng-if="$ctr.pg_no == 1" class="modal-footer">
+			<button type="button" class="btn btn-primary" ng-click="$ctr.set_audit_type('full')">Full Count</button>
+			<button type="button" class="btn btn-primary" ng-click="$ctr.set_audit_type('adjustment')">Adjustment</button>
+			<button type="button" class="btn btn-primary" ng-click="$ctr.set_audit_type('purchase audit')">Purchase Audit</button>
+		</div>
+		<div ng-if="$ctr.pg_no == 2" class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="$ctr.set_page_no('back')">Back</button>
+			<button type="button" ng-if="$ctr.audit_type != 'purchase audit'" class="btn btn-white" ng-click="$ctr.set_email_value(false)">Save Only</button>
+			<button type="button" ng-if="$ctr.audit_type != 'purchase audit'" class="btn btn-white" ng-click="$ctr.set_email_value(true)">Save and Send</button>
+			<button type="button" ng-if="$ctr.audit_type == 'purchase audit'" class="btn btn-white" ng-click="$ctr.set_email_value(true)">Proceed</button>
+		</div>
+		<div ng-if="$ctr.pg_no == 3" class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="$ctr.set_page_no('back')">Back</button>
+			<button type="button" class="btn btn-white" ng-click="$ctr.set_email_value(true)">Confirm</button>
+		</div>
+	</div>
+</script>
+
+<script>
+	// $(document).ready(function () {
+	// 	setTimeout(function () {
+	// 		var height = document.getElementById('top-section').clientHeight;
+	// 		$('#content-table-section').css('margin-top', height + 'px');
+	// 	}, 2000);
+	// });
+</script>

@@ -1,0 +1,109 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <!-- <header-component></header-component> -->
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <!-- <navigation-component></navigation-component> -->
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <!-- Main view  -->
+    <div class="row wrapper border-bottom white-bg page-heading">
+       <div class="col-lg-12">
+          <h2>Performance Score</h2>
+          <!--<p class="padding-top-5"></p>-->
+       </div>
+    </div>
+    <!-- <div id="page-wrapper" class="white-bg {{$state.current.name}}"> -->
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Performance Score</h2>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="ibox">
+                   <div class="ibox-content">
+                      <h4>Select a date.</h4>
+                      <select ng-model="$ctr.model.selected_date" ng-options="li.date as li.date for li in $ctr.model.res_scores" ng-change="$ctr.updateScoreTable($ctr.model.selected_date)">
+                         <option style="display:none" value="">{{$ctr.model.selected_date}}</option>
+                      </select>
+                   </div>
+                </div>
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="th-text-center">
+                                            <tr>
+                                                <th class="width-100">Performance Score</th>
+                                                <th class="width-100" ng-repeat="s_ele in $ctr.model.res_scores_xform">{{s_ele.date}}</th>
+                                                <th class="width-100">Industry Benchmark</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                            <tr>
+                                                <td class="performance-table-color text-left">Sales Performance</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Food Cost Performance</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"><a ng-click="$ctr.showScoreDetails(s_ele, 'food')" >{{s_ele.fscore | number : 2}}</a></td>
+                                                <td>{{$ctr.model.alcohol_industry_benchmark}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Alcohol Cost Performance</td>
+                                                <!--<td ng-repeat="s_ele in $ctr.model.res_scores_xform"><a ui-sref="admin.performanceScoreDetail" >{{s_ele.score}}</a></td>-->
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"><a ng-click="$ctr.showScoreDetails(s_ele, 'alcohol')" >{{s_ele.ascore | number : 2}}</a></td>
+                                                <td>{{$ctr.model.alcohol_industry_benchmark}}</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Labor Performance</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <!--<tr>
+                                                <td class="performance-table-color text-left">Budget Performance</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"> </td>
+                                                <td> </td>
+                                            </tr>-->
+                                            <tr>
+                                                <td class="performance-table-color text-left">Consumer Reviews</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform"> </td>
+                                                <td> </td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">TOTAL AVERAGE SCORE</td>
+                                                <td ng-repeat="s_ele in $ctr.model.res_scores_xform">{{(s_ele.ascore + s_ele.fscore)/2 | number : 2}}</td>
+                                                <td>{{$ctr.model.alcohol_industry_benchmark}}</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+
+    <!-- </div> -->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

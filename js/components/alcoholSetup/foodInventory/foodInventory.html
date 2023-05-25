@@ -1,0 +1,213 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['38'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Alcohol Inventory Audit Pad</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight" >
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins" >
+                        <div class="ibox-title ibox-title-inventory padding-left-20 padding-right-20">
+                            <div class="row">
+                                <form novalidate autocomplete="off" name="$ctr.form.search" ng-submit="$ctr.getInventories($ctr.model.vendor_category_id, $ctr.model.vendor_category_id);">
+                                    <div class="col-xs-12 col-sm-12 col-md-5">
+                                        <div class="form-inline">
+                                            <!--<div class="form-group m-b-none m-t-5 float-left select-category">-->
+                                                <!--<label class="font-noraml select-category">Select Category:</label>-->
+                                            <!--</div>-->
+                                            <div class="form-group m-t-5 m-b-none float-left">
+                                                <label class="font-noraml">Select Category:</label>
+                                                <select class="form-control m-l-sm"
+                                                        ng-model="$ctr.model.vendor_category_id"
+
+                                                        ng-options="vendor.id as vendor.category for vendor in  $ctr.get_vendors_categories"></select>
+                                                <!--ng-change="$ctr.getInventories($ctr.model.vendor_category_id, {{$ctr.model.vendor_category_id}});"-->
+                                            </div>
+                                            <div class="form-group m-b-none m-l-sm">
+                                                <input  type="text" class=" search-field-inventory form-control m-b-none ng-pristine ng-valid ng-empty ng-touched" id="filter" ng-model="$ctr.model.inventory_item" placeholder="Search">
+                                            </div>
+                                            <button type="submit"  class="btn btn-primary m-t-5">Search</button>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="col-xs-12 col-sm-12 col-md-7 pull-right">
+                                    <div class="form-inline pull-right date-wrapper-mobile">
+                                        <div class="form-control no-borders pull-right auto-height form-control-date">
+                                            <label for="begin_date">Date Counted</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="begin_date"
+                                                       datetime-picker="MM/dd/yyyy HH:mm"
+                                                       ng-model="$ctr.pickers.beginDate.date"
+                                                       ng-disabled="$ctr.typeInventory == 'adjustment' && !$ctr.isAdmin"
+                                                       is-open="$ctr.pickers.beginDate.open"
+                                                       datepicker-append-to-body="true" ng-required="$ctr.is_final_save">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"
+                                                        ng-disabled="$ctr.typeInventory == 'adjustment' && !$ctr.isAdmin"
+                                                        ng-click="$ctr.openCalendar($event, 'beginDate')">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                            </div>
+                                        </div>
+
+
+                                        <div class="form-control no-borders pull-right auto-height form-control-date">
+                                            <label for="end_date">Date Entered</label>
+                                            <div class="input-group">
+                                                <input type="text" class="form-control" id="end_date"
+                                                       datetime-picker="MM/dd/yyyy HH:mm"
+                                                       ng-model="$ctr.pickers.endDate.date"
+                                                       ng-disabled="$ctr.typeInventory == 'adjustment' && !$ctr.isAdmin"
+                                                       is-open="$ctr.pickers.endDate.open"
+                                                       datepicker-append-to-body="true" ng-required="$ctr.is_final_save">
+                                                <span class="input-group-btn">
+                                                <button class="btn btn-default" type="button"
+                                                        ng-disabled="$ctr.typeInventory == 'adjustment' && !$ctr.isAdmin"
+                                                        ng-click="$ctr.openCalendar($event, 'endDate')">
+                                                    <span class="glyphicon glyphicon-calendar"></span>
+                                                </button>
+                                            </span>
+                                            </div>
+                                        </div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content overflow-x-auto">
+                            <form novalidate autocomplete="off" name="$ctr.form" ng-submit="$ctr.saveAll($ctr.form, false)">
+                                <div class="table-responsive">
+
+
+                                    <table table-height="700px" class="table table-bordered table-bordered-fixed" fixed-header>
+
+
+                                        <thead class="th-text-center th-vertical-align-middle">
+                                        <tr>
+                                            <th  rowspan="2" class="width-200-alcohol">Vendor</th>
+											<th  rowspan="2" class="width-120-alcohol">Subcategory</th>
+                                            <th  rowspan="2" class="min-width-300-alcohol">Inventory Item</th>
+											<th  rowspan="2" class="min-width-100-alcohol">Size</th>
+                                            <th   rowspan="2" class="width-100-alcohol">Total Case(s)</th>
+                                            <th   rowspan="2" class="width-100-alcohol">Full Bottles</th>
+                                            <th   colspan="2" class="width-200-alcohol">Partial Item Qty</th>
+                                            <th   rowspan="2"  class="respons-col-table">Unit of Delivery</th>
+                                        </tr>
+                                        <tr>
+                                            <th  class="width-100">#of Bottles</th>
+                                            <th   class="width-100">Unit Weight</th>
+                                        </tr>
+                                        </thead>
+
+
+                                        <tbody>
+                                        <ng-form name="inventory">
+                                            <tr ng-repeat="i in $ctr.inventories track by $index">
+                                                <td ng-if="i.show == 1">{{i.vendor_name}}</td>
+												<td ng-if="i.show == 1">{{i.sub_category}}</td>
+                                                <td ng-if="i.show == 1">
+                                                   <span class="no-wrap">
+                                                        {{i.inventory_item}}
+                                                   </span>
+                                                </td>
+												<td ng-if="i.show == 1">{{i.tare_type}}</td>
+                                                <td ng-if="i.show == 1">
+                                                    <input ng-change="$ctr.calculateUnitWeight(i, $index);" type="number" class="form-control" ng-model="i.cases_qty" ng-required="$ctr.typeInventory == 'full'" min="0">
+                                                </td>
+                                                <td ng-if="i.show == 1">
+                                                    <input ng-change="$ctr.calculateUnitWeight(i, $index);" type="number" class="form-control" ng-model="i.packs_qty" ng-required="$ctr.typeInventory == 'full'" min="0">
+                                                </td>
+                                                <td ng-if="i.show == 1">
+
+                                                    <input ng-disabled="$ctr.refbooks.vendor_sub_cat | vendorSubCatIdTypeFilter : i.vendor_sub_cat_id" ng-change="$ctr.calculateUnitWeight(i, $index);" type="number" class="form-control" ng-model="i.nof_bottles" ng-required="$ctr.typeInventory == 'full' && !($ctr.refbooks.vendor_sub_cat | vendorSubCatIdTypeFilter : i.vendor_sub_cat_id)" min="0">
+                                                </td>
+                                                <td ng-if="i.show == 1">
+                                                    <textarea ng-disabled="$ctr.refbooks.vendor_sub_cat | vendorSubCatIdTypeFilter : i.vendor_sub_cat_id"
+                                                           ng-change="$ctr.calculateUnitWeight(i, $index); $ctr.initOfBottle(i, $index); $ctr.calculateUW(i, $index, $ctr.form)"
+                                                           ng-blur="$ctr.calculateUWSum(i, $index);  $ctr.calculateUnitWeight(i, $index); calculateUWlabel = false"
+                                                           ng-focus="$ctr.calculateUWFormula(i, $index); ; calculateUWlabel = true; $ctr.calculateUnitWeight(i, $index);"
+                                                           type="text" class="form-control calculatetextarea"
+                                                           ng-model="i.item_qty"
+                                                           style="height: 34px"
+                                                           unit-weight-valid
+                                                           ng-class="{'calculatetextareaFocus' : calculateUWlabel}"
+                                                           name="unitweight"
+                                                           ng-required="$ctr.typeInventory == 'full' && !($ctr.refbooks.vendor_sub_cat | vendorSubCatIdTypeFilter : i.vendor_sub_cat_id)"
+                                                              min="0"></textarea>
+                                                    <div ng-if="calculateUWlabel" class="text-center"><b><span ng-show="i.itemQtyStrlabel">=</span> {{i.itemQtyStrlabel}}</b></div>
+                                                </td>
+                                                <td ng-if="i.show == 1">
+                                                    {{$ctr.model.measurement_units_of_delivery(i.uom_id_of_delivery_unit)}}
+                                                 <!--   <select class="form-control" ng-model="i.uom_id_of_delivery_unit"  disabled
+
+                                                         ng-options="u.id as u.name for u in $ctr.model.measurement_units_of_delivery(i.uom_id_of_delivery_unit)">
+                                                    </select>-->
+
+                                                </td>
+                                            </tr>
+                                        </ng-form>
+                                        </tbody>
+                                    </table>
+
+
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="button" scroll-top class="btn btn-primary"
+                                                onclick="window.history.go(-1); return false;">&lt;&lt; Back
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <button ng-if="$ctr.typeInventory == 'full'" class="btn btn-warning" scroll-top ng-click="$ctr.save_type = 'final'; $ctr.saveAll($ctr.form, false, 1)" type="button">Final Save</button>
+										<button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.save_type = 'review';">Save & Review</button>
+                                        <button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.save_type = 'save';">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

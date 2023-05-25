@@ -1,0 +1,177 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['19'].r">
+	<!-- Change permission when establish a number for this-->
+	<!--<header-component></header-component>
+	  <navigation-component></navigation-component>-->
+	<!-- Page wraper -->
+	<!--<div id="page-wrapper" class="gray-bg">-->
+	<!-- Main view  -->
+	<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="row">
+			<form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.saveExpenses($ctr.form)">
+				<div class="col-lg-3">
+					<h2>Expense Budget - <select ng-model="$ctr.selected_dd_option" ng-options="value as value for value in $ctr.dd_options" ng-change="$ctr.getData()" required /></h2>
+					
+				</div>
+				<div class="col-lg-3">
+					<div class="table-responsive">
+						<table class="table no-border-top-bottom font-11">
+							<tbody>
+								<tr>
+									<td colspan="1">
+										Budgeted Break Even ($)
+									</td>
+									<td colspan="1">
+										{{$ctr.breakeven_value}}
+									</td>
+								</tr>
+								<tr>
+									<td colspan="1">
+										Total Annual Salaries ($)
+									</td>
+									<td colspan="1">
+										<input type="number" ng-model="$ctr.annual_salaries" ng-blur="$ctr.calcualte_percent_value('Labor')" style="width:100px;" required></input>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-3">
+					<div class="table-responsive">
+						<table class="table no-border-top-bottom font-11">
+							<tbody>
+								<tr>
+									<td colspan="1">
+										Alcohol Tax (%)
+									</td>
+									<td colspan="1">
+										<input type="number" ng-model="$ctr.alco_tax" ng-blur="$ctr.calcualte_percent_value('Alcohol Tax')" ng-disabled="!$ctr.alco_tax_is_editable" style="width:80px;" placeholder="Enter Tax %" required> %</input>
+										<input type="checkbox" ng-model="$ctr.alco_tax_is_editable">
+									</td>
+								</tr>
+								<tr>
+									<td colspan="1">
+										Creditcard Fee (%)
+									</td>
+									<td colspan="1">
+										<input type="number" ng-model="$ctr.cc_fee" ng-blur="$ctr.calcualte_percent_value('Creditcard Fee')" ng-disabled="!$ctr.cc_fee_is_editable" style="width:80px;" placeholder="Enter Rate %" required> %</input>
+										<input type="checkbox" ng-model="$ctr.cc_fee_is_editable">
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<div class="col-lg-3" style="margin-top: 50px">
+					<button type="submit" class="btn btn-danger float-right">
+						Save Changes
+					</button>
+				</div>
+				
+				<div class="col-lg-12">
+					<div class="table-responsive">
+						<table class="table table-bordered font-11">
+							<thead class="th-text-center">
+								<tr>
+									<th colspan="3"></th>
+									<th colspan="{{$ctr.expenses_cols.length}}">Actual Amounts</th>
+								</tr>
+								<tr>
+									<th colspan="3"></th>
+									<th ng-repeat="exp_i in $ctr.expenses_cols track by $index" style="text-align:center">
+										{{exp_i}}
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="overview_item in $ctr.overview_arr track by $index">
+								<tr>
+									
+									<th colspan="3" class="text-right">
+										{{overview_item.title}}
+									</th>
+									<td ng-repeat="m_val in overview_item.month_values track by $index" style="text-align:center">
+										{{$ctr.current_year == $ctr.selected_dd_option && $index > $ctr.current_month && $index != overview_item.month_values.length ? '' : (m_val == null ? '-' : ''+m_val)}}
+									</td>
+								</tr>
+							</tbody>
+							<tbody>
+								<tr>
+								<td colspan="15"></td>
+								</tr>
+							</tbody>
+							<thead class="th-text-center">
+								<tr>
+									<th></th>
+									<th>Budget Amt</th>
+									<th>Expense Type</th>
+									<th ng-repeat="exp_i in $ctr.expenses_cols track by $index" style="text-align:center">
+										{{exp_i}}
+									</th>
+								</tr>
+							</thead>
+							<tbody ng-repeat="budget_item in $ctr.expenses_arr track by $index">
+								<tr>
+									<td>
+										<button type="button"
+												ng-click="$ctr.removeBudgetEntry($index)">
+											<i class="fa fa-times"></i>
+										</button>
+									</td>
+									<td>
+										<input type="number" ng-blur="$ctr.calculate_budget_amt_totals($ctr.expenses_arr)" ng-model="budget_item.amount" style="width:63px;" required />
+									</td>
+									<td>
+										<select ng-model="budget_item.expense_type_unit_id" ng-options="value.id as value.unit group by value.subcat_name for value in $ctr.expenses_types | orderBy: ['subcat_name','unit']" style="width:155px" required>
+									</td>
+									<td ng-repeat="m_val in $ctr.month_names track by $index" style="text-align:center">
+										<input type="number" ng-disabled="$ctr.disableExpenseInput(m_val)" ng-model="budget_item[m_val]" ng-blur="$ctr.calculate_other_expenses_totals(m_val)" style="width:62px" />
+									</td>
+								</tr>
+							</tbody>
+							<tfoot>
+								<tr>
+									<th colspan="1">
+										<button type="button"
+										ng-click="$ctr.addBudgetEntry()"><i class="glyphicon glyphicon-plus" style="font-size:10px"></i></button>
+									</th>
+									<td colspan="1">
+										{{$ctr.budget_amt_total}}
+									</td>
+									<th>Other Expenses</th>
+									<td ng-repeat="m_val in $ctr.other_expenses_total_arr track by $index" style="text-align:center">
+										{{$ctr.current_year == $ctr.selected_dd_option && $index > $ctr.current_month && $index != overview_item.month_values.length ? '' : m_val}}
+									</td>
+								</tr>
+								<tr>
+									<th colspan="2">
+									</th>
+									<th>Est. Net Profit</th>
+									<td ng-repeat="m_val in $ctr.est_net_profit_arr track by $index" style="text-align:center">
+										{{$ctr.current_year == $ctr.selected_dd_option && $index > $ctr.current_month && $index != overview_item.month_values.length ? '' : m_val}}
+									</td>
+								</tr>
+							</tfoot>
+						</table> 
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+   
+	<!-- Footer -->
+	<div ng-include="'views/common/footer.html'"></div>
+	<!--</div>-->
+	<!-- End page wrapper-->
+</div>
+<!-- End wrapper-->
+
+<style>
+	.font-11 {
+		font-size: 13px;
+	}
+	.no-border-top-bottom {
+		border-top: none;
+		border-bottom: none;
+	}
+</style>

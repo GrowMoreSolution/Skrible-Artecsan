@@ -1,0 +1,144 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['45'].r || $ctr.permissions['46'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Menu Items Mapping</h2>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12 col-md-8 col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                
+									<button ng-if="$ctr.subscription_type_id == 2 || $ctr.subscription_type_id == 6 || (($ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 7) && $ctr.emp_id <= 3)" class="btn btn-primary" ui-sref="foodSetup.menu">Create Food Menu Item</button>
+									<button ng-if="$ctr.subscription_type_id == 1 || $ctr.subscription_type_id == 5 || (($ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 7) && ($ctr.emp_id == 4 || $ctr.emp_id <= 2))" class="btn btn-primary" ui-sref="alcoholSetup.menu">Create Alcohol Menu Item</button>
+                                
+								<div  class="col-xs-12" >
+									<div class="row">
+										<div class="col-sm-3">
+											<div class="form-group">
+												<label for="status">Category:</label>
+												<select class="form-control" ng-model="$ctr.searchModel.category" ng-options="li for li in $ctr.moveto_categories" ng-change="$ctr.getItems(true)">
+													<option style="display:none" value="">{{$ctr.searchModel.category}}</option>
+												</select>
+											</div>
+										</div>
+										<div class="col-md-12">
+                                            <!--<button ng-disabled="$ctr.searchModel.isDisabledBtn" ng-if="$ctr.searchModel.is_active == 1" ng-click="$ctr.deleteChecked();"   class="btn btn-danger pull-right">Move selected to Archived</button>
+                                            <button ng-disabled="$ctr.searchModel.isDisabledBtn" ng-if="$ctr.searchModel.is_active != 1" ng-click="$ctr.deleteChecked();"  class="btn btn-success pull-right">Restore selected to Active</button>-->
+											<button class="btn btn-danger pull-right" ng-click="$ctr.moveChecked()">Move Selected Items</button>
+                                        </div>
+									</div>
+								</div>
+                                <div  class="col-xs-12" >
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="th-text-center th-vertical-align-middle">
+                                            <tr>
+                                                <!--<th class="width-60">
+                                                    <input type="checkbox" id="chbDelay" ng-click="$ctr.checkAll(checkAll)"  ng-model="checkAll">
+                                                    <label for="chbDelay"></label>
+                                                </th>-->
+                                                <th class="min-width-150">POS Menu Item</th>
+                                                <th class="min-width-150">Artecsan Menu Item</th>
+												<th class="width-100" >Save Mapping</th>
+												<th class="width-80" >Unmap</th>
+                                                <th colspan="1" class="width-100">Move to</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <ng-form>
+                                                <tr ng-repeat="item in $ctr.items track by item.id">
+                                                    <!--<td class="text-center">
+                                                        <input type="checkbox" ng-click="$ctr.isDisabledBtn(item);" id="chbDelay1-{{$index}}" ng-model="item.isChecked">
+                                                        <label for="chbDelay1-{{$index}}"></label>
+                                                    </td>-->
+                                                    <td>
+                                                        {{item.name +" (" + item.POS_pricing_level + ")"}}
+                                                    </td>
+                                                    <td>
+                                                        <select class="form-control" ng-model="item.menu_item_id" ng-options="menu.id as $ctr.getMenuName(menu) for menu in ($ctr.menus | filter:$ctr.criteriaMatch(item.name))" ng-disabled="$ctr.searchModel.category == 'Other' || $ctr.searchModel.category == 'Archived'"></select>
+                                                    </td>
+													<td class="text-center"> 
+														<button class="btn btn-primary" ng-click="$ctr.setMenuItemId(item, $ctr.searchModel.category)">Save Mapping</button>
+                                                    </td>
+													<td class="text-center"> 
+														<button class="btn btn-primary" ng-if="item.menu_item_id != null" ng-click="$ctr.unmapItem(item, $ctr.searchModel.category)">Unmap</button>
+                                                    </td>
+													<td class="text-center">
+														<select id="status" class="form-control" ng-model="item.moveto" ng-options="o as o for o in $ctr.current_moveto"></select>
+                                                    </td>
+													<!--<td class="text-center">
+														<a href="" ng-click="$ctr.checkMoveRules(item)"><i class="fa fa-arrow-right fa-2x"></i></a>
+                                                    </td>-->
+                                                    <!--<td class="text-center">
+                                                        <a ng-if="$ctr.searchModel.is_active == 1" title="Move to Archived" href="" ng-click="$ctr.removeItem($index, item)" class="btn btn-danger btn-circle" ><i class="fa fa-times"></i></a>
+                                                        <a ng-if="$ctr.searchModel.is_active != 1" title="Restore to Active" href="" ng-click="$ctr.removeItem($index, item)"><i class="fa fa-upload fa-2x"></i></a>
+                                                    </td>-->
+                                                </tr>
+                                                <tr ng-show="!$ctr.items.length">
+                                                    <td colspan="4" class="text-center">
+                                                        No Results
+                                                    </td>
+                                                </tr>
+                                            </ng-form>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <!--<button ng-disabled="$ctr.searchModel.isDisabledBtn" ng-if="$ctr.searchModel.is_active == 1" ng-click="$ctr.deleteChecked();"   class="btn btn-danger pull-right">Move selected to Archived</button>
+                                            <button ng-disabled="$ctr.searchModel.isDisabledBtn" ng-if="$ctr.searchModel.is_active != 1" ng-click="$ctr.deleteChecked();"  class="btn btn-success pull-right">Restore selected to Active</button>-->
+											<button class="btn btn-danger pull-right" ng-click="$ctr.moveChecked()">Move Selected Items</button>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-6">
+                                            <a href="" ui-sref="reports.reportsCategory" type="button" scroll-top class="btn btn-primary m-t-md">&lt;&lt; Back
+                                            </a>
+                                        </div>
+                                        <div class="col-xs-6 text-right">
+                                            <div class="pull-right">
+                                                <ul uib-pagination total-items="$ctr.searchModel.total"
+                                                    ng-model="$ctr.searchModel.paginationOffset"
+                                                    max-size="10"
+                                                    class="pagination-sm"
+                                                    items-per-page="$ctr.searchModel.paginationCount"
+                                                    ng-change="$ctr.getItems(false)"
+                                                    boundary-link-numbers="true"
+                                                    rotate="false"></ul>
+                                            </div>
+                                            <!--<button type="submit" class="btn btn-primary" scroll-top >Save</button>-->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

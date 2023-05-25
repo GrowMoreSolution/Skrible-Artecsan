@@ -1,0 +1,289 @@
+<!--<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Home Page</h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>-->
+<div class="wrapper wrapper-content animated fadeInRight scrollTop">
+	<div class="row" ng-if="$ctr.is_su">
+		<div class="col-lg-4 col-md-4 summary_boxes" style="margin-bottom: 5px;">
+			From: <input type="date" ng-model="$ctr.np_start_date"/>
+		</div>
+		<div class="col-lg-4 col-md-4 summary_boxes" style="margin-bottom: 5px;">
+			To: <input type="date" ng-model="$ctr.np_end_date"/>
+		</div>
+		<div class="col-lg-4 col-md-4">
+			<button ng-click="loadNetProfit()" style="margin-top: 18px;">Update</button>
+		</div>
+		
+	</div>
+	<div class="row" ng-if="$ctr.is_su">
+        <div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Sales</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">${{$ctr.np_obj.sales}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Labor</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">${{$ctr.np_obj.labor}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Labor %</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">{{$ctr.np_obj.labor_percent}}% (<span class="negative_value_red"><i class="glyphicon glyphicon-arrow-up" style="font-size:10px"></i> 2%</span>)</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Inventory</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">${{$ctr.np_obj.inv}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Inventory %</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">{{$ctr.np_obj.inv_percent}}% (<span class="negative_value_red"><i class="glyphicon glyphicon-arrow-up" style="font-size:10px"></i> 1.3%</span>)</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Other Expenses</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px; color: black">
+					<th class="text-center">${{$ctr.np_obj.other_expenses}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">Net Profit</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px;">
+					<th class="text-center" ng-class="{negative_value_red : $ctr.np_obj.net_profit < 0}">${{$ctr.np_obj.net_profit}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+		<div class="col-lg-1 col-md-1 summary_boxes">
+			<table class="table">
+				<thead class="th-text-center text-black">
+				<tr class="title_tr">
+					<th style="text-align: center; padding: 2px">MTD Net Profit</th>
+				</tr>
+				<tr class="content_tr" style="text-align: center; padding: 2px;">
+					<th class="text-center" ng-class="{negative_value_red : $ctr.np_obj.month_to_date_net_profit < 0}">${{$ctr.np_obj.month_to_date_net_profit}}</th>
+				</tr>
+				</thead>
+			</table>
+		</div>
+	</div>
+    <div class="row">
+        <div class="col-lg-6 col-md-6 ir">
+            <div class="clearfix">
+                <h5 class="text-center">Sales vs Forecast</h5>
+                From: <input type="date" ng-model="start_date"/>
+                To: <input type="date" ng-model="end_date"/>
+                <button ng-click="loadLineGraph()">Filter</button>
+            </div>
+            <div class="clearfix">
+                <div id="chart"></div>
+            </div>
+        </div>
+
+        <div class="col-lg-6  col-md-6 ir">
+			<div class="clearfix">
+                <h5 class="text-center">Monthly Sales Prior Year Comparison</h5>
+                <label>Begin:</label> <input type="date" ng-model="Monthly_From_date"/>
+                <label>End:</label> <input type="date" ng-model="Monthly_To_date"/>
+
+                <select ng-model="$ctr.Monthly_category"
+                        ng-options="item as item.category for item in $ctr.mspy_categories" required></select>
+                <button ng-click="MonthlySalesPriorYearComparison(Monthly_From_date, Monthly_To_date)">Search</button>
+            </div>
+            <div class="clearfix">
+                <div id="monthly" class='rChart uvcharts'></div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-6  col-md-6 ir" ng-if="!(subscription_type_id == 3 || subscription_type_id == 7)">
+            <div class="clearfix">
+                <h5 class="text-center">Monthly Sales by Category</h5>
+                From: <input type="date" placeholder="YYYY-MM-DD" required
+                             ng-model="Bar_From_date"/>
+                To: <input type="date" ng-model="Bar_To_date"/>
+                <button ng-click="loadBarGraph()">Search</button>
+            </div>
+            <div class="clearfix">
+                <div id="bar"></div>
+            </div>
+        </div>
+        <div class="col-lg-6 col-md-6 ir"
+             ng-if="subscription_type_id == 1 || subscription_type_id == 5 || subscription_type_id == 3 || subscription_type_id == 7">
+            <div class="clearfix">
+                <h5 class="text-center">Alcohol - Sales vs. Purchases vs. Cost</h5>
+                <label>Begin:</label> <input type="date" ng-model="Summary_From_date"/>
+                <label>End:</label> <input type="date" ng-model="Summary_To_date"/>
+
+                <select ng-model="$ctr.Summary_category"
+                        ng-options="item as item.category for item in $ctr.categories" required></select>
+                <button ng-click="Summary(Summary_From_date,Summary_To_date)">Search</button>
+            </div>
+            <div class="clearfix">
+                <div id="summaryGraph" class='rChart uvcharts'></div>
+            </div>
+        </div>
+        <div class="col-lg-6  col-md-6 ir"
+             ng-if="subscription_type_id == 2 || subscription_type_id == 6 || subscription_type_id == 3 || subscription_type_id == 7">
+            <div class="clearfix">
+                <h5 class="text-center">Food - Sales vs. Purchases vs. Cost</h5>
+                <label>Begin:</label> <input type="date" ng-model="Summary_food_From_date"/>
+                <label>End:</label> <input type="date" ng-model="Summary_food_To_date"/>
+                <button ng-click="SummaryFood(Summary_food_From_date,Summary_food_To_date)">Search</button>
+            </div>
+            <div class="clearfix">
+                <div id="summaryGraphFood" class='rChart uvcharts'></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .c3 {
+        min-height: 300px !important;
+        width: 100% !important;
+    }
+
+    .c3 svg {
+        min-height: 300px !important;
+        width: 100% !important;
+        height: 300px !important;
+    }
+
+    .footer {
+        display: none;
+    }
+
+    @media (max-height: 800px ) {
+        .c3 {
+            min-height: 230px !important;
+            width: 100% !important;
+        }
+
+        .c3 svg {
+            min-height: 230px !important;
+            width: 100% !important;
+            height: 230px !important;
+        }
+    }
+
+    @media (max-height: 664px ) {
+        .c3 {
+            min-height: 200px !important;
+        }
+
+        .c3 svg {
+            min-height: 200px !important;
+            height: 200px !important;
+        }
+    }
+
+    .ir select {
+        height: 30px;
+        padding: 5px;
+        margin-bottom: 5px;
+        width: 100px;
+    }
+
+    .ir input {
+        height: 30px;
+        padding: 5px;
+        margin-bottom: 5px;
+        width: 134px;
+    }
+
+    .ir button {
+        border-color: #0078d7;
+        background-color: #0078d7;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #fff;
+        position: relative;
+        top: -3px;
+    }
+	table, tr, th, td {
+		border: 3px solid black;
+		border-collapse: collapse;
+		padding: 2px;
+	}
+	
+	.title_tr {
+		background-color: #2f4050;
+		color: #ffffff;
+	}
+	
+	.content_tr {
+		font-size: 14px;
+	}
+	
+	.summary_boxes { 
+		width:12.5%;
+	}
+</style>

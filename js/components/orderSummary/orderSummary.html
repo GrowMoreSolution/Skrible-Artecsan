@@ -1,0 +1,165 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-6">
+        <h2>Order Summary</h2>
+        <ol class="breadcrumb">
+            <li ui-sref="admin.inventoryCategories">
+                <a>Inventory</a>
+            </li>&nbsp;/&nbsp;
+            <li ui-sref="foodSubCategories" ng-show="$ctr.isFood">
+                <a>Food Categories</a>
+            </li>
+            <li ui-sref="alcoholSubCategories" ng-show="!$ctr.isFood">
+                <a>Alcohol Categories</a>
+            </li>&nbsp;/&nbsp;
+            <li class="active-page">
+                <a ng-show="$ctr.isFood">Confirm Food Delivery</a>
+                <a ng-show="!$ctr.isFood">Confirm Alcohol Delivery</a>
+            </li>
+        </ol>
+    </div>
+	<div class="col-lg-6" style="padding-top: 20px;">
+		<span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+    </div>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form name="$ctr.form" novalidate autocomplete="off" ng-submit="$ctr.save($ctr.form)">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="th-text-center" class="th-vertical-align-middle">
+                                <tr>
+                                    <th colspan="4">Order Summary</th>
+                                    <th colspan="6">Delivery Confirmation</th>
+                                    <th class="width-80" rowspan="2"></th>
+                                </tr>
+                                <tr>
+                                    <th class="min-width-115">Vendor</th>
+                                    <th class="width-80 no-wrap">Order Number</th>
+                                    <th class="width-80 no-wrap">Order Date</th>
+                                    <th class="width-80 no-wrap">Order Total</th>
+                                    <th class="width-80 no-wrap">Confirm Delivery</th>
+                                    <th class="width-80 no-wrap">Invoice Number</th>
+                                    <th class="width-80 no-wrap">Delivery Date</th>
+                                    <th class="width-80 no-wrap">Delivery Time</th>
+                                    <th class="width-80 no-wrap">Total Invoice Amount</th>
+                                    <th class="width-70">Approve</th>
+                                </tr>
+                                </thead>
+                                <tbody ng-repeat="i in $ctr.inventories">
+                                    <ng-form>
+                                        <tr>
+                                            <td>{{i.vendor_name}}</td>
+                                            <td class="text-center">{{i.order_number}}</td>
+                                            <td class="text-center">
+                                                {{i.order_date | date: 'MM/dd/yyyy'}}
+                                            </td>
+                                            <td class="text-center">
+                                                {{i.total | currency: '$'}}
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-disabled="i.invoice_total != i.total || !i.is_approved" ng-model="i.is_delivery_confirmed" ng-true-value="1" ng-false-value="0" ng-change="$ctr.check_Invoice(i)"><i></i>
+                                                </label>
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="text" class="form-control" ng-model="i.invoice_number" ng-required="i.is_approved" ng-disabled="i.is_approved">
+                                            </td>
+                                            <td class="text-center" ng-init="i.delivery_date = $ctr.getDateObj(i.delivery_date)">
+                                                <input ng-change="$ctr.checkDetails($index)" type="text" class="form-control" style="min-width: 101px"
+                                                       datetime-picker="MM/dd/yyyy HH:mm"
+                                                       format="MM/dd/yyyy"
+                                                       ng-model="i.delivery_date"
+                                                       ng-focus="orderDate = true; i.delivery_date = $ctr.getDateObj(i.delivery_date, 1)"
+                                                       is-open="orderDate"
+                                                       ng-disabled="i.is_approved"
+                                                       datepicker-append-to-body="true" ng-required="i.is_approved">
+                                            </td>
+                                            <td class="text-center" ng-init="i.delivery_time = $ctr.getDateObj(i.delivery_time)">
+                                                {{i.delivery_date | date : 'HH:mm'}}
+                                            </td>
+                                            <td class="text-center">
+                                                <input type="text" class="form-control" ng-change="$ctr.calculate()" ng-model="i.invoice_total" ng-required="i.is_approved" ng-disabled="i.is_approved">
+                                            </td>
+                                            <td class="text-center">
+                                                <label class="switch">
+                                                    <input type="checkbox" ng-model="i.is_approved" ng-true-value="1" ng-false-value="0" ng-disabled="(i.is_delivery_confirmed || i.invoice_total != i.total) || (!i.invoice_total || !i.delivery_date || !i.invoice_number)"><i></i>
+                                                </label>
+                                            </td>
+                                            <td class="text-right">
+                                                <a href="" class="btn btn-warning" ng-if="!i.is_approved" ng-show="!$ctr.isFood" ui-sref="alcohol.editAlcoholOrder({id: i.id})"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                                                <a href="" class="btn btn-warning" ng-if="!i.is_approved" ng-show="$ctr.isFood" ui-sref="food.editFoodOrder({id: i.id})"><i class="fa fa-edit"></i>&nbsp;Edit</a>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                </tbody>
+                                <tbody>
+                                    <tr class="text-bold-total">
+                                        <td colspan="2" class="text-right">TOTAL</td>
+                                        <td></td>
+                                        <td class="text-center">
+                                            {{$ctr.orderModel.totalOrder | currency : '$'}}
+                                        </td>
+                                        <td colspan="4"></td>
+                                        <td class="text-center">
+                                            {{$ctr.orderModel.totalInvoice | currency : '$'}}
+                                        </td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                                <tbody ng-show="!$ctr.inventories.length">
+                                    <tr>
+                                        <td colspan="11" class="text-center">
+                                            No added Orders yet
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="clearfix m-b-lg m-t-lg">
+                                    <div class="pull-right">
+                                        <ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+                                            ng-model="$ctr.searchModel.paginationOffset"
+                                            max-size="10"
+                                            class="pagination-sm"
+                                            items-per-page="$ctr.searchModel.paginationCount"
+                                            ng-change="$ctr.search()"
+                                            boundary-link-numbers="true"
+                                            rotate="false"></ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-6 text-left">
+                                <button class="btn btn-primary" type="button" onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-primary" type="submit">Confirm and Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

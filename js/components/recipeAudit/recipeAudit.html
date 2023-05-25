@@ -1,0 +1,181 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['60'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+				<h2>Pre-prepped Batches Audit Pad - Full</h2>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title ibox-title-inventory padding-left-20 padding-right-20">
+							<div class="row">
+								<div class="col-xs-9 col-sm-9 col-md-9 pull-left">
+									<form>
+										<div class="row">
+											<div class="col-xs-6 col-sm-6 col-md-6 pull-left text-left" style="padding-top: 20px;">
+												<div class="form-inline pull-left date-wrapper-mobile">
+													<div class="form-control no-borders pull-left auto-height form-control-date">
+														<label>Select Category</label>
+														<div class="input-group">
+															<select class="form-control m-l-sm"
+																ng-model="$ctr.model.recipe_category_id" ng-options="recipe.r_type_id as recipe.category for recipe in  $ctr.get_recipe_categories">
+															</select>
+														</div>
+													</div>
+													<div class="form-control no-borders pull-left auto-height form-control-date">
+														<div class="input-group">
+															<input  type="text" class="search-field-inventory form-control m-b-none  ng-pristine ng-valid ng-empty ng-touched" id="filter" ng-model="$ctr.model.inventory_item" placeholder="Search Keyword">
+															<button ng-if="!$ctr.loading" ng-click="$ctr.getInventoriesCaller($ctr.model.recipe_category_id, $ctr.model.recipe_category_id)" type="submit"  class="btn btn-primary m-t-5">Search</button>
+															<button ng-if="$ctr.loading" disabled class="btn btn-primary m-t-5">Loading...</button>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 pull-right">
+                                    <div class="form-inline pull-right date-wrapper-mobile">
+                                        <div class="form-control no-borders pull-right auto-height form-control-date">
+                                            <label for="begin_date">Date Counted</label>
+											<div class="input-group">
+												<input ng-disabled="!$ctr.pickers.beginDate.open" type="text" class="form-control" id="begin_date"
+													   datetime-picker="MM/dd/yyyy HH:mm"
+													   ng-model="$ctr.pickers.beginDate.date"
+													   is-open="$ctr.pickers.beginDate.open"
+													   datepicker-append-to-body="true">
+												<span class="input-group-btn">
+													<button class="btn btn-default" type="button"
+															ng-click="$ctr.openCalendar($event, 'beginDate')">
+														<span class="glyphicon glyphicon-edit"></span>
+													</button>
+												</span>
+											</div>
+											<button
+												  type="button"
+												  class="btn btn-primary"
+												  ng-click="$ctr.changeAuditDate()">
+												  Save Date
+											</button>
+                                        </div>
+                                    </div>
+									<div class="form-inline pull-left date-wrapper-mobile">
+										<div class="form-control no-borders pull-right auto-height form-control-date">
+											<button class="btn btn-primary float-right" ng-if="!print_loading" ng-click="$ctr.generatePDFCall()"><i
+													class="fa fa-print"></i> Print
+											</button>
+											<button class="btn btn-primary float-right" ng-if="print_loading"><i
+													class="fa fa-spinner fa-spin"></i> Printing...
+											</button>
+											<button ng-click="$ctr.changeMode()" class="btn btn-info" ng-active="true">
+												Show Inventory
+											</button>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content overflow-x-auto">
+                            <form novalidate autocomplete="off" name="$ctr.form" ng-submit="$ctr.saveAll($ctr.form, false)">
+								<div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="button" scroll-top class="btn btn-primary"
+                                                onclick="window.history.go(-1); return false;">&lt;&lt; Back
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <button class="btn btn-warning" scroll-top ui-sref="reports.foodCostOfSummary" type="button">View Report</button>
+                                        <button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.is_final_save = false;">Save</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive">
+                                    <table table-height="700px" class="table table-bordered table-bordered-fixed" fixed-header>
+                                        <thead class="th-text-center th-vertical-align-middle">
+                                        <tr>
+											<th class="width-50"></th>
+                                            <th class="min-width-300-food">Recipe Name</th>
+											<th class="width-70">Created On</th>
+                                            <th class="width-100-food">Ounces in a Full Batch</th>
+                                            <th class="width-100-food">Full Qty in Units</th>
+                                            <th class="width-120">
+												Partial Qty in
+												<select ng-change="$ctr.convertPartialToCurrentMode(true)" class="form-control m-l-sm" style="width:80%"
+													ng-model="$ctr.current_partial_qty_mode" ng-options="m as m for m in  $ctr.partial_qty_modes">
+												</select>
+											</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="foodBody">
+                                        <ng-form name="inventory">
+                                            <tr ng-repeat="i in $ctr.recipes track by $index">
+												<td ng-if="i.is_ref!=0"><button type="button" class="btn btn-info" ng-click="$ctr.pushNewInstance($index, i)"><i class="glyphicon glyphicon-plus"></i></button></td>
+												<td ng-if="i.is_ref==0"><a ng-disabled="i.is_approved == 1" href="" ng-click="$ctr.deleteInstance($index)" class="btn btn-danger btn-circle pull-right" ><i class="fa fa-times"></i></a></td>
+                                                <td class="min-width-300-food">
+                                                   <span class="no-wrap">
+                                                        {{i.recipe_name}}
+                                                   </span>
+                                                </td>
+												<td class="width-70">
+													<input type="date" ng-change="$ctr.checkCreationDate($index)" ng-model="i.recipe_created_on" required/>
+												</td>
+                                                <td class="width-100-food text-center">
+                                                    <span class="no-wrap">
+                                                        {{i.servings}}
+                                                   </span>
+                                                </td>
+                                                <td class="width-100-food">
+                                                    <input type="number" class="form-control" ng-model="i.full_qty" min="0">
+                                                </td>
+                                                <td class="width-120">
+                                                    <input type="number" class="form-control" ng-model="i.partial_qty_ph" min="0">
+                                                </td>
+                                            </tr>
+                                        </ng-form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="button" scroll-top class="btn btn-primary"
+                                                onclick="window.history.go(-1); return false;">&lt;&lt; Back
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+										<button type="button" class="btn btn-danger" ng-click="$ctr.deleteCurrentInventoryAudit()">
+												Clear Audit
+										</button>
+                                        <button class="btn btn-warning" scroll-top ui-sref="reports.foodCostOfSummary" type="button">View Report</button>
+                                        <button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.is_final_save = false;">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/vfs_fonts.min.js"></script>

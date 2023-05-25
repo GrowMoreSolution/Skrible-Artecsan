@@ -1,0 +1,164 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-12">
+        <h2>Inventory Usage Report</h2>
+        <ol class="breadcrumb">
+            <li ui-sref="admin.dashboardSubCategories">
+                <a>Reports</a>
+            </li>&nbsp;/&nbsp;
+            <li ui-sref="food.foodDetail">
+                <a>Food Detail Report</a>
+            </li>&nbsp;/&nbsp;
+            <li class="active-page">
+                <a>Inventory Usage Report</a>
+            </li>
+        </ol>
+    </div>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content overflow-x-auto">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-primary"  onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-noraml">Date From</label>
+
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-noraml">Date To</label>
+
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 search-button">
+                        <button class="btn btn-primary">Search</button>
+                    </div>
+                    </div>
+                    <div class="table-responsive">
+                        <table class="table table-bordered">
+                        <thead class="th-text-center th-vertical-align-middle">
+                        <tr>
+                            <th rowspan="2" class="min-width-115">Vendor Name</th>
+                            <th colspan="4">Inventory Item</th>
+                            <th colspan="7">Inventory</th>
+                        </tr>
+                        <tr>
+                            <th class="width-80">Type</th>
+                            <th class="width-100">Description</th>
+                            <th class="width-80">Individual Cost</th>
+                            <th class="width-80">Pkg Unit Type</th>
+                            <th class="width-80">Last Counted</th>
+                            <th class="width-80">Purchased this Period</th>
+                            <th class="width-100">Counted this Period</th>
+                            <th class="width-100">Qty Used this Period</th>
+                            <th class="width-100">POS Sales this Period</th>
+                            <th class="width-100">Over/ Short this Period</th>
+                            <th class="width-100">Cost of Over/ Short this Period</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td class="performance-table-color"><strong>Ben</strong></td>
+                            <td>Meat</td>
+                            <td>Steak</td>
+                            <td class="text-center">$2.13</td>
+                            <td>Individual</td>
+                            <td class="text-center">25.1</td>
+                            <td class="text-center">50</td>
+                            <td class="text-center">29.2</td>
+                            <td class="text-center">45.9</td>
+                            <td class="text-center">40</td>
+                            <td class="text-danger text-center">(5.90)</td>
+                            <td class="performance-table-color text-center">$(12.57)</td>
+                        </tr>
+                        <tr>
+                            <td class="performance-table-color"><strong>Ben</strong></td>
+                            <td>Salt</td>
+                            <td>Seasoning</td>
+                            <td class="text-center">$0.13</td>
+                            <td>Box</td>
+                            <td class="text-center">12</td>
+                            <td class="text-center">12</td>
+                            <td class="text-center">12.2</td>
+                            <td class="text-center">11.8</td>
+                            <td class="text-center">10.42</td>
+                            <td class="text-danger text-center">(1.38)</td>
+                            <td class="performance-table-color text-center">$(0.18)</td>
+                        </tr>
+                        <tr>
+                            <td class="performance-table-color"><strong>Sysco</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="performance-table-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="performance-table-color"><strong>Ben</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="performance-table-color"></td>
+                        </tr>
+                        <tr>
+                            <td class="performance-table-color"><strong>Sysco</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td class="performance-table-color"></td>
+                        </tr>
+                        <tr class="text-bold-total">
+                            <td class="text-right" colspan="3"><strong>TOTAL</strong></td>
+                            <td></td>
+                            <td></td>
+                            <td class="text-center">37.10</td>
+                            <td class="text-center">62</td>
+                            <td class="text-center">41.40</td>
+                            <td class="text-center">57.70</td>
+                            <td class="text-center">50.42</td>
+                            <td class="text-danger text-center">(7.28)</td>
+                            <td class="performance-table-color text-center">(12.75)</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

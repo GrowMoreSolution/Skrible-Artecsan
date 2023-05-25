@@ -1,0 +1,643 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <!--<div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+                                    <button class="btn btn-primary" ui-sref="reports.food.foodDetail">Overview</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodCostOfSummary">Cost of Sales</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodOnHand">On-Hand</button>
+                                    <button class="btn btn-primary active" ui-sref="reports.foodSalesReport">Sales</button>
+                                    <button class="btn btn-primary" ui-sref="reports.batchReport">Batches</button>
+									<button class="btn btn-primary" ui-sref="reports.analytics({typeInventory: 'food'})">Usage</button>
+									<button class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'food'})">PMIX</button>
+									<button class="btn btn-primary" ui-sref="reports.foodCostChangeReport">Cost Change</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodUsageVsPurchase">Purchases</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox-content text-center">
+						<label class="font-noraml"><b>Show:</b></label>
+						<button class="btn btn-danger" ng-click="$ctr.changeMode('summary')">Summary</button>
+						<button class="btn btn-danger" ng-click="$ctr.changeMode('details')">Details</button>
+					</div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content overflow-x-auto ir">
+							<div class="row">
+								<div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date From</label>
+                                        <input type="date" ng-model="$ctr.start_date"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div class="form-group">
+                                        <label class="font-noraml">Date To</label>
+                                        <input type="date" ng-model="$ctr.end_date"/>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1 search-button">
+                                    <div class="form-group">
+                                            <button class="btn btn-primary" ng-click="$ctr.loadSalesData()">Search</button>
+                                    </div>
+                                </div>
+								<div class="col-sm-3 search-button float-right">
+                                    <div class="form-group">
+                                            <button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.downloadCSV()" ng-if="!$ctr.export_loading">Export Report
+											</button>
+											<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+											</button>
+                                    </div>
+                                </div>
+							</div>
+							<div class="row">
+								<div class="col-lg-6" ng-if="$ctr.mode == 'summary'">
+									<div class="table-responsive">
+										<table class="table table-bordered">
+											<thead class="th-text-center">
+												<tr>
+													<th colspan="2">Sales Summary</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td>Food Sales</td>
+													<td class="border-bottom-td text-right">$ {{$ctr.sales.Food}}</td>
+												</tr>
+												<tr>
+													<td>Total Sales</td>
+													<td class="text-right">$ {{$ctr.sales.Total | number : 2}}</td>
+												</tr>
+											</tbody>
+										</table> 
+									</div>
+								</div>
+								<div class="col-lg-6" ng-if="$ctr.mode == 'summary'">
+									<div class="clearfix">
+										<h5 class="text-center">Item Detail Sales Report</h5>
+									</div>
+									<div class="clearfix">
+										<div id="sales" class='rChart uvcharts'></div>
+									</div>
+								</div>
+								
+								<div class="col-sm-12" ng-if="$ctr.mode == 'details'">
+									<div class="ibox float-e-margins">
+										<div class="ibox-content overflow-x-auto ir">
+											<div>
+												<table class="table table-bordered table-sm" style="margin-top: 10px">
+													<thead>
+														<tr>
+															<th>
+																Item
+															</th>
+															<th>
+																Units Sold
+															</th>
+														</tr>
+													</thead>
+													<tbody ng-repeat="item in $ctr.sales_table_data">
+														<tr>
+															<td>{{item.item_name}}</td>
+															<td>{{item.units_sold | number: 2}}</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>-->
+
+		<div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox float-e-margins">
+						<div class="ibox-content">
+							<div class="row">
+								<div class="col-xs-12">
+									<button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+                                    <button class="btn btn-primary" ui-sref="reports.food.foodDetail">Overview</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodCostOfSummary">Inventory Count</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodOnHand">On-Hand</button>
+                                    <button class="btn btn-primary active" ui-sref="reports.foodSalesReport">Sales</button>
+                                    <button class="btn btn-primary" ui-sref="reports.batchReport">Batches</button>
+									<button class="btn btn-primary" ui-sref="reports.analytics({typeInventory: 'food'})">Usage</button>
+									<button class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'food'})">PMIX</button>
+									<button class="btn btn-primary" ui-sref="reports.foodCostChangeReport">Cost Change</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodUsageVsPurchase">Purchases</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="ibox-content text-center">
+						<label class="font-noraml"><b>Show:</b></label>
+						<button class="btn btn-danger" ng-class="{active : $ctr.mode == 'summary'}" ng-click="$ctr.changeMode('summary')">Summary</button>
+						<button class="btn btn-danger" ng-class="{active : $ctr.mode == 'details'}" ng-click="$ctr.changeMode('details')">Details</button>
+						<button class="btn btn-danger" ng-class="{active : $ctr.mode == 'pmix_weekly'}" ng-click="$ctr.changeMode('pmix_weekly')">Weekly</button>
+						<button class="btn btn-danger" ng-class="{active : $ctr.mode == 'pmix_trend'}" ng-click="$ctr.changeMode('pmix_trend')">Sales Trend</button>
+						<button class="btn btn-danger" ng-class="{active : $ctr.mode == 'daily'}" ng-click="$ctr.changeMode('daily')">Daily Sales</button>
+					</div>
+                </div>
+			</div>
+            <div class="row">
+                <div class="col-sm-12">
+					<div class="ibox-content overflow-x-auto ir">
+						<div class="row">
+							<div ng-if="$ctr.mode == 'summary' || $ctr.mode == 'details'" class="col-sm-2">
+								<div class="form-group">
+									<label class="font-noraml">Date From</label>
+									<input type="date" ng-model="$ctr.start_date"/>
+								</div>
+							</div>
+							<div ng-if="$ctr.mode == 'summary' || $ctr.mode == 'details'" class="col-sm-2">
+								<div class="form-group">
+									<label class="font-noraml">Date To</label>
+									<input type="date" ng-model="$ctr.end_date"/>
+								</div>
+							</div>
+							<div ng-if="$ctr.mode != 'daily'" class="col-sm-2">
+								<div class="form-group">
+									<label class="font-noraml">Category</label>
+									<div class="input-group date">
+										<select ng-model="$ctr.category" ng-options="item.category as item.category for item in $ctr.categories" required></select>
+									</div>
+								</div>
+							</div>
+							<div ng-if="$ctr.mode == 'daily'" class="col-sm-2">
+								<div class="form-group">
+									<label class="font-noraml">Mode</label>
+									<div class="input-group date">
+										<select ng-model="$ctr.daily_sales_mode" ng-options="item as item.name for item in $ctr.daily_sales_modes_list" required></select>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-1 search-button">
+								<div class="form-group">
+									<div class="input-group date">
+										<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.mode == 'summary' || $ctr.mode == 'details' ? $ctr.loadSalesData() : $ctr.mode == 'daily' ? $ctr.loadDailySalesData() : $ctr.loadPMIXData()">Search</button>
+										<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+									</div>
+								</div>
+							</div>
+							<div class="col-sm-3 search-button float-right">
+								<div class="form-group">
+										<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.exportReport($ctr.mode)" ng-if="!$ctr.export_loading && $ctr.mode != 'summary'">Export Report
+										</button>
+										<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+										</button>
+								</div>
+                            </div>
+							<div ng-if="$ctr.mode == 'pmix_weekly'" class="col-lg-6">
+								<h2 class="float-right">PMIX Details for the week </br>
+									<b class="float-right">{{$ctr.pmix_weekly_start.substring(0, 10)}} to {{$ctr.pmix_weekly_end.substring(0, 10)}}</b>
+								</h2>
+								<!--<p class="padding-top-5"></p>-->
+							</div>
+							<div ng-if="$ctr.mode == 'pmix_trend'" class="col-lg-6">
+								<h2 class="float-right">PMIX Details for the period </br>
+									<b class="float-right">{{$ctr.pmix_trend_start.substring(0, 10)}} to {{$ctr.pmix_trend_end.substring(0, 10)}}</b>
+								</h2>
+								<!--<p class="padding-top-5"></p>-->
+							</div>
+						</div>
+						<div class="row" ng-if="$ctr.mode == 'summary'">
+							<div class="col-lg-6">
+								<div class="table-responsive">
+									<table class="table table-bordered">
+										<thead class="th-text-center">
+											<tr>
+												<th colspan="2">Sales Summary</th>
+											</tr>
+										</thead>
+										<tbody>
+											<tr>
+												<td>Food Sales</td>
+												<td class="border-bottom-td text-right">$ {{$ctr.sales.Food}}</td>
+											</tr>
+											<tr>
+												<td>Total Sales</td>
+												<td class="text-right">$ {{$ctr.sales.Total | number : 2}}</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+							<div class="col-lg-6">
+								<div class="clearfix">
+									<h5 class="text-center">Item Detail Sales Report</h5>
+								</div>
+								<div class="clearfix">
+									<div id="sales" class='rChart uvcharts'></div>
+								</div>
+							</div>
+						</div>
+					</div>
+                </div>
+            </div>
+
+			<div class="row" id="top-section" ng-if="$ctr.mode == 'details'" style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<th style="width: 360px;">
+													Item
+												</th>
+												<th>
+													Units Sold
+												</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" id="top-section" ng-if="$ctr.mode == 'pmix_weekly'" style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<td style="width: 8.5%;">Category</td>
+												<td style="width: 17.5%;">Menu Item</td>
+												<td style="width: 6%;">Pricing Level</td>
+												<td style="width: 9%;">Total Weekly $ Sales</td>
+												<td style="width: 9%;">Total Weekly $ Cost</td>
+												<td style="width: 9%;">Gross $ Profit</td>
+												<td style="width: 9%;">Last Week Units Sold</td>
+												<td style="width: 9%;">13 Week Avg Units Sold</td>
+												<td style="width: 9%;">Variance</td>
+												<td style="width: 9%;">Last Week % of Sales</td>
+												<td style="width: 8.3%;">Est. Prep Work Labor</td>
+												<td style="width: 8.3%;">Cook Method</td>
+												<td style="width: 8.3%;">Est. Time To Cook</td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" id="top-section" ng-if="$ctr.mode == 'pmix_trend'" style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<td style="width: 8.5%;">Category</td>
+												<td style="width: 17.5%;">Menu Item</td>
+												<td style="width: 6%;">Pricing Level</td>
+												<td style="width: 6.8%;">Week 1</td>
+												<td style="width: 6.8%;">Week 2</td>
+												<td style="width: 6.8%;">Week 3</td>
+												<td style="width: 6.8%;">Week 4</td>
+												<td style="width: 6.8%;">Week 5</td>
+												<td style="width: 6.8%;">Week 6</td>
+												<td style="width: 6.8%;">Week 7</td>
+												<td style="width: 6.8%;">Week 8</td>
+												<td style="width: 6.8%;">Week 9</td>
+												<td style="width: 6.8%;">Trend</td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="row" id="top-section" ng-if="$ctr.mode == 'daily'" style="margin-right :-7px;margin-left: -10px;">
+				<div class="row" style="margin-top: -39px;">
+					<div class="col-sm-12" style="padding-left: 0px;padding-right: 0px;">
+						<div class="ibox float-e-margins" style="background: transparent;padding: 0px 25px 21px 19px;">
+							<div class="ibox-content overflow-x-auto ir" style="background: transparent;padding-right: 0px;padding-left: 0px;">
+								<div >
+									<table class="table table-bordered table-sm" style="margin-top: 10px;table-layout: fixed;">
+										<thead>
+											<tr>
+												<td style="width: 25%;"></td>
+												<td style="width: 9%;">Monday</td>
+												<td style="width: 9%;">Tuesday</td>
+												<td style="width: 9%;">Wednesday</td>
+												<td style="width: 9%;">Thursday</td>
+												<td style="width: 9%;">Friday</td>
+												<td style="width: 9%;">Saturday</td>
+												<td style="width: 9%;">Sunday</td>
+												<td style="width: 9%;">Total</td>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" ng-if="$ctr.mode == 'details'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row"  id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+								<tbody ng-repeat="item in $ctr.sales_table_data">
+									<!--<tr ng-repeat="restaurant in $ctr.restaurantsList">-->
+									<tr>
+										<td style="width: 360px;">{{item.item_name}}</td>
+										<td>{{item.units_sold | number: 2}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" ng-if="$ctr.mode == 'pmix_weekly'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row"  id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+								<tbody ng-repeat="item in $ctr.pmix_data">
+									<tr>
+										<td style="width: 8.5%;">{{item.category}}</td>
+										<td style="width: 17.5%;">{{item.name}}</td>
+										<td style="width: 6%;">{{item.price_number}}</td>
+										<td style="width: 9%;">{{item.sales | number: 2}}</td>
+										<td style="width: 9%;">{{item.cost | number: 2}}</td>
+										<td style="width: 9%;">{{item.sales - item.cost | number: 2}}</td>
+										<td style="width: 9%;">{{item.units_sold}}</td>
+										<td style="width: 9%;">{{item.units_sold_avg_13_weeks | number: 2}}</td>
+										<td style="width: 9%;">{{(item.units_sold - item.units_sold_avg_13_weeks) | number: 2}}</td>
+										<td style="width: 9%;">{{item.percent_of_sales | number: 2}}</td>
+										<td style="width: 8.3%;">{{}}</td>
+										<td style="width: 8.3%;">{{}}</td>
+										<td style="width: 8.3%;">{{}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="row" ng-if="$ctr.mode == 'pmix_trend'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row"  id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+								<tbody ng-repeat="item in $ctr.pmix_data">
+									<tr>
+										<td style="width: 8.5%;">{{item.category}}</td>
+										<td style="width: 17.5%;">{{item.name}}</td>
+										<td style="width: 6%;">{{item.price_number}}</td>
+										<td style="width: 6.8%;">{{item.week_1}}</td>
+										<td style="width: 6.8%;">{{item.week_2}}</td>
+										<td style="width: 6.8%;">{{item.week_3}}</td>
+										<td style="width: 6.8%;">{{item.week_4}}</td>
+										<td style="width: 6.8%;">{{item.week_5}}</td>
+										<td style="width: 6.8%;">{{item.week_6}}</td>
+										<td style="width: 6.8%;">{{item.week_7}}</td>
+										<td style="width: 6.8%;">{{item.week_8}}</td>
+										<td style="width: 6.8%;">{{item.week_9}}</td>
+										<td style="width: 6.8%;" ng-class='{red_text : item.trend < 0, green_text: item.trend > 1}'>{{item.trend}}</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" ng-if="$ctr.mode == 'daily'" style="margin-left: -11px;margin-right: -8px;">
+				<div class="row"  id="content-table-section">
+					<div class="ibox float-e-margins" style="margin-top: -35px;
+					padding-left: 0px;
+					padding-right: 6px;">
+						<div class="ibox-content ir adjust-pad">
+							<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+								<tbody ng-repeat="ds_key in $ctr.daily_sales_data_keys">
+									<tr>
+										<td style="width: 25%;">{{$ctr.previous_year_label}} {{ds_key}} {{$ctr.daily_sales_row_header}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[0]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[1]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[2]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[3]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[4]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[5]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[6]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].previous[7]}}</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header == 'Highest $ Sales Day'">
+										<td style="width: 25%;">Date of {{$ctr.daily_sales_row_header}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[0]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[1]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[2]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[3]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[4]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[5]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[6]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_highest_date[7]}}</td>
+									</tr>
+									<tr>
+										<td style="width: 25%;">{{$ctr.current_year_label}} {{ds_key}} {{$ctr.daily_sales_row_header}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[0]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[1]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[2]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[3]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[4]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[5]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[6]}}</td>
+										<td style="width: 9%;">$ {{$ctr.daily_sales_data[ds_key].current[7]}}</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header == 'Highest $ Sales Day'">
+										<td style="width: 25%;">Date of {{$ctr.daily_sales_row_header}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[0]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[1]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[2]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[3]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[4]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[5]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[6]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_highest_date[7]}}</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header != 'Highest $ Sales Day'">
+										<td style="width: 25%;">Difference</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[0] - $ctr.daily_sales_data[ds_key].previous[0])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[1] - $ctr.daily_sales_data[ds_key].previous[1])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[2] - $ctr.daily_sales_data[ds_key].previous[2])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[3] - $ctr.daily_sales_data[ds_key].previous[3])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[4] - $ctr.daily_sales_data[ds_key].previous[4])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[5] - $ctr.daily_sales_data[ds_key].previous[5])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[6] - $ctr.daily_sales_data[ds_key].previous[6])}}</td>
+										<td style="width: 9%;">$ {{($ctr.daily_sales_data[ds_key].current[7] - $ctr.daily_sales_data[ds_key].previous[7])}}</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header != 'Highest $ Sales Day'">
+										<td style="width: 25%;">% Change</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[0] - $ctr.daily_sales_data[ds_key].previous[0]) * 100 / $ctr.daily_sales_data[ds_key].previous[0]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[1] - $ctr.daily_sales_data[ds_key].previous[1]) * 100 / $ctr.daily_sales_data[ds_key].previous[1]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[2] - $ctr.daily_sales_data[ds_key].previous[2]) * 100 / $ctr.daily_sales_data[ds_key].previous[2]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[3] - $ctr.daily_sales_data[ds_key].previous[3]) * 100 / $ctr.daily_sales_data[ds_key].previous[3]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[4] - $ctr.daily_sales_data[ds_key].previous[4]) * 100 / $ctr.daily_sales_data[ds_key].previous[4]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[5] - $ctr.daily_sales_data[ds_key].previous[5]) * 100 / $ctr.daily_sales_data[ds_key].previous[5]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[6] - $ctr.daily_sales_data[ds_key].previous[6]) * 100 / $ctr.daily_sales_data[ds_key].previous[6]) | number : 2}}%</td>
+										<td style="width: 9%;">{{(($ctr.daily_sales_data[ds_key].current[7] - $ctr.daily_sales_data[ds_key].previous[7]) * 100 / $ctr.daily_sales_data[ds_key].previous[7]) | number : 2}}%</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header == 'Highest $ Sales Day'">
+										<td style="width: 25%;">{{$ctr.previous_year_label}} {{ds_key}} Zero Sales Days</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[0]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[1]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[2]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[3]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[4]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[5]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[6]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].previous_zero_days[7]}}</td>
+									</tr>
+									<tr ng-if="$ctr.daily_sales_row_header == 'Highest $ Sales Day'">
+										<td style="width: 25%;">{{$ctr.current_year_label}} {{ds_key}} Zero Sales Days</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[0]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[1]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[2]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[3]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[4]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[5]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[6]}}</td>
+										<td style="width: 9%;">{{$ctr.daily_sales_data[ds_key].current_zero_days[7]}}</td>
+									</tr>
+									<tr>
+										<td colspan="9">
+										&nbsp;
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+    .ir select, .ir input {
+        height: 35px;
+        padding: 5px;
+        margin-bottom: 10px;
+		width: 136px
+    }
+    .ir button {
+        border-color: #0078d7;
+        background-color: #0078d7;
+        display: inline-block;
+        padding: 6px 12px;
+        margin-bottom: 0;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 1.42857143;
+        text-align: center;
+        white-space: nowrap;
+        vertical-align: middle;
+        -ms-touch-action: manipulation;
+        touch-action: manipulation;
+        cursor: pointer;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-image: none;
+        border: 1px solid transparent;
+        border-radius: 4px;
+        color: #fff;
+        position: relative;
+    }
+
+	#content-table-section {
+    max-height: 55vh;
+    overflow-y: scroll;
+	}
+
+	.adjust-pad {
+		padding-right: 2px;
+		padding-top: 0
+	}
+
+	#top-section {
+		position: absolute;
+	}
+
+	.bottomless {
+		padding-bottom: 0;
+		border-bottom: 0;
+	}
+
+</style>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            var height = document.getElementById('top-section').clientHeight;
+            $('#content-table-section').css('margin-top', height + 'px');
+        }, 2000);
+    });
+</script>

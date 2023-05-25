@@ -1,0 +1,563 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-6">
+        <h2>
+            <span ng-show="!$ctr.isEdit">New</span>
+			<span ng-show="$ctr.isEdit">Confirm</span>
+            <span ng-show="$ctr.isFood">Food</span>
+            <span ng-show="!$ctr.isFood">Alcohol</span>
+			<span ng-show="!$ctr.isEdit">Order</span>
+			<span ng-show="$ctr.isEdit">Delivery</span>
+            
+        </h2>
+        <ol class="breadcrumb">
+            <li ui-sref="admin.inventoryCategories">
+                <a>Inventory</a>
+            </li>&nbsp;/&nbsp;
+            <li ui-sref="foodSubCategories" ng-show="$ctr.isFood">
+                <a>Food Categories</a>
+            </li>
+            <li ui-sref="alcoholSubCategories" ng-show="!$ctr.isFood">
+                <a>Alcohol Categories</a>
+            </li>&nbsp;/&nbsp;
+            <li class="active-page">
+                <a ng-show="!$ctr.isEdit && !$ctr.isFood">New Alcohol Order</a>
+                <a ng-show="!$ctr.isEdit && $ctr.isFood">New Food Order</a>
+				<a ng-show="$ctr.isEdit && !$ctr.isFood">Confirm Alcohol Delivery</a>
+                <a ng-show="$ctr.isEdit && $ctr.isFood">Confirm Food Delivery</a>
+            </li>
+        </ol>
+    </div>
+	<div class="col-lg-6" style="padding-top: 20px;">
+		<span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+    </div>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+	<div class="row">
+        <div class="col-sm-12">
+			<div class="ibox-content">
+				<div class="row">
+					<div class="col-sm-3">
+						<div class="form-group">
+							<label class="font-noraml">Vendor</label>
+							<div class="input-group date">
+								<select ng-disabled="$ctr.isEdit" class="form-control" ng-model="$ctr.current_vendor" ng-change="$ctr.chooseVendor(0)" ng-options="v as v.vendor_name for v in $ctr.vendors | orderBy:'vendor_name'"></select>
+							</div>
+						</div>
+					</div>
+					<div ng-if="$ctr.current_vendor != null && !$ctr.isEdit" class="col-sm-2">
+						<div class="form-group">
+							<label class="font-noraml">Order Option</label>
+							<div class="input-group date">
+								<select class="form-control" ng-model="$ctr.order_option" ng-change="$ctr.loadOrder()" ng-options="item as item.name for item in $ctr.order_options" required></select>
+							</div>
+						</div>
+					</div>
+					<div ng-if="!$ctr.isEdit" class="col-sm-1 search-button">
+						<div class="form-group">
+							<div class="input-group date">
+								<!--<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.loadOrder()" ng-disabled="$ctr.current_vendor == null">Go</button>-->
+								<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+							</div>
+						</div>
+					</div>
+					<div ng-if="$ctr.order_option.id == 1 && $ctr.last_order_date != null" class="col-sm-3 search-button float-right">
+						<div class="form-group">
+							{{'Last Ordered On: '}}<h3>{{$ctr.last_order_date}}</h3>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form name="$ctr.form" novalidate autocomplete="off" ng-submit="$ctr.addNewOrder($ctr.form)">
+                        <div class="table-responsive">
+                            <table class="table table-bordered">
+                                <thead class="th-text-center th-vertical-align-middle">
+                                    <tr>
+                                        <th rowspan="2">Item Description</th>
+										<!--<th ng-if="!$ctr.isEdit && !$ctr.isFood" rowspan="2" class="width-90">Units On Hand</th>-->
+										<!--<th ng-if="!$ctr.isEdit && $ctr.isFood" colspan="3" class="min-width-240">Units On Hand</th>-->
+                                        <!--<th ng-if="!$ctr.isEdit" colspan="2">Suggested</th>-->
+										<th ng-if="!$ctr.isEdit" rowspan="2" class="width-90 text-center">On Hand Units</th>
+                                        <th colspan="2">Actual</th>
+										<th ng-if="!$ctr.isEdit && $ctr.isFood" rowspan="2" class="width-70 text-center">Case size</th>
+                                        <th ng-if="$ctr.isEdit && $ctr.isFood" rowspan="2" class="width-180 text-center">Case size</th>
+                                        <th rowspan="2" class="width-70 text-center">Item Cost</th>
+                                        <th rowspan="2" class="width-90 text-center">Total Order Cost</th>
+                                        <th rowspan="2" class="width-70">Approve</th>
+                                        <th rowspan="2" class="width-70">Delete</th>
+                                    </tr>
+                                    <tr>
+										<!--<th ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">Cs</th>
+										<th ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">Pk</th>
+										<th ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">Un</th>-->
+                                        <!--<th ng-if="!$ctr.isEdit" class="width-60 text-center">Order</th>
+                                        <th ng-if="!$ctr.isEdit" class="width-80">Order Type</th>-->
+                                        <th class="width-100">Order</th>
+                                        <th class="width-120">Order Type</th>
+                                    </tr>
+                                </thead>
+                                <tbody ng-repeat="i in $ctr.orderModel.items">
+                                <ng-form name="items">
+                                    <tr>
+                                        <td>
+                                            <select ng-disabled="i.is_locked == 1" class="form-control" required ng-model="i.vendor_sku_id" ng-change="$ctr.pushNewItem(); $ctr.calculate($index, i.vendor_sku_id, $ctr.isEdit)" ng-options="v.id as v.item_name for v in $ctr.inventories | orderBy:'item_name'"></select>
+                                        </td>
+										<!--<td ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">{{i.cases_OH | number : 2}}</td>
+										<td ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">{{i.packs_OH | number : 2}}</td>
+										<td ng-if="!$ctr.isEdit && $ctr.isFood" class="text-center">{{i.OH | number : 2}}</td>-->
+										<!--<td ng-if="!$ctr.isEdit && !$ctr.isFood" class="text-center">{{i.OH | number : 2}}</td>-->
+                                        <!--<td ng-if="!$ctr.isEdit" class="text-center">{{i.suggested_amount}}</td>
+                                        <td ng-if="!$ctr.isEdit" class="text-center">{{i.suggested_type}}</td>-->
+										<td ng-if="!$ctr.isEdit" class="text-center">{{$ctr.getItemOH(i.vendor_sku_id)}}</td>
+                                        <td ng-if="$ctr.isFood"><input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, $ctr.isEdit)" class="form-control" ng-model="i.amount" required></td>
+										<td ng-if="!$ctr.isFood"><input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, $ctr.isEdit)" only-digits class="form-control" ng-model="i.amount" required></td>
+                                        <td>
+											<div class="text-center" >
+												<select class="form-control" ng-model="i.order_type" ng-change="$ctr.calculate($index, i.vendor_sku_id, $ctr.isEdit)" ng-options="item.value as item.name for item in i.otypes" required></select>
+											</div>
+                                        </td>
+										<td class="text-center" ng-if="$ctr.isFood">
+											<span ng-if="!$ctr.isEdit">
+												{{i.total_unit_size}}{{i.unit_of_delivery}}
+											</span>
+											<div class="input-group" ng-if="$ctr.isEdit">
+                                                <span class="input-group-addon">
+													<input ng-if="$ctr.isEdit" type="checkbox" ng-model="i.item_size_is_editable">
+                                                </span>
+												<input ng-if="$ctr.isEdit" type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, -1)" ng-disabled="!i.item_size_is_editable" ng-model="i.total_unit_size" required class="form-control">
+												<span class="input-group-addon">
+													{{i.unit_of_delivery}}
+                                                </span>
+                                            </div>
+										</td>
+                                        <td class="text-center">
+                                            <span ng-if="!$ctr.isEdit">
+                                                {{i.item_cost| currency: '$'}}
+                                            </span>
+                                            <!--<div class="input-group width-120" ng-if="i.id">-->
+                                            <div class="input-group width-120" ng-if="$ctr.isEdit">
+                                                <span class="input-group-addon">
+                                                    <input type="checkbox" ng-model="i.item_cost_is_editable">
+                                                </span>
+                                                <input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, -1)" ng-disabled="!i.item_cost_is_editable" ng-model="i.item_cost" required class="form-control">
+                                            </div>
+                                        </td>
+                                        <td class="text-center">{{i.total_cost| currency: '$'}}</td>
+                                        <td>
+                                            <label class="switch">
+                                                <input type="checkbox" ng-model="i.is_approved" ng-true-value="1" ng-false-value="0"><i></i>
+                                            </label>
+                                        </td>
+                                        <td class="text-center">
+                                            <a ng-disabled="i.is_approved == 1" href="" ng-click="$ctr.delete($index, i, i.is_approved, i.is_suggested)" class="btn btn-danger btn-circle pull-right" ><i class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                </ng-form>
+                                </tbody>
+								<tbody>
+									<tr>
+										<td>
+											<button type="button" class="btn btn-info" ng-click="$ctr.pushNewItem()"><i class="glyphicon glyphicon-plus"></i></button>
+										</td>
+									</tr>
+								</tbody>
+                                <tbody>
+                                    <tr ng-show="!$ctr.orderModel.items.length">
+                                        <td ng-if="!$ctr.isFood" colspan="11" class="text-center">
+                                            No added Inventory yet
+                                        </td>
+										<td ng-if="$ctr.isFood" colspan="14" class="text-center">
+                                            No added Inventory yet
+                                        </td>
+                                    </tr>
+                                    <tr class="text-bold-total">
+                                        <td ng-if="!$ctr.isEdit && !$ctr.isFood" colspan="3" class="text-right">TOTAL</td>
+										<td ng-if="!$ctr.isEdit && $ctr.isFood" colspan="3" class="text-right">TOTAL</td>
+										<td ng-if="($ctr.isEdit && !$ctr.isFood) || ($ctr.isEdit && $ctr.isFood)" colspan="2" class="text-right">TOTAL</td>
+										<td ng-if="$ctr.isEdit && !$ctr.isFood" colspan="1"></td>
+                                        <td ng-if="!$ctr.isEdit && !$ctr.isFood" colspan="1"></td>
+										<td ng-if="$ctr.isEdit && $ctr.isFood" colspan="2"></td>
+										<td ng-if="!$ctr.isEdit && $ctr.isFood" colspan="2"></td>
+                                        <td class="text-center">{{$ctr.orderModel.totalItems| currency: '$'}}</td>
+                                        <td class="text-center">{{$ctr.orderModel.totalCost| currency: '$'}}</td>
+                                        <td colspan="2"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row m-t-lg">
+                            <div class="col-xs-6">
+                                <button class="btn btn-primary" type="button" onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-primary" type="submit" ng-if="!$ctr.isEdit" ng-click="setEmail()">Confirm and Send</button>
+                                <button class="btn btn-primary" type="submit" ng-click="setNoEmail()">Confirm and Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script type="text/ng-template" id="add_new_vendor.html">
+  <div class="inmodal">
+      <form novalidate autocomplete="off" name="form" ng-submit="$ctr.submit(form)">
+          <div class="modal-header">
+              <h4 class="modal-title">Add a new Vendor</h4>
+          </div>
+          <div class="modal-body">
+              <fieldset>
+                <div class="form-group">
+                    <label>Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Vendor Name" ng-model="$ctr.model.vendor_name" required>
+                </div>
+				<!--<ul style="list-style: none;">
+					<li>-->
+						<div class="form-group">
+							<label>Is a local distributor of: </label>
+							<select ng-model="$ctr.model.primary_vendor" ng-options="item.id as item.vendor_name for item in $ctr.global_Vendors"></select>
+						</div>
+				<!--	</li>
+				</ul>-->
+                <!--<div class="form-group">
+                    <label>Type <span class="text-danger">*</span></label>
+                    <select class="form-control" ng-model="$ctr.model.vendor_type_id" required ng-options="type.id as type.name for type in $ctr.get_refbooks.entity_types"></select>
+                </div>-->
+                <div class="form-group">
+                    <label>Street Address </label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Street Address" ng-model="$ctr.model.address">
+                </div>
+                <div class="form-group">
+                    <label>Zip code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Zip code" ng-model="$ctr.model.zip" required
+                           ng-pattern="/^\d+$/" minlength="3" maxlength="6"
+                           ng-change="$ctr.onZipChanged($ctr.model.zip)" name="zip">
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="City" ng-model="$ctr.model.city" required readonly>
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>State <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="State" ng-model="$ctr.model.state" required readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sales Rep Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Sales Representative Name" ng-model="$ctr.model.sales_rep" required>
+                </div>
+                <div class="form-group">
+                  <label>Primary Email <span class="text-danger">*</span></label>
+                  <input type="text" placeholder="Email for Orders" class="form-control" ng-model="$ctr.model.primary_email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+				  <label>Secondary Email 1 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_1" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+				  <label>Secondary Email 2 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_2" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                </div>
+                <div class="form-group">
+                    <label>Account No. <span class="text-danger">*</span></label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Account Number" ng-model="$ctr.model.account_no" required>
+                </div>
+              </fieldset>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" ng-click="$ctr.cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+      </form>
+  </div>
+</script>
+
+<script type="text/ng-template" id="add_new_food_inventory_item.html">
+    <div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Inventory Item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+                                    <tr>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+											   SKU <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th>
+											<span class="no-wrap cursor-pointer">
+												 Item name <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Category <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Sub Category
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Unit <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Pack <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Size <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Case ($) <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-80">
+											<span class="no-wrap cursor-pointer">
+												 Min Order <span class="text-danger">*</span>
+											</span>
+                                        </th>
+										<th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                    <tbody ng-repeat="item in $ctr.uniqueItem">
+                                    <ng-form name="items">
+                                        <tr>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.vendor_sku"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" ng-model="item.item_name" required>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_cat_id" required ng-change="$ctr.filterItems()" ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 1}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_sub_cat_id"  ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'"class="form-control" ng-model="item.uom_id_of_delivery_unit" ng-change="$ctr.filterItems()" required ng-options="item.id as item.name for item in $ctr.deliveryMeasure"></select>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" only-digits ng-model="item.pack" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.size" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.case_cost"  required min="0">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" required ng-model="item.minimum_order_type">
+                                                    <option value="Case" selected>CASE</option>
+                                                    <option value="Pack">PACK</option>
+                                                    <option value="Each">EACH</option>
+                                                </select>
+                                            </td>
+											<td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.substitute_for" ng-options="sku.id as sku.item_name group by sku.vendor_name for sku in $ctr.inventoryListSelected | orderBy:['vendor_name','item_name']"></select>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+					<button type="button" class="btn btn-primary" ui-sref="foodSetup.inventory">Edit</button>
+					<button type="button" class="btn btn-primary" ng-click="$ctr.clear()">Clear</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="add_new_alcohol_inventory_item.html">
+	<div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Inventory Item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+                                    <tr>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                SKU <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class="no-wrap cursor-pointer">
+                                                Item name <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                Category <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                Sub Category <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												Size <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												Full Unit Weight <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Unit <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Case($) <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Item ($) <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+										<th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                    <tbody ng-repeat="item in $ctr.uniqueItem" ng-if="$ctr.refbooks">
+                                    <ng-form name="items">
+                                        <tr>
+                                            <td>
+												<input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.vendor_sku"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+                                            <td>
+												<input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="name as name.disp_name for name in $ctr.item_name_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.item_name"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.vendor_cat_id" required ng-change="$ctr.changeMOT($index)" ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 2}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.vendor_sub_cat_id" ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)" required ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.tare_type_id" required
+                                                        ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)"
+                                                        ng-options="item.tare_type_id as item.name for item in $ctr.getSizes(item.vendor_cat_id, item.vendor_sub_cat_id)"></select>
+                                            </td>
+                                            <td>
+                                                 <span ng-if="!($ctr.src != '' || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99)">
+                                                     <span ng-if="(item.vendor_cat_id === 71)">-</span>
+                                                     <input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" ng-if="(item.vendor_cat_id !== 71)" type="number" class="form-control" ng-model="item.full_weight" required min="0"
+                                                      ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)">
+                                                </span>
+                                                <span ng-if="$ctr.src != '' || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99">-</span>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-change="$ctr.calculate($index)" required min="1" ng-model="item.pack">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" ng-model="item.case_cost" readonly required min="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.pack_cost"  required min="0.01" ng-change="$ctr.calculate($index)">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.substitute_for" ng-options="sku.id as sku.item_name group by sku.vendor_name for sku in $ctr.inventoryListSelected | orderBy:['vendor_name','item_name']"></select>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+					<button type="button" class="btn btn-primary" ui-sref="alcoholSetup.inventory">Edit</button>
+					<button type="button" class="btn btn-primary" ng-click="$ctr.clear()">Clear</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

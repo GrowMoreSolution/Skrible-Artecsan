@@ -1,0 +1,264 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <button class="close" ng-click="$ctr.cancel()" type="button"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title">Modify/Add - {{$ctr.vendorsName}}</h4>
+    </div>
+    <div class="modal-body">
+        <div class="row padding-top-20">
+            <form novalidate autocomplete="off" name="form" ng-submit="$ctr.search()">
+                <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                    <div class="col-xs-6 col-sm-4">
+                        <label>Category</label>
+                        <input type="text" class="form-control  m-b-xs"
+                               placeholder="Category" ng-model="$ctr.searchModel.category">
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label>Sub Category</label>
+                        <input type="text" class="form-control  m-b-xs"
+                               placeholder="Sub Category"
+                               ng-model="$ctr.searchModel.sub_category">
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label>Inventory Name</label>
+                        <input type="text" class="form-control  m-b-xs"
+                               placeholder="Name" ng-model="$ctr.searchModel.item_name">
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label>SKU (Vendor)</label>
+                        <input type="text" class="form-control  m-b-xs"
+                               placeholder="SKU" ng-model="$ctr.searchModel.vendor_sku">
+                    </div>
+                    <div class="col-xs-6 col-sm-4">
+                        <label>Owner</label>
+                        <select class="form-control" ng-model="$ctr.searchModel.filter">
+                            <option value="any">Any</option>
+                            <option value="common">Common</option>
+                            <option value="own">Own</option>
+                        </select>
+                    </div>
+                    <div class="col-xs-6 col-md-4 padding-top-20">
+                        <button type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+
+    <form autocomplete="off" name="$ctr.form" ng-submit="$ctr.submit($ctr.form, true)" novalidate>
+        <fieldset ng-disabled="$ctr.searchModel.inRequest">
+            <div class="modal-body">
+                <div class="row m-b">
+                    <div class="col-xs-12">
+                        <div class="table-responsive">
+                            <table class="table ng-scope footable-sort">
+                                <thead class="th-text-center th-vertical-align-middle ">
+                                <tr>
+                                    <th class="width-150"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'vendor_sku' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'vendor_sku' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('vendor_sku')">
+                                            <span class="no-wrap cursor-pointer">
+                                                SKU <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'item_name' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'item_name' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('item_name')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Item name <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-120"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'category' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'category' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('category')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Category <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-150"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'sub_category' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'sub_category' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('sub_category')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Sub Category <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-100"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'tare_type_id' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'tare_type_id' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('tare_type_id')">
+                                                <span class="no-wrap cursor-pointer">
+                                                Size <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                                </span>
+                                    </th>
+                                    <th class="width-100"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'full_weight' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'full_weight' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.search('full_weight')">
+                                                <span class="no-wrap cursor-pointer">
+                                                    Full Unit Wt <span class="text-danger">*</span>
+                                                    <span class="footable-sort-indicator"></span>
+                                                </span>
+                                    </th>
+                                    <th class="width-100"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'total_unit_size' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'total_unit_size' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('total_unit_size')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Unit <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-100"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'case_cost' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'case_cost' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('case_cost')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Case($) <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-100"
+                                        ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'unit_cost' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'unit_cost' && $ctr.searchModel.order_way == 'ASC')}"
+                                        ng-click="$ctr.getMyItems('unit_cost')">
+                                            <span class="no-wrap cursor-pointer">
+                                                Item ($) <span class="text-danger">*</span>
+                                                <span class="footable-sort-indicator"></span>
+                                            </span>
+                                    </th>
+                                    <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                    </th>
+                                    <th class="width-50">Delete</th>
+                                </tr>
+                                </thead>
+                                <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                <tbody ng-if="$ctr.refbooks" ng-repeat="item in $ctr.uniqueItem">
+                                <ng-form name="items">
+                                    <tr>
+                                        <td>
+                                            <input class="form-control"
+                                                   ng-disabled="item.parent_id || item.src == 'l' || item.src == 'g'"
+                                                   ng-model="item.vendor_sku" required search-params="$ctr.searchParams"
+                                                   type="text"
+                                                   typeahead-focus-first="false"
+                                                   typeahead-min-length="2"
+                                                   typeahead-on-select="$ctr.apply_values($index, $item)"
+                                                   typeahead-wait-ms="500"
+                                                   uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)"
+                                                   unique-sku>
+                                        </td>
+                                        <td>
+                                            <span ng-if="item.parent_id" uib-tooltip="{{item.item_name}}">
+                                                <input class="form-control" ng-model="item.item_name" readonly
+                                                       type="text">
+                                            </span>
+                                            <span ng-if="!item.parent_id">
+                                                <input class="form-control"
+                                                       ng-disabled="item.src == 'l' || item.src == 'g' || item.src == 's'"
+                                                       ng-model="item.item_name" required
+                                                       type="text"
+                                                       typeahead-focus-first="false"
+                                                       typeahead-min-length="2"
+                                                       typeahead-on-select="$ctr.apply_values($index, $item)"
+                                                       typeahead-wait-ms="500"
+                                                       uib-typeahead="name as name.disp_name for name in $ctr.item_name_lookup($viewValue)">
+                                            </span>
+                                        </td>
+                                        <td>
+                                            <select class="form-control"
+                                                    ng-change="$ctr.changeMOT($index); item.sub_dd_options = $ctr.filterItems(item.id, item.vendor_cat_id)"
+                                                    ng-disabled="item.parent_id || item.src == 'l' || item.src == 'g' || item.src == 's'"
+                                                    ng-model="item.vendor_cat_id"
+                                                    ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 2}"
+                                                    required></select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control"
+                                                    ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)"
+                                                    ng-disabled="item.parent_id || item.src == 'l' || item.src == 'g' || item.src == 's'"
+                                                    ng-model="item.vendor_sub_cat_id"
+                                                    ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"
+                                                    required></select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control"
+                                                    ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)"
+                                                    ng-disabled="item.parent_id || item.src == 'l' || item.src == 'g' || item.src == 's'"
+                                                    ng-model="item.tare_type_id"
+                                                    ng-options="item.tare_type_id as item.name for item in $ctr.getSizes(item.vendor_cat_id, item.vendor_sub_cat_id)"
+                                                    required></select>
+                                        </td>
+                                        <td>
+                                             <span ng-if="!(item.src == 'g' || item.src == 's' || item.parent_id || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99)">
+                                                 <span ng-if="(item.vendor_cat_id === 74 || item.vendor_cat_id === 75 || item.vendor_cat_id === 99)">-</span>
+                                                 <input class="form-control"
+                                                        min="0"
+                                                        ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)"
+                                                        ng-disabled="item.parent_id || item.src == 'l' || item.src == 'g' || item.src == 's'"
+                                                        ng-if="!(item.vendor_cat_id === 74 || item.vendor_cat_id === 75 || item.vendor_cat_id === 99)"
+                                                        ng-model="item.full_weight" required
+                                                        type="number">
+                                            </span>
+                                            <span ng-if="item.src == 'g' || item.src == 's' || item.parent_id || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99">-</span>
+                                        </td>
+                                        <td>
+                                            <input class="form-control" min="1"
+                                                   ng-change="$ctr.calculate($index)"
+                                                   ng-disabled="item.parent_id || item.src == 'l'" ng-model="item.pack"
+                                                   required type="number">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" min="0" ng-model="item.case_cost" readonly
+                                                   required type="number">
+                                        </td>
+                                        <td>
+                                            <input class="form-control" min="0.01" ng-change="$ctr.calculate($index)"
+                                                   ng-disabled="item.src == 'l'" ng-model="item.pack_cost" required
+                                                   type="number">
+                                        </td>
+                                        <td>
+                                            <select class="form-control" ng-change="$ctr.chkIfSubSelected($index)"
+                                                    ng-disabled="item.src == 'l'"
+                                                    ng-model="item.substitute_for"
+                                                    ng-options="subs.id as subs.item_name group by subs.vendor_name for subs in item.sub_dd_options | orderBy:['vendor_name','item_name']"></select>
+                                        </td>
+                                        <td style="padding-right: 0;">
+                                            <a class="btn btn-danger btn-circle pull-right" href=""
+                                               ng-click="$ctr.removeUniqueItem($index, item)"><i
+                                                    class="fa fa-times"></i></a>
+                                        </td>
+                                    </tr>
+                                </ng-form>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="clearfix m-b-lg m-t-lg">
+                        <div class="pull-right">
+                            <ul boundary-link-numbers="true" class="pagination-sm"
+                                items-per-page="$ctr.searchModel.paginationCount"
+                                max-size="10"
+                                ng-change="$ctr.search()"
+                                ng-model="$ctr.searchModel.paginationOffset"
+                                rotate="false"
+                                total-items="$ctr.searchModel.paginationTotal"
+                                uib-pagination></ul>
+                        </div>
+                    </div>
+                    <div class="col-xs-12 m-t-md">
+                        <div class="text-right">
+                            <button class="btn btn-info" id="btnAddRecipe" name="btnAddRecipe"
+                                    ng-click="$ctr.addUniqueItem()"
+                                    type="button"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary float-right" ng-click="$ctr.cancel()" type="button">Close</button>
+                <button class="btn btn-primary float-right" type="submit">Save</button>
+            </div>
+        </fieldset>
+    </form>
+</div>

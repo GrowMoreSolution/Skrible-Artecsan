@@ -1,0 +1,88 @@
+<!-- Wrapper-->
+<div id="wrapper" >
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <header-component></header-component>
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg {{$state.current.name}}">
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>First Audit</h2>
+                <!--<ol class="breadcrumb">
+                    <li ui-sref="alcoholSetup.foodInventory">
+                        <a>Alcohol</a>
+                    </li>&nbsp;/&nbsp;
+                    <li ui-sref="foodSetup.foodInventory">
+                        <a>Food</a>
+                    </li>
+                </ol>-->
+            </div>
+
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div ng-if="(main.subscription_type_id == 2 || main.subscription_type_id == 3 || main.subscription_type_id == 6 || main.subscription_type_id == 7) && main.permissions['60'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="foodSetup.tabletEntry({typeInventory: 'full'})">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Food</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="(main.subscription_type_id == 1 || main.subscription_type_id == 3 || main.subscription_type_id == 5 || main.subscription_type_id == 7) && main.permissions['59'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="alcoholSetup.tabletEntry({typeInventory: 'full'})">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Alcohol</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <h4>Helpful Tip</h4>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="full-height-scroll" full-scroll>
+                                            <p class="padding-top-5">
+                                                Note
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

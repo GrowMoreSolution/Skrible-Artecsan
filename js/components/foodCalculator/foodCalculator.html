@@ -1,0 +1,270 @@
+<!-- Wrapper--> 
+<div id="wrapper">
+
+   <!--<header-component></header-component>-->
+    <!-- Navigation -->
+    <!--<div ng-include="'views/common/navigation.html'"></div>-->
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg navigation-hide" ng-class="{'navigation-hide' : !main.isFoodSetup && main.isRegistration}">
+
+
+        <!-- Main view  -->
+
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Account Level</h2>
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <!--<div style="margin-top:30px">-->
+                <div class="row" style="margin-top:0px">
+					<div class="col-sm-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content overflow-x-auto ir">
+								<div class="row">
+									<div class="col-sm-2">
+										<h4 class="text-right" style="margin-top:15px">Menu Name</h4>
+									</div>
+									<div class="col-sm-4">
+										<input class="form-control  m-b-xs" type="text" placeholder="Type Menu Name here" style="width:100%; margin-top:5px" ng-model="$ctr.model.menu_name"/>
+									</div>
+									
+									<div class="col-sm-2">
+										<h4 class="text-left" style="margin-top:5px">How much do you sell this plate for?</h4>
+									</div>
+									<div class="col-sm-2">
+										<input class="form-control  m-b-xs" type="number" min="0" placeholder="$" ng-blur="$ctr.adjustPrice()" style="width:100%; margin-top:5px" ng-change="$ctr.calculate(-1)" ng-model="$ctr.model.menu_price"/>
+									</div>
+								</div>
+								<hr/>
+								
+								<div class="row">
+									<div class="col-sm-5" style="border-bottom: 3px solid;">
+										<h4 class="text-left" style="margin-top:10px">Menu Item Summary</h4>
+									</div>
+									<div class="col-sm-4">
+									</div>
+									<div class="col-sm-3 text-right">
+										<button type="button" name="btnAddMenu" class="btn btn-primary" ng-click="$ctr.reset_model_alert()">
+											<i class="fa fa-repeat"> Reset fields</i>
+										</button>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3">
+										<a ng-click="$ctr.select_item(1)"><h4 class="text-right" style="margin-top:10px">{{$ctr.model.item1.recipe_name}}</h4></a>
+									</div>
+									<div class="col-sm-1">
+										<input class="form-control  m-b-xs" placeholder="$" type="number" style="width:100px;" ng-model="$ctr.model.item1.recipe_cost" disabled />
+									</div>
+									<div class="col-sm-1">
+									</div>
+									<div class="col-sm-1">
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3">
+										<a ng-click="$ctr.select_item(2)"><h4 class="text-right" style="margin-top:10px">{{$ctr.model.item2.recipe_name}}</h4></a>
+									</div>
+									<div class="col-sm-1">
+										<input class="form-control  m-b-xs" placeholder="$" type="number" style="width:100px;" ng-model="$ctr.model.item2.recipe_cost" disabled />
+									</div>
+									<div class="col-sm-1">
+									</div>
+									<div class="col-sm-1">
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3">
+										<a ng-click="$ctr.select_item(3)"><h4 class="text-right" style="margin-top:10px">{{$ctr.model.item3.recipe_name}}</h4></a>
+									</div>
+									<div class="col-sm-1">
+										<input class="form-control  m-b-xs" placeholder="$" type="number" style="width:100px;" ng-model="$ctr.model.item3.recipe_cost" disabled />
+									</div>
+									<div class="col-sm-1">
+									</div>
+									<div class="col-sm-1">
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3" style="border-top: 3px solid;">
+										<h4 class="text-left" style="margin-top:10px">Total Plate Cost</h4>
+									</div>
+									<div class="col-sm-1" style="border-top: 3px solid;">
+										<input class="form-control  m-b-xs" placeholder="$" type="number" style="width:100px;" ng-model="$ctr.model.menu_cost" disabled />
+									</div>
+									<div class="col-sm-1" style="border-top: 3px solid;">
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3" style="border-top: 3px solid;">
+										<h4 class="text-left" style="margin-top:10px">Plate Cost %</h4>
+									</div>
+									<div class="col-sm-1" style="border-top: 3px solid;">
+										<input class="form-control  m-b-xs" placeholder="%" type="number" style="width:100px;" ng-model="$ctr.model.menu_cost_percent" disabled />
+									</div>
+									<div class="col-sm-1" style="border-top: 3px solid;">
+									</div>
+									<div class="col-sm-4">
+									</div>
+									<div class="col-sm-3 text-right">
+										<button type="button" name="btnAddMenu" class="btn btn-primary" ng-click="$ctr.emailDetails()">
+											<i class="fa fa-envelope"> Email me these details</i>
+										</button>
+									</div>
+								</div>
+								<hr/>
+								
+								<div class="row">
+									<div class="col-sm-2">
+										<h4 class="text-right" style="margin-top:15px">Recipe Name</h4>
+									</div>
+									<div class="col-sm-4">
+										<input class="form-control  m-b-xs" type="text" placeholder="{{$ctr.selected_item.recipe_name}}" style="width:100%; margin-top:5px" ng-model="$ctr.selected_item.recipe_name" ng-blur="$ctr.checkRecipeName($ctr.selected_item)"/>
+									</div>
+									
+									<div class="col-sm-4">
+										<h4 class="text-right" style="margin-top:15px">How many people can this recipe serve?</h4>
+									</div>
+									<div class="col-sm-2">
+										<input class="form-control  m-b-xs" type="number" min="0" placeholder="0" ng-blur="$ctr.adjustServings($ctr.selected_item)" style="width:100%; margin-top:5px" ng-change="$ctr.calculate($ctr.selected_item_no)" ng-model="$ctr.selected_item.servings"/>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-8">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th class="text-left" colspan="4">Enter the ingredient details for your recipe and then use them to create your recipes. You may add up to eight ingredients.</th>
+													</tr>
+													<tr>
+														<th style="width:60px"></th>
+														<th style="width:300px">Ingredient Name</th>
+														<th style="width:90px">Delivery Type</th>
+														<th style="width:120px">Cost per delivery unit ($)</th>
+													</tr>
+												</thead>
+												<tbody ng-repeat="ingre in $ctr.selected_item.ingredients track by $index">
+													<tr>
+														<td>
+															<button type="button" name="btnDelMenu" class="btn btn-danger" ng-click="$ctr.delIngreEntry($index)">
+																<i class="fa fa-times"></i>
+															</button>
+														</td>
+														<td style="width:300px">
+															<input class="form-control  m-b-xs" type="text" ng-model="ingre.ingre_name"/>
+														</td>
+														<td style="width:90px">
+															<select class="form-control" ng-model="ingre.delivery_unit"
+																	ng-options="value as value.name for value in $ctr.unit_types"
+																	ng-change="$ctr.resetFields(ingre, $index)">
+															</select>
+														</td>
+														<td style="width:120px">
+															<input class="form-control  m-b-xs" min="0" type="number" ng-change="$ctr.calculate($ctr.selected_item_no, $index)" ng-model="ingre.cost"/>
+														</td>
+													</tr>
+												</tbody>
+												<tfoot ng-if="$ctr.selected_item.ingredients.length < 8">
+													<tr>
+														<td colspan="4">
+															<button type="button" name="btnAddMenu" class="btn btn-info" ng-click="$ctr.addIngreEntry()">
+																<i class="glyphicon glyphicon-plus"></i>
+															</button>
+														</td>
+													</tr>
+												</tfoot>
+											</table> 
+										</div>
+									</div>
+								
+									<div class="col-sm-4">
+										<div class="table-responsive">
+											<table class="table table-bordered">
+												<thead>
+													<tr>
+														<th class="text-left" colspan="3">In this section use the ingredient on the left to create your recipe.</th>
+													</tr>
+													<tr>
+														<th>Recipe Amount</th>
+														<th>Measurement type</th>
+														<th>Recipe Cost ($)</th>
+													</tr>
+												</thead>
+												<tbody ng-repeat="ingre in $ctr.selected_item.ingredients track by $index">
+													<tr>
+														<td>
+															<input class="form-control  m-b-xs" min="0" type="number" ng-change="$ctr.calculate($ctr.selected_item_no, $index)" ng-model="ingre.recipe_amount"/>
+														</td>
+														<td style="width:90px">
+															<select class="form-control" ng-model="ingre.measure_type"
+																	ng-options="value as value.name for value in $ctr.get_unit_types($index)"
+																	ng-change="$ctr.calculate($ctr.selected_item_no, $index)">
+															</select>
+														</td>
+														<td style="width:90px">
+															<input class="form-control  m-b-xs" type="text" ng-model="ingre.recipe_cost" disabled />
+														</td>
+													</tr>
+												</tbody>
+												<tfoot ng-if="$ctr.selected_item.ingredients.length < 8">
+													<tr>
+														<td colspan="3" style="height: 56px">
+															
+														</td>
+													</tr>
+												</tfoot>
+											</table> 
+										</div>
+									</div>
+								</div>
+									
+							</div>
+						</div>
+					</div>
+				</div>
+            <!--</div>-->
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="email_results.html">
+	<div class="inmodal" style="margin-top:80px;">
+		<form class="m-t" name="$ctr.emailForm" novalidate autocomplete="off" ng-submit="$ctr.save($ctr.emailForm)">
+			<div class="modal-body">
+				<h4 class="text-center modal-title">{{$ctr.q_title}}</h4>
+				<hr/>
+				
+				<div class="row">
+					<div class="col-sm-2">
+						<h4 class="text-right" style="margin-top:15px">Email: </h4>
+					</div>
+					<div class="col-sm-9">
+						<input name="Email" class="form-control  m-b-xs" type="text" style="width:100%; margin-top:5px" ng-model="$ctr.user_email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" autocomplete="off" required />
+					</div>
+				</div>
+			</div>
+
+			<div class="modal-footer">
+				<button type="button" class="btn btn-white" ng-click="$ctr.cancel()">Cancel</button>
+				<button type="submit" class="btn btn-white">Send Email</button>
+			</div>
+		</form>
+	</div>
+</script>

@@ -1,0 +1,602 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-6">
+        <h2>
+            <span ng-show="!$ctr.isEdit">Add New Invoice</span>            
+        </h2>
+    </div>
+	<div class="col-lg-6" style="padding-top: 20px;">
+		<span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+    </div>
+</div>
+
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content">
+                    <form name="$ctr.form" novalidate="" autocomplete="off" ng-submit="$ctr.addNewOrder($ctr.form)" class="ng-pristine ng-valid">
+                    	<div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button type="button" class="btn btn-info" ng-click="$ctr.viewInvoices()">View Invoices</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                        	<div class="col-xs-4">
+	                        	<div class="form-group row"><label class="col-lg-2 col-form-label">Vendor</label>
+	                                <div class="col-lg-10">
+	                                	<select class="form-control" ng-change="$ctr.chooseVendor()" ng-model="$ctr.selected_vendor" ng-options="v as v.vendor_name for v in $ctr.vendors | orderBy:'vendor_name'" required></select>
+	                                </div>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                        	<div class="form-group row">
+	                            	<label class="col-lg-2 col-form-label">Invoice #</label>
+	                                <div class="col-lg-10">
+										<input type="text" ng-blur="$ctr.check_Invoice()" ng-model="$ctr.invoice_number" placeholder="Invoice Number" class="form-control" required>
+									</div>
+	                            </div>
+	                        </div>
+	                        <div class="col-xs-4">
+	                        	<div class="form-group row">
+	                            	<label class="col-lg-2 col-form-label">Date</label>
+	                                <div class="col-lg-10">
+										<input ng-change="$ctr.checkDetails()" type="date" class="form-control" style="min-width: 101px"
+										   ng-model="$ctr.invoice_date" required>
+										<!--<input ng-change="$ctr.checkDetails()" type="text" class="form-control" style="min-width: 101px"
+										   datetime-picker="MM/dd/yyyy HH:mm"
+										   format="MM/dd/yyyy"
+										   ng-model="$ctr.invoice_date"
+										   ng-focus="orderDate = true;"
+										   is-open="orderDate"
+										   datepicker-append-to-body="true" required>-->
+									</div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+	                        </div>
+	                        <div class="col-xs-4">
+	                        </div>
+	                        <div class="col-xs-4">
+	                        	<div class="form-group row">
+	                            	<label class="col-lg-2 col-form-label">Invoice Total</label>
+	                                <div class="col-lg-10">
+										<input type="number" ng-model="$ctr.invoice_total" placeholder="Invoice Total" class="form-control" required></div>
+	                            </div>
+	                        </div>
+                        </div>
+                        <div ng-if="$ctr.selected_vendor.id && $ctr.selected_vendor.id != -1" class="table-responsive">
+                            <ng-form name="items" class="ng-pristine ng-valid">
+                                    </ng-form>
+                                <table class="table table-bordered">
+                                <thead class="th-text-center th-vertical-align-middle">
+                                    <tr>
+                                        <th class="width-180">Item SKU</th>
+                                        <th class="width-180">Item Name</th>
+										<th class="width-80">#Received</th>
+										<th class="width-80">Order Type</th>
+										<th class="width-70">Item Cost</th>
+                                        <th ng-if="!$ctr.isFood" class="width-70">Discounts/Deposits</th>
+                                        <th ng-if="$ctr.isFood" class="width-70">Case Size</th>
+										<!-- <th ng-hide="$ctr.isFood" ng-show="!$ctr.isFood" class="width-70">Discounts/Deposits</th>
+										<th ng-hide="!$ctr.isFood" ng-show="$ctr.isFood" class="width-70">Case Size</th> -->
+                                        <th class="width-90">Order Total</th>                                        <!-- <th ng-hide="$ctr.isFood" ng-show="!$ctr.isFood" class="width-90">Order Total</th>
+                                        <th ng-hide="!$ctr.isFood" ng-show="$ctr.isFood" class="width-90">Total Order Cost</th> -->
+                                        <th class="width-70">Delete</th>
+                                    </tr>
+                                </thead>
+								<tbody ng-repeat="i in $ctr.orderModel.items">
+									<ng-form name="items">
+										<tr class="text-center">
+                                            <td>
+												<input type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($index, $viewValue)" 
+                                                       typeahead-focus-first="false" ng-model="i.vendor_sku"
+                                                       typeahead-on-select="$ctr.apply_values($index, $item)"
+													   ng-disabled="i.locked">
+											</td>
+											<td>
+												<input type="text" class="form-control" ng-model="i.item_name" required readonly>
+											</td>
+											<td>
+												<input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, 0)" class="form-control" ng-model="i.amount" required>
+											</td>
+											<td>
+												<select class="form-control" ng-model="i.order_type" ng-change="$ctr.calculate($index, i.vendor_sku_id, 0)" ng-options="item.value as item.name for item in i.otypes" required></select>
+											</td>
+											<td>
+												<div class="input-group width-120">
+													<span class="input-group-addon">
+														<input type="checkbox" ng-model="i.item_cost_is_editable">
+													</span>
+													<input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, -1)" ng-disabled="!i.item_cost_is_editable" ng-model="i.item_cost" required class="form-control">
+												</div>
+											</td>
+											<td ng-if="!$ctr.isFood">
+												<input type="number" ng-change="$ctr.calculate($index, i.vendor_sku_id, 0)" class="form-control" ng-model="i.discount" required>
+											</td>
+											<td class="text-center" ng-if="$ctr.isFood">
+												<input type="text" class="form-control" ng-model="i.case_size" required readonly>
+											</td>
+											<td>
+												${{i.total_cost | number : 2}}
+											</td>
+											<td class="text-center">
+												<a href="" ng-click="$ctr.delete($index)" class="btn btn-danger btn-circle pull-right" ><i class="fa fa-times"></i></a>
+											</td>
+										</tr>
+									</ng-form>
+                                </tbody>
+                                <tbody>
+                                    <tr ng-show="!$ctr.orderModel.items.length">
+                                        <td colspan="11" class="text-center ng-scope">
+                                            No data added yet
+                                        </td>
+                                    </tr>
+                                    <tr class="text-bold-total">
+                                        <td colspan="4" class="text-right">TOTAL</td>
+										<td class="text-center">${{$ctr.orderModel.totalItems | number : 2}}</td>
+                                        <td ng-if="!$ctr.isFood" class="text-center">${{$ctr.orderModel.totalDiscount}}</td>
+										<td colspan="1" ng-if="$ctr.isFood"></td>
+										<td class="text-center">${{$ctr.orderModel.totalCost | number : 2}}</td>
+                                        <td class="text-center"></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 text-right">
+                                <button type="button" ng-if="$ctr.selected_vendor.id && $ctr.selected_vendor.id != -1" class="btn btn-info" ng-click="$ctr.pushNewItem()"><i class="glyphicon glyphicon-plus"></i></button>
+                            </div>
+                        </div>
+                        <div class="row m-t-lg">
+                            <div class="col-xs-6">
+                                <button class="btn btn-primary" type="button" onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+								<!-- ngIf: !$ctr.isEdit --><button class="btn btn-primary ng-scope" type="submit" ng-if="!$ctr.isEdit" ng-click="setEmail()">All Entries Completed</button><!-- end ngIf: !$ctr.isEdit -->
+                            </div>
+                            <div class="col-xs-6 text-right">
+                                <button class="btn btn-primary" type="submit">Save</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/ng-template" id="add_new_vendor.html">
+  <div class="inmodal">
+      <form novalidate autocomplete="off" name="form" ng-submit="$ctr.submit(form)">
+          <div class="modal-header">
+              <h4 class="modal-title">Add a new Vendor</h4>
+          </div>
+          <div class="modal-body">
+              <fieldset>
+                <div class="form-group">
+                    <label>Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Vendor Name" ng-model="$ctr.model.vendor_name" required>
+                </div>
+				<div class="form-group">
+                    <label>Vendor type <span class="text-danger">*</span></label>
+                    <select class="form-control" ng-model="$ctr.model.vendor_type_id" ng-change="$ctr.getGlobalVendors()" ng-options="item.id as item.name for item in $ctr.vendor_types" required></select>
+                </div>
+				<div class="form-group">
+					<label>Is a local distributor of: </label>
+					<select class="form-control" ng-model="$ctr.model.primary_vendor" ng-options="item.id as item.vendor_name for item in $ctr.global_Vendors"></select>
+				</div>
+                <div class="form-group">
+                    <label>Street Address </label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Street Address" ng-model="$ctr.model.address">
+                </div>
+                <div class="form-group">
+                    <label>Zip code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Zip code" ng-model="$ctr.model.zip" required
+                           ng-pattern="/^\d+$/" minlength="3" maxlength="6"
+                           ng-change="$ctr.onZipChanged($ctr.model.zip)" name="zip">
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="City" ng-model="$ctr.model.city" required readonly>
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>State <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="State" ng-model="$ctr.model.state" required readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sales Rep Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Sales Representative Name" ng-model="$ctr.model.sales_rep" required>
+                </div>
+                <div class="form-group">
+                  <label>Primary Email <span class="text-danger">*</span></label>
+                  <input type="text" placeholder="Email for Orders" class="form-control" ng-model="$ctr.model.primary_email" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/" required>
+				  <label>Secondary Email 1 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_1" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+				  <label>Secondary Email 2 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_2" ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                </div>
+                <div class="form-group">
+                    <label>Account No. <span class="text-danger">*</span></label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Account Number" ng-model="$ctr.model.account_no" required>
+                </div>
+              </fieldset>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" ng-click="$ctr.cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+      </form>
+  </div>
+</script>
+
+<script type="text/ng-template" id="add_new_food_inventory_item.html">
+    <div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Inventory Item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+                                    <tr>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+											   SKU <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th>
+											<span class="no-wrap cursor-pointer">
+												 Item name <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Category <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Sub Category
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Unit <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Pack <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Size <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Case ($) <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-80">
+											<span class="no-wrap cursor-pointer">
+												 Min Order <span class="text-danger">*</span>
+											</span>
+                                        </th>
+										<th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                    <tbody ng-repeat="item in $ctr.uniqueItem">
+                                    <ng-form name="items">
+                                        <tr>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.vendor_sku"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" ng-model="item.item_name" required>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_cat_id" required ng-change="$ctr.filterItems()" ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 1}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_sub_cat_id"  ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'"class="form-control" ng-model="item.uom_id_of_delivery_unit" ng-change="$ctr.filterItems()" required ng-options="item.id as item.name for item in $ctr.deliveryMeasure"></select>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" only-digits ng-model="item.pack" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.size" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.case_cost"  required min="0">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" required ng-model="item.minimum_order_type">
+                                                    <option value="Case" selected>CASE</option>
+                                                    <option value="Pack">PACK</option>
+                                                    <option value="Each">EACH</option>
+                                                </select>
+                                            </td>
+											<td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.substitute_for" ng-options="sku.id as sku.item_name group by sku.vendor_name for sku in $ctr.inventoryListSelected | orderBy:['vendor_name','item_name']"></select>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+					<button type="button" class="btn btn-primary" ng-click="$ctr.clear()">Clear</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="add_new_alcohol_inventory_item.html">
+	<div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Inventory Item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+                                    <tr>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                SKU <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th>
+                                            <span class="no-wrap cursor-pointer">
+                                                Item name <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                Category <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-150">
+                                            <span class="no-wrap cursor-pointer">
+                                                Sub Category <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												Size <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												Full Unit Weight <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Unit <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Case($) <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+                                        <th class="width-100">
+                                            <span class="no-wrap cursor-pointer">
+                                                Item ($) <span class="text-danger">*</span>
+                                            </span>
+                                        </th>
+										<th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                    <tbody ng-repeat="item in $ctr.uniqueItem" ng-if="$ctr.refbooks">
+                                    <ng-form name="items">
+                                        <tr>
+                                            <td>
+												<input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.vendor_sku"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+                                            <td>
+												<input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="name as name.disp_name for name in $ctr.item_name_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.item_name"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.vendor_cat_id" required ng-change="$ctr.changeMOT($index)" ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 2}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.vendor_sub_cat_id" ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)" required ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" class="form-control" ng-model="item.tare_type_id" required
+                                                        ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)"
+                                                        ng-options="item.tare_type_id as item.name for item in $ctr.getSizes(item.vendor_cat_id, item.vendor_sub_cat_id)"></select>
+                                            </td>
+                                            <td>
+                                                 <span ng-if="!($ctr.src != '' || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99)">
+                                                     <span ng-if="(item.vendor_cat_id === 71)">-</span>
+                                                     <input ng-disabled="$ctr.src == 'l' || $ctr.src == 'g' || $ctr.src == 's'" ng-if="(item.vendor_cat_id !== 71)" type="number" class="form-control" ng-model="item.full_weight" required min="0"
+                                                      ng-change="$ctr.setWeights($index, item.vendor_cat_id, item.vendor_sub_cat_id, item.tare_type_id)">
+                                                </span>
+                                                <span ng-if="$ctr.src != '' || item.vendor_cat_id == 74 || item.vendor_cat_id == 75 || item.vendor_cat_id == 99">-</span>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-change="$ctr.calculate($index)" required min="1" ng-model="item.pack">
+                                            </td>
+                                            <td>
+                                                <input type="number" class="form-control" ng-model="item.case_cost" readonly required min="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.pack_cost"  required min="0.01" ng-change="$ctr.calculate($index)">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.substitute_for" ng-options="sku.id as sku.item_name group by sku.vendor_name for sku in $ctr.inventoryListSelected | orderBy:['vendor_name','item_name']"></select>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+					<button type="button" class="btn btn-primary" ng-click="$ctr.clear()">Clear</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>
+
+<script type="text/ng-template" id="save_invoice.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">Is this the last invoice for this restaurant?</h4>
+		</div>
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white float-left" ng-click="save_invoice.skip()">Close</button>
+			<button type="button" class="btn btn-danger" ng-click="save_invoice.save(true)">Yes. Last Invoice</button>
+			<button type="button" class="btn btn-success" ng-click="save_invoice.save(false)">No. Continue More Entries</button>
+		</div>
+	</div>
+</script>
+
+<script type="text/ng-template" id="view_invoice.html">
+    <div class="inmodal">
+        <div class="modal-header">
+            <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title">Added Invoices</h4>
+        </div>
+        <div class="modal-body">
+        	<div class="row">
+        		<div class="col-xs-5">
+                	<div class="form-group row">
+                    	<label class="col-lg-2 col-form-label">Start Date</label>
+                        <div class="col-lg-10">
+							<input type="date" class="form-control" style="min-width: 101px"							 
+							   ng-model="$ctr.start_date" required>
+						</div>
+                    </div>
+                </div>
+                <div class="col-xs-5">
+                	<div class="form-group row">
+                    	<label class="col-lg-2 col-form-label">End Date</label>
+                        <div class="col-lg-10">
+							<input type="date" class="form-control" style="min-width: 101px"							   
+							   ng-model="$ctr.end_date"
+							    required>
+						</div>
+                    </div>
+                </div>
+                <div class="col-xs-2">
+                	<button type="button" class="btn btn-primary" ng-click="$ctr.search()">Search</button>
+                </div>
+
+        	</div>
+            <div class="row m-b">
+                <div class="col-xs-12">
+                    <div class="table-responsive">
+                        <table class="table ng-scope  footable-sort">
+                            <thead class="th-text-center th-vertical-align-middle ">
+                            <tr>
+                            	<th>
+                                    <span class="no-wrap cursor-pointer">Vendor Name</span>
+                                </th>
+                                <th>
+                                    <span class="no-wrap cursor-pointer">Invoice #</span>
+                                </th>                      
+                                <th class="width-100">
+                                    <span class="no-wrap cursor-pointer">Invoice Total</span>
+                                </th>
+                                <th>
+                                    <span class="no-wrap cursor-pointer">Created At</span>
+                                </th>
+                            </tr>
+                            </thead>                            
+                            <tbody ng-repeat="item in $ctr.invoices">
+                                <tr class="text-center">
+                                	<td>{{item.vendor_name}}</td>
+                                    <td>{{item.invoice_number}}</td>
+                                    <td>{{item.invoice_total}}</td>
+                                    <td>{{item.created_at | date :  "yyyy-MM-dd HH:mm:ss"}}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" ng-click="$ctr.cancel()">Close</button>
+        </div>
+    </div>
+</script>

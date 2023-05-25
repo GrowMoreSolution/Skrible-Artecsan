@@ -1,0 +1,705 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.showCCData">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <!-- <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Sales Report</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="reports.reportsCategory">
+                        <a>Reports</a>
+                    </li>&nbsp;/&nbsp;
+                    <li ui-sref="reports.alcohol.alcoholDetail">
+                        <a>Alcohol Detail Report</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Sales Report</a>
+                    </li>
+                </ol> 
+            </div>
+            <div class="col-lg-2">
+                <h5>Sales Report</h5>
+            </div>
+        </div> -->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="administrator.menu">&lt;&lt; Back</button>
+                                    <button class="btn btn-primary" ng-if="$ctr.showProfileData" ng-class="{active : $ctr.mode == 'profile'}" ng-click="$ctr.changeMode('profile')">Restaurant Profile</button>
+                                    <button class="btn btn-primary" ng-class="{active : $ctr.mode == 'schedule'}" ng-click="$ctr.changeMode('schedule')">{{$ctr.user.userid != 1 ? 'Timesheet' : 'Schedule'}}</button>
+									<button class="btn btn-primary" ng-class="{active : $ctr.mode == 'auditor'}" ng-click="$ctr.changeMode('auditor')">Auditor Performance</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content overflow-x-auto ir">
+							<div ng-if="$ctr.mode == 'profile' && $ctr.showProfileData">
+								<form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.saveRestaurantAuditProfile($ctr.form)">
+									<div class="row">
+										<div class="col-lg-5">
+											<div class="row">
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead class="th-text-center">
+															<tr>
+																<th colspan="3">Points of Contact</th>
+															</tr>
+															<tr>
+																<th>Name</th>
+																<th>Title</th>
+																<th>Phone</th>
+															</tr>
+														</thead>
+														<tbody ng-repeat="contact_item in $ctr.rest_aud_profile.contacts">
+															<tr>
+																<td>
+																	<input type="text" style="width:140px" ng-model="contact_item.full_name"/>
+																</td>
+																<td>
+																	<input type="text" style="width:100px" ng-model="contact_item.title"/>
+																</td>
+																<!--<td>
+																	<input type="text" style="width:100px" ng-model="contact_item.phone"/>
+																</td>-->
+																<td>
+																<div class="phone-input">
+																	<div>
+																		<div class="phone-code">
+																			<div>+1</div>
+																		</div>
+																	</div>
+																	<input name="phone" style="width:150px" type="text" class="form-control"
+																	   only-digits
+																	   ng-model="contact_item.phone" maxlength="10" placeholder="Only digits">
+																</div>
+																</td>
+															</tr>
+														</tbody>
+													</table> 
+												</div>
+											</div>
+											<div class="row">
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Pref. Auditor NAC: </label>
+														<label class="switch">
+															<input type="checkbox" ng-model="$ctr.rest_aud_profile.replacement_auditor_allowed" ng-true-value="1" ng-false-value="0"><i></i>
+														</label>
+														
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Pref. Date. NAC: </label>
+														<label class="switch">
+															<input type="checkbox" ng-model="$ctr.rest_aud_profile.replacement_date_allowed" ng-true-value="1" ng-false-value="0"><i></i>
+														</label>
+													</div>
+												</div>
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label>Wifi Password: </label>
+														<input type="text" ng-model="$ctr.rest_aud_profile.wifi_password"/>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Mode: </label>
+														<select ng-model="$ctr.InvType" ng-change="$ctr.changeInvType()" ng-options="value as value for value in $ctr.getModes()"/>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<label>Audit Active: </label>
+														<label class="switch">
+															<input type="checkbox" ng-model="$ctr.rest_aud_profile.audit_enabled" ng-true-value="1" ng-false-value="0"><i></i>
+														</label>
+													</div>
+												</div>
+												<div class="col-sm-12">
+													<div class="form-group">
+														<label>Internal Notes: </label>
+														<textarea class="form-control" ng-model="$ctr.rest_aud_profile.internal_notes"></textarea>
+													</div>
+												</div>
+												<div class="col-sm-6">
+													<div class="form-group">
+														<button type="submit" class="btn btn-primary">Save Restaurant Profile</button>
+													</div>
+												</div>
+											</div>
+										</div>
+										<div class="col-lg-4">
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead class="th-text-center">
+														<tr>
+															<th colspan="4">{{$ctr.InvType}} - Budget</th>
+														</tr>
+														<tr>
+															<th>Category</th>
+															<th>Budget</th>
+															<th>Assigned</th>
+															<th></th>
+														</tr>
+													</thead>
+													<tbody ng-repeat="budget_item in $ctr.rest_aud_profile.budget">
+														<tr>
+															<td>
+																<select ng-model="budget_item.category" style="width:85px" required ng-options="value.category as value.category for value in $ctr.SKU_categories"/>
+															</td>
+															<td>
+																<input type="number" min="0" style="width:55px" required ng-change="$ctr.recalcTotalBudget()" ng-model="budget_item.budget_minutes"/>
+															</td>
+															<td>
+																<select ng-model="budget_item.assigned" style="width:90px" required>
+																	<option value="Auditor 1">Auditor 1</option>
+																	<option value="Auditor 2">Auditor 2</option>
+																	<option value="Auditor 3">Auditor 3</option>
+																	<option value="Auditor 4">Auditor 4</option>
+																</select>
+															</td>
+															<td>
+																<a ng-click="$ctr.delBudgetEntry($index)" style="width:25px" class="btn btn-danger btn-circle pull-right"><i class="fa fa-times"></i></a>
+															</td>
+														</tr>
+													</tbody>
+													<tfoot>
+														<tr>
+															<td colspan="2">
+																<label>Total {{$ctr.InvType}} Est.: </label>
+																<label>{{$ctr.total_est_hrs | number : 2}} hrs</label>
+															</td>
+															<td colspan="2">
+																<button type="button" name="btnAddMenu" class="btn btn-info" ng-click="$ctr.addBudgetEntry()">
+																	<i class="glyphicon glyphicon-plus"></i>
+																</button>
+															</td>
+														</tr>
+													</tfoot>
+												</table> 
+											</div>
+										</div>
+										<div class="col-lg-3">
+											<div ng-if="$ctr.InvType=='Alcohol'" class="table-responsive">
+												<table class="table table-bordered">
+													<thead class="th-text-center">
+														<tr>
+															<th colspan="2">Section Info</th>
+														</tr>
+													</thead>
+													<tbody>
+														<tr>
+															<td>Number of Large Bars</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Small Bars</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Speed Rails</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Draft Beer Taps</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Wine Taps</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Liquor Storage Rooms</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+														<tr>
+															<td>Number of Keg Storage</td>
+															<td class="text-right"><input style="width:50px" disabled type="number"/></td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							
+							<!--Audits list-->
+							<div ng-if="$ctr.mode == 'schedule'">
+								<form name="$ctr.audit_form" autocomplete="off" novalidate>
+									<div ng-if="$ctr.user.userid != 1" class="row">
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="font-noraml">Restaurant</label>
+												<div class="input-group date">
+													<select ng-model="$ctr.current_rest" style="width:200px" ng-options="item.id as item.restaurant_name for item in $ctr.rest_list" required>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div ng-if="$ctr.timesheet_filter == '--All--'" class="col-sm-2">
+											<div class="form-group">
+												<label class="font-noraml">Date From</label>
+												<div class="input-group date">
+													<input type="date" ng-model="$ctr.timesheet_start_date"/>
+												</div>
+											</div>
+										</div>
+										<div ng-if="$ctr.timesheet_filter == '--All--'" class="col-sm-2">
+											<div class="form-group">
+												<label class="font-noraml">Date To</label>
+												<div class="input-group date">
+													<input type="date" ng-model="$ctr.timesheet_end_date"/>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-2">
+											<div class="form-group">
+												<label class="font-noraml">Show</label>
+												<div class="input-group date">
+													<select ng-model="$ctr.timesheet_filter" style="width:200px" ng-options="item as item for item in $ctr.timesheet_filter_list" required>
+													</select>
+												</div>
+											</div>
+										</div>
+										<div class="col-sm-1 search-button">
+											<div class="form-group">
+												<div class="input-group date">
+													<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.getScheduledAudits()">Search</button>
+													<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-lg-12">
+											<div class="table-responsive">
+												<table class="table table-bordered">
+													<thead>
+														<tr>
+															<th colspan="12">{{$ctr.InvType}} - Audit {{$ctr.user.userid != 1 ? 'Timesheet' : 'Schedule'}}</th>
+														</tr>
+														<tr>
+															<th ng-if="$ctr.user.userid != 1">Location</th>
+															<th>Audit Date</th>
+															<th>Day</th>
+															<th>Start Time</th>
+															<th>Frequency</th>
+															<th>Opt #1</th>
+															<th>Opt #2</th>
+															<th ng-if="$ctr.user.userid == 1">Rate</th>
+															<th ng-if="$ctr.user.userid != 1">Budget Rate</th>
+															<th>Audit Status</th>
+															<th ng-if="$ctr.user.userid == 1">Request Date</th>
+															<th>Auditors</th>
+															<th>Notes</th>
+															<th ng-if="$ctr.user.userid != 1">Accept/Deny</th>
+														</tr>
+													</thead>
+													<tbody ng-repeat="auds_item in $ctr.audit_schedule">
+														<tr>
+															<td ng-if="$ctr.user.userid != 1">
+																{{auds_item.location_name}}
+															</td>
+															<td>
+																{{auds_item.audit_date}}
+															</td>
+															<td>
+																{{auds_item.audit_day}}
+															</td>
+															<td>
+																{{auds_item.start_time}}
+															</td>
+															<td>
+																{{auds_item.frequency}}
+															</td>
+															<td>
+																{{auds_item.frequency_option_1 == null ? 'N/A' : auds_item.frequency_option_1}}
+															</td>
+															<td>
+																{{auds_item.frequency_option_2 == null ? 'N/A' : auds_item.frequency_option_2}}
+															</td>
+															<td ng-if="$ctr.user.userid == 1">
+																{{auds_item.final_audit_rate}}
+															</td>
+															<td ng-if="$ctr.user.userid != 1">
+																{{auds_item.budget_rate}}
+															</td>
+															<td>
+																{{auds_item.status}}
+															</td>
+															<td ng-if="$ctr.user.userid == 1">
+																{{auds_item.request_date}}
+															</td>
+															<td>
+																<button type="button" class="btn btn-primary" ng-click="$ctr.viewAuditors(auds_item)">View</button>
+															</td>
+															<td>
+																<button type="button" class="btn btn-primary" ng-click="$ctr.viewNotes(auds_item)">View</button>
+															</td>
+															<td ng-if="$ctr.user.userid != 1">
+																<button type="button" class="btn btn-success" ng-if="auds_item.status == 'Upcoming'" ng-click="$ctr.acceptDenyAudit(auds_item, 'Accept')">Accept</button>
+																<button type="button" class="btn btn-danger" ng-if="auds_item.status == 'Upcoming'" ng-click="$ctr.acceptDenyAudit(auds_item, 'Deny')">Deny</button>
+															</td>
+														</tr>
+													</tbody>
+												</table> 
+											</div>
+										</div>
+									</div>
+								</form>
+							</div>
+							<!--Audits list-->
+							
+							<!--Auditor Performance-->
+							<div ng-if="$ctr.mode == 'auditor'">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Employee</label>
+											<div class="input-group date">
+												<select ng-model="$ctr.current_auditor" style="width:200px" ng-options="value.id as value.first_name + ' ' +value.last_name for value in $ctr.skrible_auditor_emps" required>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Restaurant</label>
+											<div class="input-group date">
+												<select ng-model="$ctr.current_rest" style="width:200px" ng-options="item.id as item.restaurant_name for item in $ctr.rest_list" required>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Date From</label>
+											<div class="input-group date">
+												<input type="date" ng-model="$ctr.trans_start_date"/>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Date To</label>
+											<div class="input-group date">
+												<input type="date" ng-model="$ctr.trans_end_date"/>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-1 search-button">
+										<div class="form-group">
+											<div class="input-group date">
+												<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.getAuditorTransactionSummary()">Search</button>
+												<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-1 search-button float-right">
+										<div class="form-group">
+												<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.exportReport('auditor')" ng-if="$ctr.mode == 'auditor'">Export Report
+												</button>
+												<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+												</button>
+										</div>
+									</div>
+								</div>
+								
+								<div class="row">
+									<div class="col-sm-3">
+										<h3 class="float-left">{{$ctr.InvType}} - Auditor Performance</h3>
+									</div>
+									<div class="col-sm-3">
+										<h3>Company Efficiency: {{$ctr.company_eff | number : 2}}</h3>
+									</div>
+									<div class="col-sm-3">
+										<h3>Average Efficiency: {{$ctr.avg_efficiency | number : 2}}</h3>
+									</div>
+									<div class="col-sm-3">
+										<h3 class="float-right">Total Duration: {{$ctr.total_duration | number : 2}} hrs</h3>
+									</div>
+								</div>
+								
+								<div class="row" id="top-section" style="margin-right :20px;margin-left: -15px;">
+									<form name="$ctr.audit_form" autocomplete="off" novalidate>
+										<div class="row">
+											<div class="col-lg-12">
+												<div class="table-responsive">
+													<table class="table table-bordered">
+														<thead>
+															<!--<tr>
+																<th colspan="9"></th>
+																<th colspan="2"></th>
+															</tr>-->
+															<tr>
+																<th style="width: 12%;">Restaurant</th>
+																<th style="width: 11.5%;">Audit Date</th>
+																<th style="width: 10%;">Auditor</th>
+																<th style="width: 11.5%;">Start Time</th>
+																<th style="width: 11.5%;">End Time</th>
+																<th style="width: 6%;">Duration (hrs)</th>
+																<th style="width: 5%;">Budget (hrs)</th>
+																<th style="width: 5%;">Var. (hrs)</th>
+																<th style="width: 5%;">Review (min)</th>
+																<th style="width: 6%;">Efficiency</th>
+																<th style="width: 4%;">Error rate</th>
+																<th style="width: 11.5%;">Audit Closed At</th>
+															</tr>
+														</thead>
+													</table> 
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+							
+							
+								<div class="row" style="margin-left: -20px;margin-right: -8px;">
+									<div class="row"  id="content-table-section">
+										<div class="ibox float-e-margins" style="margin-top: -35px;
+										padding-left: 0px;
+										padding-right: 6px;">
+											<div class="ibox-content ir adjust-pad">
+												<table class="table table-bordered table-sm" style="table-layout: fixed;margin-top: 78px;">
+													<tbody ng-repeat="auds_item in $ctr.trans_summary">
+														<tr>
+															<td style="width: 12%;">
+																{{auds_item.restaurant_name}}
+															</td>
+															<td style="width: 11.5%;">
+																{{auds_item.audit_date}}
+															</td>
+															<td style="width: 10%;">
+																{{auds_item.auditor_name}}
+															</td>
+															<td style="width: 11.5%;">
+																{{auds_item.start_time}}
+															</td>
+															<td style="width: 11.5%;">
+																{{auds_item.end_time}}
+															</td>
+															<td style="width: 6%;">
+																{{auds_item.duration}}
+															</td>
+															<td style="width: 5%;">
+																{{auds_item.budget_in_hrs == null ? 0 : auds_item.budget_in_hrs}}
+															</td>
+															<td style="width: 5%;" ng-class="{red_text : (auds_item.duration - auds_item.budget_in_hrs > 0) && (auds_item.budget_in_hrs != null)}">
+																{{(auds_item.duration - (auds_item.budget_in_hrs == null ? 0 : auds_item.budget_in_hrs) | number : 2)}}
+															</td>
+															<td style="width: 5%;">
+																{{auds_item.review_duration * 60}}
+															</td>
+															<td style="width: 6%;">
+																{{auds_item.efficiency}}
+															</td>
+															<td style="width: 4%;">
+																{{auds_item.error_rate}}{{'%'}}
+															</td>
+															<td style="width: 11.5%;" ng-class="{red_text : auds_item.is_closeout_delayed}">
+																{{auds_item.audit_closed_at}}
+															</td>
+														</tr>
+													</tbody>
+												</table>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!--Auditor Performance-->
+						</div>
+					</div>
+				</div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="view_edit_auditors.html">
+	<div class="inmodal">
+        <form name="$ctr.auditor_form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.auditor_form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Assigned Auditors for Audit ({{$ctr.audit_schedule_item.audit_date}})</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+										<tr>
+											<th>
+												<span class="no-wrap cursor-pointer">
+													Auditor
+												</span>
+											</th>
+											<th class="width-120">
+												<span class="no-wrap cursor-pointer">
+													Assigned
+												</span>
+											</th>
+											<th class="width-100">
+												<span class="no-wrap cursor-pointer">
+													$ Rate
+												</span>
+											</th>
+											<th class="width-120">
+												<span class="no-wrap cursor-pointer">
+													Status
+												</span>
+											</th>
+										</tr>
+                                    </thead>
+                                    <tbody ng-repeat="item in $ctr.auditors">
+										<tr>
+											<td>
+												<select ng-disabled="(!$ctr.is_admin) || ($ctr.audit_status != 'Pending' && $ctr.audit_status != 'Accepted')" class="form-control" ng-model="item.auditor_user_id" ng-change="$ctr.selectAuditor(item)" style="width:200px" ng-options="value.id as value.first_name + ' ' +value.last_name for value in $ctr.skrible_auditors"/>
+											</td>
+											<td class="width-120 text-center">
+												{{$ctr.is_admin ? item.assigned : item.category}}
+											</td>
+											<td class="width-100 text-center">
+												{{item.budget_rate}}
+											</td>
+											<td class="width-120 text-center">
+												{{item.status}}
+											</td>
+										</tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+                    <button type="submit" ng-if="$ctr.is_admin && ($ctr.audit_status == 'Pending' || $ctr.audit_status == 'Accepted')" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="view_edit_notes.html">
+	<div class="inmodal">
+        <form name="$ctr.notes_form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Notes for Audit ({{$ctr.audit_schedule_item.audit_date}})</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+
+                        <div class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+										<tr>
+											<th>
+												<span class="no-wrap cursor-pointer width-150">
+													Type
+												</span>
+											</th>
+											<th>
+												<span class="no-wrap cursor-pointer">
+													Content
+												</span>
+											</th>
+										</tr>
+                                    </thead>
+                                    <tbody>
+										<tr>
+											<td class="text-center width-150">
+												Auditor Notes
+											</td>
+											<td class="text-center">
+												<textarea class="form-control" readonly ng-model="$ctr.audit_schedule_item.auditor_notes"></textarea>
+											</td>
+										</tr>
+										<tr>
+											<td class="text-center">
+												Restaurant Notes
+											</td>
+											<td class="text-center">
+												<textarea class="form-control" readonly ng-model="$ctr.audit_schedule_item.restaurant_notes"></textarea>
+											</td>
+										</tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<style>
+.ir select, .ir input {
+    height: 35px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#content-table-section {
+    max-height: 55vh;
+    overflow-y: scroll;
+}
+
+.adjust-pad {
+    padding-right: 2px;
+    padding-top: 0
+}
+
+#top-section {
+    position: absolute;
+}
+
+.bottomless {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            var height = document.getElementById('top-section').clientHeight;
+            $('#content-table-section').css('margin-top', (height-62) + 'px');
+        }, 3000);
+    });
+</script>

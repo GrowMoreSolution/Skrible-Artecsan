@@ -1,0 +1,760 @@
+<!-- Wrapper-->
+<div id="wrapper">       <!-- Change permission when establish a number for this-->
+
+    <!--<header-component></header-component>
+
+    <navigation-component></navigation-component>-->
+
+    <!-- Page wraper -->
+    <!--<div id="page-wrapper" class="gray-bg">-->
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Analytics</h2>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <form novalidate autocomplete="off" name="$ctr.from" ng-submit="$ctr.next($ctr.from)">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <div class="form-group" ng-repeat="item in $ctr.analytics_questionare track by $index">
+                                    <label>{{($index+1)}}. {{item.name}}</label>
+                                    <div class="input-group width-300">
+
+									  <!-- Page 1 -->
+                                      <!-- 1.	Please tell us what type of Restaurant you are. If you are a restaurant that sells both food and alcohol but your alcohol sales are greater than 80% of your total sales, please select Full Service Bar from the dropdown list otherwise please select your appropriate restaurant type. -->
+                                      <select ng-if="$index==0 && $ctr.page == 1" class="form-control" ng-model="$ctr.model.restaurant_category" ng-options="li.name as li.name for li in $ctr.all_restaurant_categories" required ng-disabled="$ctr.pg1_exists">
+                                          <option style="display:none" value="">{{$ctr.model.restaurant_category}}</option>
+                                      </select>
+
+                                      <!-- 3.	What is the total square feet of your restaurant including utilized customer patio area? -->
+                                      <input ng-if="$index==1 && $ctr.page == 1" type="number" min="0" class="form-control" ng-model="$ctr.model.total_area_sqft" required ng-disabled="$ctr.pg1_exists">
+									  <div ng-if="$index==1 && $ctr.page == 1" class="form-group">
+										<table>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Total sq. ft of your Kitchen area&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.kitchen_area_sqft" required ng-disabled="$ctr.pg1_exists">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Total sq. ft of your Dining Room&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.dining_area_sqft" required ng-disabled="$ctr.pg1_exists">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Total sq. ft of your Patio&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.patio_area_sqft" required ng-disabled="$ctr.pg1_exists">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Total sq. ft of Other area&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.other_area_sqft" required ng-disabled="$ctr.pg1_exists">
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+									  
+                                      <!-- 4.	Your restaurant is located near or within (if more than 1 choice applies to you, please choose the first one on the list) -->
+                                      <select ng-if="$index==2 && $ctr.page == 1" class="form-control" ng-model="$ctr.model.rest_locality" ng-options="li.name as li.name for li in $ctr.rest_locn" required ng-disabled="$ctr.pg1_exists">
+                                          <option style="display:none" value="">{{$ctr.model.rest_locality}}</option>
+                                      </select>
+									  <!-- Page 1 End -->
+									  
+									  
+									  <!-- Page 2 -->
+                                      <!-- 1.	What percent of the food sales is your food cost budget? -->
+                                      <table ng-if="$index==0 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<input ng-if="$index==0 && $ctr.page == 2" type="number" min="1" max="99" class="form-control" ng-model="$ctr.model.food_cost_budget">
+											</td>
+											<td>
+												<label>&nbsp;%</label>
+											</td>
+										  </tr>
+									  </table>
+									  
+
+                                      <!-- 2.	What percent of the liquor sales is your liquor cost budget? (Does not include beer and wine cost) -->
+                                      <table ng-if="$index==1 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<input ng-if="$index==1 && $ctr.page == 2" type="number" min="1" max="99" class="form-control" ng-model="$ctr.model.liq_cost_budget">
+											</td>
+											<td>
+												<label>&nbsp;%</label>
+											</td>
+										  </tr>
+									  </table>
+
+                                      <!-- 3. What percent of the beer sales is your beer cost budget? (Does not include liquor and wine cost) -->
+                                      <table ng-if="$index==2 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<input ng-if="$index==2 && $ctr.page == 2" type="number" min="1" max="99" class="form-control" ng-model="$ctr.model.beer_cost_budget">
+											</td>
+											<td>
+												<label>&nbsp;%</label>
+											</td>
+										  </tr>
+									  </table>
+
+                                      <!-- 4. What percent of the champagne/wine sales is your champagne/wine cost budget? (Does not include liquor and beer cost) -->
+                                      <table ng-if="$index==3 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<input ng-if="$index==3 && $ctr.page == 2" type="number" min="1" max="99" class="form-control" ng-model="$ctr.model.wine_cost_budget">
+											</td>
+											<td>
+												<label>&nbsp;%</label>
+											</td>
+										  </tr>
+									  </table>
+
+                                      <!-- 5. What is your monthly base rent? -->
+                                      <table ng-if="$index==4 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<label>$&nbsp;</label>
+											</td>
+											<td>
+												<input type="number" min="1" class="form-control" ng-model="$ctr.model.base_rent">
+											</td>
+										  </tr>
+									  </table>
+									  
+									  
+
+                                      <!-- 6. Do you pay percent rent? -->
+									  <select ng-if="$index==5 && $ctr.page == 2" class="form-control" ng-model="$ctr.model.percent_rent" ng-options="li.name as li.name for li in $ctr.yes_no">
+                                          <option style="display:none" value="">{{$ctr.model.percent_rent}}</option>
+                                      </select>
+
+                                      <!-- 7. What percent of the total budget is your monthly labor budget? -->
+                                      <table ng-if="$index==6 && $ctr.page == 2">
+										  <tr>
+											<td>
+												<input ng-if="$index==6 && $ctr.page == 2" type="number" min="1" max="99" class="form-control" ng-model="$ctr.model.labor_budget">
+											</td>
+											<td>
+												<label>&nbsp;%</label>
+											</td>
+										  </tr>
+									  </table>
+									  <!-- Page 2 End -->
+									  
+									  <!-- Page 3 -->
+                                      <!-- 1. What are your restaurant hours? -->
+                                      <div ng-if="$index==0 && $ctr.page == 3" class="form-group">
+                                        <table>
+                                          <th class="text-center">
+                                            &nbsp;
+                                          </th>
+                                          <th class="text-center">
+                                            Open
+                                          </th>
+                                          <th class="text-center">
+                                            Close
+                                          </th>
+                                          <tr>
+                                            <td>
+                                              <label>Sunday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[0]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[0]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[0]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Monday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[1]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[1]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[1]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Tuesday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[2]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[2]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[2]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Wednesday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[3]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[3]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[3]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Thrusday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[4]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[4]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[4]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Friday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[5]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[5]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[5]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                          <tr>
+                                            <td>
+                                              <label>Saturday </label>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.open_times[6]" ng-options="li.name as li.name for li in $ctr.hours_of_the_day">
+                                                  <option style="display:none" value="">{{$ctr.model.open_times[6]}}</option>
+                                              </select>
+                                            </td>
+                                            <td>
+                                              <select class="form-control" ng-model="$ctr.model.close_times[6]">
+                                                  <option ng-repeat="i in $ctr.close_hours_of_the_day" value="{{i.name}}" ng-disabled="i.name == 'Next Day'">{{i.name}}</option>
+                                              </select>
+                                            </td>
+                                          </tr>
+                                        </table>
+                                      </div>
+
+									  
+									  <!-- 2. Are you part of a restaurant group which includes 1 or more locations and the locations have multiple unique concepts? -->
+                                      <select ng-if="$index==1 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.part_of_grp" ng-options="li.name as li.name for li in $ctr.yes_no">
+                                          <option style="display:none" value="">{{$ctr.model.part_of_grp}}</option>
+									  </select>
+									  
+                                      <!-- 3. How often do you do a physical inventory food count? -->
+                                      <select ng-if="$index==2 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.inventory_food_count" ng-options="li.name as li.name for li in $ctr.inventory_count_frequency">
+                                          <option style="display:none" value="">{{$ctr.model.inventory_food_count}}</option>
+                                      </select>
+
+                                      <!-- 4. How often do you do a physical inventory alcohol count? -->
+                                      <select ng-if="$index==3 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.inventory_alcohol_count" ng-options="li.name as li.name for li in $ctr.inventory_count_frequency">
+                                          <option style="display:none" value="">{{$ctr.model.inventory_alcohol_count}}</option>
+                                      </select>
+
+                                      <!-- 5. Is your restaurant managed by the owner? -->
+                                      <select ng-if="$index==4 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.managed_by_primary_rest_owner" ng-options="li.name as li.name for li in $ctr.yes_no">
+                                          <option style="display:none" value="">{{$ctr.model.managed_by_primary_rest_owner}}</option>
+                                      </select>
+
+                                      <!-- 6. Is your restaurant partially or wholly owned by a chef? -->
+                                      <select ng-if="$index==5 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.partially_owned_by_chef" ng-options="li.name as li.name for li in $ctr.yes_no">
+                                          <option style="display:none" value="">{{$ctr.model.partially_owned_by_chef}}</option>
+                                      </select>
+
+                                      <!-- 7. How many years has your restaurant been in business? -->
+                                      <input ng-if="$index==6 && $ctr.page == 3" type="number" min="0" class="form-control" ng-model="$ctr.model.years_in_business">
+									  
+									  <!-- 8. Including both hourly and salary employees, how many employees do you have on your payroll? -->
+                                      <table ng-if="$index==7 && $ctr.page == 3">
+                                          <tr>
+                                            <td>
+                                              <label>Full Time&nbsp;</label>
+                                            </td>
+                                            <td>
+												<input type="number" min="0" class="form-control" ng-model="$ctr.model.emp_full_time">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Part Time&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.emp_part_time">
+                                            </td>
+                                          </tr>
+									  </table>
+									  
+									  <!-- 9. How many servers have you currently employed? -->
+                                      <table ng-if="$index==8 && $ctr.page == 3">
+                                          <tr>
+                                            <td>
+                                              <label>Full Time&nbsp;</label>
+                                            </td>
+                                            <td>
+												<input type="number" min="0" class="form-control" ng-model="$ctr.model.servers_full_time">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Part Time&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.servers_part_time">
+                                            </td>
+                                          </tr>
+									  </table>
+									  
+									  <!-- 10. How many bartenders have you currently employed? -->
+                                      <table ng-if="$index==9 && $ctr.page == 3">
+                                          <tr>
+                                            <td>
+                                              <label>Full Time&nbsp;</label>
+                                            </td>
+                                            <td>
+												<input type="number" min="0" class="form-control" ng-model="$ctr.model.bartenders_full_time">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Part Time&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.bartenders_part_time">
+                                            </td>
+                                          </tr>
+									  </table>
+									  
+									  <!-- 11. How many kitchen employees have you currently employed? -->
+                                      <table ng-if="$index==10 && $ctr.page == 3">
+                                          <tr>
+                                            <td>
+                                              <label>Full Time&nbsp;</label>
+                                            </td>
+                                            <td>
+												<input type="number" min="0" class="form-control" ng-model="$ctr.model.kitchen_emp_full_time">
+                                            </td>
+                                          </tr>
+										  <tr>
+											<td>
+												<br/>
+											</td>
+										  </tr>
+										  <tr>
+                                            <td>
+                                              <label>Part Time&nbsp;</label>
+                                            </td>
+                                            <td>
+                                              <input type="number" min="0" class="form-control" ng-model="$ctr.model.kitchen_emp_part_time">
+                                            </td>
+                                          </tr>
+									  </table>
+									  
+									  <!-- 12. How many years of experience does your GM have as a GM? -->
+                                      <input ng-if="$index==11 && $ctr.page == 3" type="number" min="0" class="form-control" ng-model="$ctr.model.gm_exp">
+									  
+									  <!-- 13. Is your GM is a male or a female? -->
+                                      <select ng-if="$index==12 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.gm_gender" ng-options="li.name as li.name for li in $ctr.male_female">
+                                          <option style="display:none" value="">{{$ctr.model.gm_gender}}</option>
+                                      </select>
+									  
+									  <!-- 14. Is your primary and/or active owner a male or a female? -->
+                                      <select ng-if="$index==13 && $ctr.page == 3" class="form-control" ng-model="$ctr.model.owner_gender" ng-options="li.name as li.name for li in $ctr.male_female">
+                                          <option style="display:none" value="">{{$ctr.model.owner_gender}}</option>
+                                      </select>
+									  <!-- Page 3 End -->
+									  
+									  <!-- Page 4 -->
+									  <!-- 1. Does your restaurant serve -->
+                                      <table ng-if="$index==0 && $ctr.page == 4">
+                                          <tr>
+                                            <td>
+                                              <label>Breakfast&nbsp;</label>
+                                            </td>
+                                            <td>
+												<select class="form-control" ng-model="$ctr.model.serve_bkfst" ng-options="li.name as li.name for li in $ctr.yes_no">
+												    <option style="display:none" value="">{{$ctr.model.serve_bkfst}}</option>
+											    </select>
+                                            </td>
+                                          </tr>
+										  <tr>
+                                            <td>
+                                              <label>Lunch&nbsp;</label>
+                                            </td>
+                                            <td>
+												<select class="form-control" ng-model="$ctr.model.serve_lunch" ng-options="li.name as li.name for li in $ctr.yes_no">
+												    <option style="display:none" value="">{{$ctr.model.serve_lunch}}</option>
+											    </select>
+                                            </td>
+                                          </tr>
+										  <tr>
+                                            <td>
+                                              <label>Brunch&nbsp;</label>
+                                            </td>
+                                            <td>
+												<select class="form-control" ng-model="$ctr.model.serve_brunch" ng-options="li.name as li.name for li in $ctr.yes_no">
+												    <option style="display:none" value="">{{$ctr.model.serve_brunch}}</option>
+											    </select>
+                                            </td>
+                                          </tr>
+										  <tr>
+                                            <td>
+                                              <label>Dinner&nbsp;</label>
+                                            </td>
+                                            <td>
+												<select class="form-control" ng-model="$ctr.model.serve_dinner" ng-options="li.name as li.name for li in $ctr.yes_no">
+												    <option style="display:none" value="">{{$ctr.model.serve_dinner}}</option>
+											    </select>
+                                            </td>
+                                          </tr>
+									  </table>
+									  
+									  <!-- 2. Is your restaurant attached to other businesses similar to a strip mall? -->
+									  <select ng-if="$index==1 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.is_rest_attached_to_mall" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.is_rest_attached_to_mall}}</option>
+									  </select>
+									  
+									  <!-- 3. Is your restaurant a standalone building? -->
+									  <select ng-if="$index==2 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.is_rest_standalone_bldg" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.is_rest_standalone_bldg}}</option>
+									  </select>
+									  
+									  <!-- 4. Does your restaurant have a large sign attached to the outside of the building? -->
+									  <select ng-if="$index==3 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.attached_sign" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.attached_sign}}</option>
+									  </select>
+									  
+									  <!-- 5. Is your restaurant located adjacent to a major freeway on the service road? -->
+									  <select ng-if="$index==4 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.near_freeway" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.near_freeway}}</option>
+									  </select>
+									  
+									  <!-- 6. Is having physically attractive employees a part of your restaurant business model? -->
+									  <select ng-if="$index==5 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.phy_attr_emp" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.phy_attr_emp}}</option>
+									  </select>
+									  
+									  <!-- 7. Does your restaurant play licensed music on a regular basis? -->
+									  <select ng-if="$index==6 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.play_lic_music" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.play_lic_music}}</option>
+									  </select>
+									  
+									  <!-- 8. Does your restaurant host a live band on a regular basis? -->
+									  <select ng-if="$index==7 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.live_band" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.live_band}}</option>
+									  </select>
+									  
+									  <!-- 9. Does your restaurant frequently book parties and groups of 10+ people? -->
+									  <select ng-if="$index==8 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.party_n_group" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.party_n_group}}</option>
+									  </select>
+									  
+									  <!-- 10. What is the occupancy limit set for your restaurant by the local state or fire code? -->
+									  <input ng-if="$index==9 && $ctr.page == 4" type="number" min="0" class="form-control" ng-model="$ctr.model.occupancy_limit">
+									  
+									  <!-- 11. Does your restaurant have a permanent built in stage? -->
+									  <select ng-if="$index==10 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.built_in_stage" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.built_in_stage}}</option>
+									  </select>
+									  
+									  <!-- 12. Does your restaurant have a dance floor? -->
+									  <select ng-if="$index==11 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.dance_floor" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.dance_floor}}</option>
+									  </select>
+									  
+									  <!-- 13. Does your restaurant utilize valet parking on a regular weekly schedule? -->
+									  <select ng-if="$index==12 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.valet_parking" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.valet_parking}}</option>
+									  </select>
+									  
+									  <!-- 14. How many seats does your restaurant have? -->
+									  <input ng-if="$index==13 && $ctr.page == 4" type="number" min="0" class="form-control" ng-model="$ctr.model.total_seats">
+									  
+									  <!-- 15. How many tables does your restaurant have? -->
+									  <input ng-if="$index==14 && $ctr.page == 4" type="number" min="0" class="form-control" ng-model="$ctr.model.total_tables">
+									  
+									  <!-- 16. Does your restaurant regularly have a cover charge? -->
+									  <select ng-if="$index==15 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.cover_charge" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.cover_charge}}</option>
+									  </select>
+									  
+									  <!-- 17. Does your company own 2 or more locations with the same name and concept? -->
+									  <select ng-if="$index==16 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.multiple_locns" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.multiple_locns}}</option>
+									  </select>
+									  
+									  <!-- 18. Does your restaurant cater? -->
+									  <select ng-if="$index==17 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.cater" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.cater}}</option>
+									  </select>
+									  
+									  <!-- 19. Does your restaurant operate a food truck? -->
+									  <select ng-if="$index==18 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.food_truck" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.food_truck}}</option>
+									  </select>
+									  
+									  <!-- 20. Does your restaurant employ delivery staff or require your employees to deliver? -->
+									  <select ng-if="$index==19 && $ctr.page == 4" class="form-control" ng-model="$ctr.model.delivery_staff" ng-options="li.name as li.name for li in $ctr.yes_no">
+										  <option style="display:none" value="">{{$ctr.model.delivery_staff}}</option>
+									  </select>
+									  <!-- Page 4 End -->
+									  
+
+                                      <!-- From page 1 - 1. Restaurant sub-category (Bar, Gents club, Nightclub) -->
+                                      <ul style="list-style-type: none;" ng-if="$index==0  && $ctr.page == 1 && $ctr.model.restaurant_category && ($ctr.model.restaurant_category=='Bar' || $ctr.model.restaurant_category=='Gentleman\'s Club' || $ctr.model.restaurant_category=='Night Club')">
+                                        <li>
+                                          <label>Restaurant Type</label>
+                                        </li>
+                                        <li>
+                                          <select ng-if="$ctr.model.restaurant_category=='Bar' || $ctr.model.restaurant_category=='Gentleman\'s Club'" class="form-control" ng-model="$ctr.model.restaurant_subcategory" ng-options="li as li for li in $ctr.all_restaurant_categories[1].sub" required ng-disabled="$ctr.pg1_exists">
+                                              <option style="display:none" value="">{{$ctr.model.restaurant_subcategory}}</option>
+                                          </select>
+                                        </li>
+                                        <li>
+                                          <select ng-if="$ctr.model.restaurant_category=='Night Club'" class="form-control" ng-model="$ctr.model.restaurant_subcategory" ng-options="li as li for li in $ctr.all_restaurant_categories[19].sub" required ng-disabled="$ctr.pg1_exists">
+                                              <option style="display:none" value="">{{$ctr.model.restaurant_subcategory}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+
+                                      <!-- From page 1 - 1. Restaurant sub-category (Other than Bar, Gents club, Nightclub) -->
+                                      <ul style="list-style-type: none;" ng-if="$index==0  && $ctr.page == 1 && $ctr.model.restaurant_category && ($ctr.model.restaurant_category!='Bar' && $ctr.model.restaurant_category!='Gentleman\'s Club' && $ctr.model.restaurant_category!='Night Club')">
+                                        <li>
+                                          <label>Restaurant Type</label>
+                                        </li>
+                                        <li>
+                                          <select class="form-control" ng-model="$ctr.model.restaurant_subcategory" ng-options="li.name as li.name for li in $ctr.all_restaurant_types" required ng-disabled="$ctr.pg1_exists">
+                                              <option style="display:none" value="">{{$ctr.model.restaurant_subcategory}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+									  
+									  <!-- From page 1 - 1. If Subcategory is Other -->
+                                      <ul style="list-style-type: none;" ng-if="$index==0  && $ctr.page == 1 && $ctr.model.restaurant_subcategory == 'Other'">
+                                        <li>
+                                          <label>Please enter Type</label>
+                                        </li>
+                                        <li>
+                                          <input type="text" class="form-control" ng-model="$ctr.model.restaurant_subcategory_other" required ng-disabled="$ctr.pg1_exists">
+                                        </li>
+                                      </ul>
+									  
+									  <!-- From page 2 - 6. Do you pay percent rent? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==5 && $ctr.page == 2 && $ctr.model.percent_rent == 'Yes'">
+                                        <li>
+                                          <label>Please enter the percent rent</label>
+                                        </li>
+                                        <li>
+										  <table>
+											  <tr>
+												<td>
+													<input type="text" class="form-control" ng-model="$ctr.model.percent_rent_value" required>
+												</td>
+												<td>
+													<label>&nbsp;%</label>
+												</td>
+											  </tr>
+										  </table>
+                                        </li>
+                                      </ul>
+
+									  <!-- From page 4 - 6. Is having physically attractive employees a part of your restaurant business model? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==5 && $ctr.page == 4 && $ctr.model.phy_attr_emp == 'Yes'">
+                                        <li>
+                                          <label>Please provide a description</label>
+                                        </li>
+                                        <li>
+                                          <select class="form-control" ng-model="$ctr.model.phy_attr_emp_desc" ng-options="li.name as li.name for li in $ctr.phy_attr_emp_desc_list" required>
+                                              <option style="display:none" value="">{{$ctr.model.phy_attr_emp_desc}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+
+									  <!-- From page 4 - 7. Does your restaurant play licensed music on a regular basis? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==6 && $ctr.page == 4 && $ctr.model.play_lic_music == 'Yes'">
+                                        <li>
+                                          <label>How often is the music played?</label>
+                                        </li>
+                                        <li>
+                                          <select class="form-control" ng-model="$ctr.model.play_lic_music_freq" ng-options="li.name as li.name for li in $ctr.play_lic_music_freq_list" required>
+                                              <option style="display:none" value="">{{$ctr.model.play_lic_music_freq}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+									  
+									  <!-- From page 4 - 7. Does your restaurant play licensed music on a regular basis? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==6 && $ctr.page == 4 && $ctr.model.play_lic_music == 'Yes'">
+                                        <li>
+                                          <label>What type of music is played?</label>
+                                        </li>
+                                        <li>
+                                          <select class="form-control" ng-model="$ctr.model.play_lic_music_type" ng-options="li.name as li.name for li in $ctr.play_lic_music_type_list" required>
+                                              <option style="display:none" value="">{{$ctr.model.play_lic_music_type}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+									  
+									  <!-- From page 4 - 8. Does your restaurant host a live band on a regular basis? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==7 && $ctr.page == 4 && $ctr.model.live_band == 'Yes'">
+                                        <li>
+                                          <label>How often?</label>
+                                        </li>
+                                        <li>
+                                          <select class="form-control" ng-model="$ctr.model.live_band_freq" ng-options="li.name as li.name for li in $ctr.live_band_freq_list" required>
+                                              <option style="display:none" value="">{{$ctr.model.live_band_freq}}</option>
+                                          </select>
+                                        </li>
+                                      </ul>
+									  
+									  <!-- From page 4 - 17. Does your company own 2 or more locations with the same name and concept? -->
+                                      <ul style="list-style-type: none;" ng-if="$index==16 && $ctr.page == 4 && $ctr.model.multiple_locns == 'Yes'">
+                                        <li>
+                                          <label>How many locations are there?</label>
+                                        </li>
+                                        <li>
+										  <input type="number" min="0" class="form-control" ng-model="$ctr.model.multiple_locns_count" required>
+                                        </li>
+                                      </ul>
+									  
+                                    </div>
+									<hr/>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div ng-if="$ctr.subscription_type_id != 4 && $ctr.page == 1 && $ctr.setupStatus == 1" class="col-xs-4 text-left">
+                                <button scroll-top class="btn btn-primary" ui-sref="admin.managementCategories">&lt;&lt; Back</button>
+                            </div>
+							<div ng-if="($ctr.subscription_type_id != 4 && $ctr.page == 1 && $ctr.setupStatus == 0) || ($ctr.subscription_type_id == 4 && $ctr.page == 1)" class="col-xs-4 text-left">
+                                <button scroll-top class="btn btn-primary" ui-sref="administrator.posSync">&lt;&lt; Back</button>
+                            </div>
+							<div ng-if="$ctr.page == 2" class="col-xs-4 text-left">
+                                <button scroll-top class="btn btn-primary" ng-click="$ctr.go_back()">&lt;&lt; Back</button>
+                            </div>
+							<div ng-if="$ctr.page == 3" class="col-xs-4 text-left">
+                                <button scroll-top class="btn btn-primary" ng-click="$ctr.go_back()">&lt;&lt; Back</button>
+                            </div>
+							<div ng-if="$ctr.page == 4" class="col-xs-4 text-left">
+                                <button scroll-top class="btn btn-primary" ng-click="$ctr.go_back()">&lt;&lt; Back</button>
+                            </div>
+							<div class="col-xs-4 text-center">
+                                <label>{{$ctr.page}} / 4</label>
+                            </div>
+							<div ng-if="$ctr.page == 1 && !$ctr.pg1_exists" class="col-xs-4">
+                                <button scroll-top type="submit"
+                                        class="btn btn-primary block m-b float-right" ng-disabled="$ctr.analytics_questionare.length<1">Save
+                                </button>
+                            </div>
+                            <div ng-if="$ctr.page == 1 && $ctr.pg1_exists" class="col-xs-4">
+                                <button scroll-top type="submit"
+                                        class="btn btn-primary block m-b float-right" ng-disabled="$ctr.analytics_questionare.length<1">Next &gt;&gt;
+                                </button>
+                            </div>
+							<div ng-if="$ctr.page != 1" class="col-xs-4">
+                                <button scroll-top type="submit"
+                                        class="btn btn-primary block m-b float-right" ng-disabled="$ctr.analytics_questionare.length<1">Save & Next &gt;&gt;
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    <!--</div>-->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir canvas {
+    height: 400px !important;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+</style>

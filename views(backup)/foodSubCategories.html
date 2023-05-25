@@ -1,0 +1,131 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="main.subscription_type_id != 1 || main.subscription_type_id != 3">
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <header-component></header-component>
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg {{$state.current.name}}">
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Food Sub Categories</h2>
+                <ol class="breadcrumb">
+                    <li ui-sref="admin.inventoryCategories">
+                        <a>Inventory</a>
+                    </li>&nbsp;/&nbsp;
+                    <li class="active-page">
+                        <a>Food Categories</a>
+                    </li>
+                </ol>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary"  onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div ng-if="main.permissions['28'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="food.newFoodOrder">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">New Food Orders</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['29'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="food.orderSummary">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Confirm Food Delivery</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--ui-sref="foodSetup.foodInventory"-->
+                                <div ng-click="main.beginFoodInventoryCount()" ng-if="main.permissions['30'].r" class="col-sm-12 col-md-6 col-lg-4" >
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Begin Food Inventory Count</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['31'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="foodSetup.vendor">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Add New Food Vendor</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['32'].r" class="col-sm-12 col-md-6 col-lg-4" ui-sref="foodSetup.recipe">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Modify Food Menu/Recipe</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div ng-if="main.permissions['33'].r" class="col-sm-12 col-md-6 col-lg-4"  ui-sref="foodSetup.delivery">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Modify Food Order Schedule</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!--<div ng-if="main.permissions['34'].r" class="col-sm-12 col-md-6 col-md-offset-3 col-lg-4 col-lg-offset-4" ui-sref="admin.comingSoon">-->
+                                    <!--<div class="widget style1 lazur-bg">-->
+                                        <!--<div class="text-center button-element">-->
+                                            <!--<a class="pos-title">Food Inventory Quick-View Pricing Update</a>-->
+                                        <!--</div>-->
+                                    <!--</div>-->
+                                <!--</div>-->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <h4>Helpful Tip</h4>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="full-height-scroll" full-scroll>
+                                            <p class="padding-top-5">
+                                                Note
+                                            </p>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

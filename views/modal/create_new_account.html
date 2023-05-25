@@ -1,0 +1,30 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <h4 class="modal-title">Password</h4>
+    </div>
+    <form name="$ctr.popupForm" novalidate autocomplete="off" ng-submit="$ctr.confirmPopupPasswd($ctr.popupForm, $ctr.m.popup_passwd);">
+        <div class="modal-body">
+            <p class="text-center">To join our beta please enter the password or contact us at <a
+                    href="mailto:sales@skrible.co">sales@skrible.co</a></p>
+					<!--<p class="text-center">To join our beta please enter the password or contact us at <a href="tel:800888888">800.888.888</a> or <a
+                    href="mailto:sales@skrible.co">sales@skrible.co</a></p>-->
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-12 no-padding">
+                            <label>Password</label>
+                            <input type="password" placeholder="Password" autocomplete="off" required class="form-control" ng-model="$ctr.m.popup_passwd">
+                        </div>
+                        <div class="m-t-xs animated fadeInRight"
+                             ng-show="$ctr.popupForm.$submitted && !$ctr.popupForm.Password.$valid">
+                            <small class="text-danger" ng-show="$ctr.popupForm.$submitted && !$ctr.m.popup_passwd">Password field is required.</small>
+                        </div>
+                    </div>
+                </fieldset>
+
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" ng-click="$ctr.close()">Cancel</button>
+            <button type="submit" class="btn btn-primary" >Ok</button>
+        </div>
+    </form>
+</div>

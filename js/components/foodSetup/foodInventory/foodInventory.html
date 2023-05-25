@@ -1,0 +1,241 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['60'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Food Inventory Audit Pad</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-title ibox-title-inventory padding-left-20 padding-right-20">
+							<div class="row">
+								<div class="col-xs-9 col-sm-9 col-md-9 pull-left">
+									<form>
+										<div class="row">
+											<div class="col-xs-6 col-sm-6 col-md-6 pull-left text-left" style="padding-top: 20px;">
+												<div class="form-inline pull-left date-wrapper-mobile">
+													<div class="form-control no-borders pull-left auto-height form-control-date">
+														<label>Select Category</label>
+														<div class="input-group">
+															<select class="form-control m-l-sm"
+																ng-model="$ctr.model.vendor_category_id"
+																ng-options="vendor as vendor.category for vendor in  $ctr.get_vendors_categories">
+															</select>
+														</div>
+													</div>
+													<div class="form-control no-borders pull-left auto-height form-control-date">
+														<div class="input-group">
+															<input  type="text" class="search-field-inventory form-control m-b-none  ng-pristine ng-valid ng-empty ng-touched" id="filter" ng-model="$ctr.model.inventory_item" placeholder="Search Keyword">
+															<button ng-if="!$ctr.loading" ng-click="$ctr.getInventoriesCaller($ctr.model.vendor_category_id, $ctr.model.vendor_category_id)" class="btn btn-primary m-t-5">Search</button>
+															<button ng-if="$ctr.loading" disabled class="btn btn-primary m-t-5">Loading...</button>
+														</div>
+													</div>
+												</div>
+											</div>
+											<div class="col-xs-3 col-sm-3 col-md-3 pull-right">
+												<div class="form-inline pull-right date-wrapper-mobile">
+													<div class="form-control no-borders pull-right auto-height form-control-date">
+														<label>Location</label>
+														<div class="input-group">
+															<select class="form-control" ng-model="$ctr.selected_location"
+																ng-change="$ctr.changeLocation()" ng-options="locn.sr_no as locn.location_name for locn in $ctr.locations" required>
+															</select>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</form>
+								</div>
+                                <div class="col-xs-3 col-sm-3 col-md-3 pull-right">
+                                    <div class="form-inline pull-right date-wrapper-mobile">
+                                        <div class="form-control no-borders pull-right auto-height form-control-date">											
+											<label for="begin_date">Date Counted</label>
+											<div class="input-group">
+												<input ng-disabled="!$ctr.pickers.beginDate.open" type="text" class="form-control" id="begin_date"
+													   datetime-picker="MM/dd/yyyy HH:mm"
+													   ng-model="$ctr.pickers.beginDate.date"
+													   is-open="$ctr.pickers.beginDate.open"
+													   datepicker-append-to-body="true">
+												<span class="input-group-btn">
+													<button class="btn btn-default" type="button"
+															ng-click="$ctr.openCalendar($event, 'beginDate')">
+														<span class="glyphicon glyphicon-edit"></span>
+													</button>
+												</span>
+											</div>
+											<button
+												  type="button"
+												  class="btn btn-primary"
+												  ng-click="$ctr.changeAuditDate()">
+												  Save Date
+											</button>
+                                        </div>
+                                    </div>
+									<div class="form-inline pull-left date-wrapper-mobile">
+										<div class="form-control no-borders pull-right auto-height form-control-date">
+											<button class="btn btn-primary float-right" ng-if="!print_loading" ng-click="$ctr.generatePDFCall()"><i
+													class="fa fa-print"></i> Print
+											</button>
+											<button class="btn btn-primary float-right" ng-if="print_loading"><i
+													class="fa fa-spinner fa-spin"></i> Printing...
+											</button>
+											<button ng-click="$ctr.changeMode()" class="btn btn-info" ng-active="true">
+												Show Prep’d Items
+											</button>
+										</div>
+									</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="ibox-content overflow-x-auto">
+
+                            <form novalidate autocomplete="off" name="$ctr.form" ng-submit="$ctr.saveAll($ctr.form, false)">
+								<div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="button" scroll-top class="btn btn-primary"
+                                                onclick="window.history.go(-1); return false;">&lt;&lt; Back
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+                                        <button class="btn btn-warning" scroll-top ui-sref="reports.foodCostOfSummary" type="button">View Report</button>
+										<button
+										  type="button"
+										  class="btn btn-primary pull-right"
+										  ng-click="$ctr.finalSaveAudit()"
+										  ng-if="$ctr.is_sug_aud == 'true' && $ctr.SetUpStatus != 0"
+										>
+										  Final Save
+										</button>
+										<button
+										  type="button"
+										  class="btn btn-primary pull-right"
+										  ng-click="$ctr.finalSaveAudit('first_audit')"
+										  ng-if="$ctr.SetUpStatus == 0"
+										>
+										  Final Save
+										</button>
+                                        <button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.is_final_save = false;">Save</button>
+                                    </div>
+                                </div>
+                                <div id="inv-wrapper" class="table-responsive">
+                                    <table table-height="700px" class="table table-bordered table-bordered-fixed" fixed-header>
+                                        <thead class="th-text-center th-vertical-align-middle">
+                                        <tr>
+                                            <th class="width-200-food">Vendor</th>
+											<th class="width-120-food">Category</th>
+                                            <th class="min-width-300-food">Inventory Item</th>
+                                            <th class="width-100-food">Total Case(s)</th>
+                                            <th class="width-100-food">Partial Item Qty</th>
+                                            <th class="width-100-food">Unit of Delivery</th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="foodBody">
+                                        <ng-form name="inventory">
+                                            <tr ng-repeat="i in $ctr.inventories track by $index">
+                                                <td ng-if="i.show">{{i.vendor_name}}</td>
+												<td ng-if="i.show">{{i.category}}</td>
+                                                <td ng-if="i.show">
+                                                   <span class="no-wrap">
+                                                        {{i.inventory_item}} (Case size: {{i.total_unit_size}} {{$ctr.model.measurement_units_of_delivery(i.uom_id_of_delivery_unit)}})
+                                                   </span>
+                                                </td>
+                                                <td ng-if="i.show">
+                                                    <input type="number" class="form-control" ng-model="i.cases_qty_ph" min="0">
+                                                </td>
+                                                <td ng-if="i.show">
+													<textarea
+														ng-change="$ctr.calculatePartialOnChange(i, $index, $ctr.form)"
+                                                        ng-blur="$ctr.calculatePartialTotal(i, $index); calculateUWlabel = false"
+                                                        ng-focus="$ctr.calculatePartialOnFocus(i, $index); ; calculateUWlabel = true;"
+                                                        type="text" class="form-control calculatetextarea"
+                                                        ng-model="i.item_qty_ph"
+                                                        style="height: 34px"
+                                                        ng-class="{'calculatetextareaFocus' : calculateUWlabel}"
+                                                        name="unitweight"
+														min="0"
+														onfocus="this.select();">
+													</textarea>
+													<div ng-if="calculateUWlabel" class="text-center"><b><span ng-show="i.itemQtyStrlabel">=</span> {{i.itemQtyStrlabel}}</b></div>
+                                                    <!--<input type="number" class="form-control" ng-model="i.item_qty_ph"  min="0">-->
+                                                </td>
+
+                                                <td ng-if="i.show">
+                                                    {{$ctr.model.measurement_units_of_delivery(i.uom_id_of_delivery_unit)}}
+                                                </td>
+                                            </tr>
+                                        </ng-form>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row">
+                                    <div class="col-xs-6">
+                                        <button type="button" scroll-top class="btn btn-primary"
+                                                onclick="window.history.go(-1); return false;">&lt;&lt; Back
+                                        </button>
+                                    </div>
+                                    <div class="col-xs-6 text-right">
+										<button type="button" class="btn btn-danger" ng-click="$ctr.deleteCurrentInventoryAudit()">
+											{{$ctr.is_sug_aud == 'false' ? 'Clear Audit' : 'Clear Suggested Audit'}}
+										</button>
+                                        <button ng-if="$ctr.is_sug_aud != 'true'" class="btn btn-warning" scroll-top ui-sref="reports.foodCostOfSummary" type="button">View Report</button>
+										<button
+										  type="button"
+										  class="btn btn-primary pull-right"
+										  ng-click="$ctr.finalSaveAudit()"
+										  ng-if="$ctr.is_sug_aud == 'true'"
+										>
+										  Final Save
+										</button>
+                                        <button type="submit" class="btn btn-primary" scroll-top ng-click="$ctr.is_final_save = false;">Save</button>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/pdfmake.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.3.0-beta.1/vfs_fonts.min.js"></script>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

@@ -1,0 +1,154 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+    <navigation-component ng-if="$ctr.isAdministratorEdit"></navigation-component>
+
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg"
+         ng-class="{'navigation-hide' : !$ctr.isAdministratorEdit}">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Payment Profile</h2>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+            <div class="row">
+                <div class="col-xs-12">
+                    <button type="button" class="btn btn-primary" ng-click="$ctr.back()"> &lt;&lt; Back</button>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+								<div class="col-sm-12">
+									<div class="ibox float-e-margins">
+										<div class="ibox-content">
+											<div class="row">
+												<div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+													<h3 class="text-center">Payment Details</h3>
+													<img class="img-responsive float-right" src="img/png/accepted_cards.png"/>
+													<form stripe-form="handleStripe" name="myForm" class="m-t" autocomplete="off" novalidate ng-submit="$ctr.submit(myForm)">
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="form-group">
+																	<label for="cardNumber">
+																		Card number <span class="text-danger">*</span>
+																	</label>
+																	<div class="input-group">
+																		<input type="text" class="form-control" ng-model="number" payments-validate="card" payments-format="card" payments-type-model="type" ng-class="myForm.number.$card.type" required>
+																		<div class="input-group-addon">
+																			<span>
+																				<i class="fa fa-credit-card"></i>
+																			</span>
+																		</div>
+																	</div>
+																</div>
+															</div>
+
+														</div>
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group">
+																	<label>
+																		<span>Expiry (MM/YY) <span class="text-danger">*</span></span>
+																	</label>
+																	<div>
+																		<input type="text" class="form-control width-20" min="{{$ctr.currYear}}" ng-model="expiry" payments-validate="expiry" payments-format="expiry" required />
+																	</div>
+																</div>
+															</div>
+															<div class="col-xs-6 pull-right">
+																<div class="form-group">
+																	<label for="cardCVC">
+																		CVV Code <span class="text-danger">*</span>
+																	</label>
+																	<input type="text" class="form-control" ng-model="cvc" payments-validate="cvc" payments-format="cvc" payments-type-model="type" placeholder="3 digit number on the back of your card" maxlength="3" required>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group">
+																	<label for="zipCode">
+																		Zip Code <span class="text-danger">*</span>
+																	</label>
+																	<input class="form-control" type="text" id="zipCode" only-digits
+																		   ng-pattern="/^\d+$/" minlength="3" maxlength="6"
+																		   placeholder="ZIP Code" ng-model="zip" required>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-6">
+																<div class="form-group">
+																	<label for="firstName">
+																		First Name <span class="text-danger">*</span>
+																	</label>
+																	<input class="form-control" type="text" id="firstName"
+																		   placeholder="First Name" maxlength="50" ng-model="first_name" required>
+																</div>
+															</div>
+															<div class="col-xs-6">
+																<div class="form-group">
+																	<label for="lastName">
+																		Last Name <span class="text-danger">*</span>
+																	</label>
+																	<input class="form-control" type="text" id="lastName"
+																		   placeholder="At least two characters" minlength="2" maxlength="50" ng-model="last_name" required>
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-12">
+																<div class="form-group">
+																	<label for="billingAddress">
+																		Billing Address <span class="text-danger">*</span>
+																	</label>
+																	<input class="form-control" maxlength="50" type="text" id="billingAddress" ng-model="billing_address" required placeholder="Billing Address">
+																</div>
+															</div>
+														</div>
+
+														<div class="row">
+															<div class="col-xs-6 text-left">
+																<button scroll-top class="btn btn-primary" ng-click="$ctr.back()">&lt;&lt; Back</button>
+															</div>
+															<div class="col-xs-6">
+																<button type="submit" class="btn btn-primary block float-right m-b">
+																	Next - Disclaimer and Confidentiality Agreement
+																</button>
+															</div>
+														</div>
+													</form>
+												</div>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>	
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

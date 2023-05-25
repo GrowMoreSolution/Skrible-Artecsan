@@ -1,0 +1,300 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['7'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Inventory Setup</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+            <div class="row">
+                <div class="col-xs-12 col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="row">
+                                        <h3 class="text-center">Inventory</h3>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <ol class="breadcrumb">
+                                                <li class="active" ng-repeat="vendor in $ctr.vendors"
+                                                    ng-click="$ctr.selectVendor(vendor)">
+                                                    <span class="badge badge-info vertical-align-bottom"
+                                                          style="margin: 2px">{{$index + 1}}</span>
+                                                    <strong class="text-info vendor"
+                                                            ng-class="{'active-vendor':vendor.is_selected}">{{vendor.vendor_name}}</strong>
+                                                </li>
+                                            </ol>
+                                        </div>
+                                    </div>
+                                    <div class="row padding-top-20">
+                                        <form novalidate autocomplete="off" name="form" ng-submit="$ctr.search()">
+                                            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                                                <div class="col-xs-6">
+                                                    <label>Category</label>
+                                                    <input type="text" class="form-control  m-b-xs"
+                                                           placeholder="Category" ng-model="$ctr.searchModel.category">
+                                                </div>
+                                                <div class="col-xs-6">
+                                                    <label>Sub Category</label>
+                                                    <input type="text" class="form-control  m-b-xs"
+                                                           placeholder="Sub Category"
+                                                           ng-model="$ctr.searchModel.sub_category">
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label>Inventory Name</label>
+                                                    <input type="text" class="form-control  m-b-xs"
+                                                           placeholder="Name" ng-model="$ctr.searchModel.item_name">
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label>SKU (Vendor)</label>
+                                                    <input type="text" class="form-control  m-b-xs"
+                                                           placeholder="SKU" ng-model="$ctr.searchModel.vendor_sku">
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label>Owner</label>
+                                                    <select class="form-control" ng-model="$ctr.searchModel.filter">
+                                                        <option value="any">Any</option>
+                                                        <option value="common">Common</option>
+                                                        <option value="own">Own</option>
+                                                    </select>
+                                                </div>
+                                                <div class="col-xs-12 col-md-4 pull-right text-right padding-top-20">
+                                                    <button type="submit" class="btn btn-primary">Search</button>
+                                                </div>
+                                                <div class="col-xs-12 col-md-8">
+                                                    <ol class="breadcrumb" style="font-size: 18px; padding: 20px 0">
+                                                        <li class="active" ng-repeat="vendor in $ctr.vendors" ng-if="vendor.is_selected">
+                                                           <strong class="text-info vendor" style="margin-left: 0px;"
+                                                                    ng-class="{'active-vendor':vendor.is_selected}">{{vendor.vendor_name}}</strong>
+                                                        </li>
+                                                    </ol>
+                                                </div>
+
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="footable-custom table-stripped toggle-arrow-tiny table footable-sort">
+                                    <thead>
+                                    <tr>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Category
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Sub Category
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th ng-click="$ctr.search('item_name')"
+                                            ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'item_name' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'item_name' && $ctr.searchModel.order_way == 'ASC')}">
+                                                <span class="no-wrap cursor-pointer">
+                                                    Inventory Name
+                                                    <span class="footable-sort-indicator"></span>
+                                                </span>
+                                        </th>
+                                        <th ng-click="$ctr.search('vendor_sku')"
+                                            ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'vendor_sku' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'vendor_sku' && $ctr.searchModel.order_way == 'ASC')}">
+                                                <span class="no-wrap cursor-pointer">
+                                                    SKU
+                                                    <span class="footable-sort-indicator"></span>
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Case
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Pack
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Size
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                    Unit
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th>
+                                                <span class="no-wrap">
+                                                     Price($)
+                                                    <!--<span class="footable-sort-indicator"></span>-->
+                                                </span>
+                                        </th>
+                                        <th class="width-50"></th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="i in $ctr.inventoryList track by $index">
+                                        <td>{{i.category}}</td>
+                                        <td>{{i.sub_category}}</td>
+                                        <td>{{i.item_name}}</td>
+                                        <td>{{i.vendor_sku}}</td>
+                                        <td>{{i.case_qty}}</td>
+                                        <td>{{i.pack}}</td>
+                                        <td>{{i.size}}</td>
+                                        <td>{{i.unit_of_delivery}}</td>
+                                        <td>{{i[i.price_field] || i.case_cost | currency: ''}}</td>
+                                        <td class="text-right">
+                                            <label class="switch">
+                                                <input ng-disabled="i.is_used_by_receipts || !$ctr.permissions['7'].w" type="checkbox" ng-model="i.is_used" ng-true-value="1" ng-false-value="0" ng-change="$ctr.addInventory(i)"><i></i>
+                                            </label>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="!$ctr.inventoryList.length">
+                                        <td colspan="11" class="text-center">
+                                            <b>This vendor doesn't have any inventories</b>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="clearfix m-b-lg m-t-lg">
+                                <div class="pull-right">
+                                    <ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+                                        ng-model="$ctr.searchModel.paginationOffset"
+                                        max-size="10"
+                                        class="pagination-sm"
+                                        items-per-page="$ctr.searchModel.paginationCount"
+                                        ng-change="$ctr.search()"
+                                        boundary-link-numbers="true"
+                                        rotate="false"></ul>
+                                </div>
+                            </div>
+
+
+                            <div class="row">
+                                <div class="col-xs-6 text-left">
+                                    <button scroll-top class="btn btn-primary" ng-click="$ctr.back()">&lt;&lt; Back</button>
+                                </div>
+                                <!--<div class="col-xs-6" ng-if="!main.isSecondVendor">-->
+                                <!--<button type="submit" class="btn btn-primary block m-b float-right" ng-click="main.isSecondVendor = true">Next</button>-->
+                                <!--</div>-->
+                                <div class="col-xs-6">
+                                    <button scroll-top type="button" class="btn btn-primary block m-b float-right" ng-click="$ctr.next()">
+                                        Next <span ng-show="$ctr.currentVendor.is_last">- Recipe Setup</span>
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+									<div ng-if="$ctr.SetUpStatus" class="row">
+										<div class="col-xs-6 float-right">
+											<button scroll-top class="btn btn-primary" ui-sref="food.newFoodOrder">Place an Order</button>
+										</div>
+									</div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <h2>Selected Inventory</h2>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <button ng-click="$ctr.addUniqueItems()" class="btn btn-primary pull-right" >Modify/Add</button>
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <div class="table-responsive">
+                                            <table class="table table-stripped">
+                                                <thead>
+                                                <tr>
+                                                    <th>SKU</th>
+                                                    <th>Name</th>
+                                                    <th class="width-50">Price($)</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="i in $ctr.inventoryListSelected">
+                                                    <td>{{i.vendor_sku}}</td>
+                                                    <td>{{i.item_name}}</td>
+                                                    <td>{{i[i.price_field] || i.case_cost | currency: ''}}</td>
+                                                    <td>
+                                                        <a href="" class="btn btn-danger pull-right btn-circle" ng-if="$ctr.permissions['7'].d"  ng-click="$ctr.deleteInventory(i)" ><i class="fa fa-times"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="!$ctr.inventoryListSelected.length">
+                                                    <td colspan="2" class="text-center">No selected items by current vendor</td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12">
+                                            <button scroll-top type="button" class="btn btn-primary block m-b pull-right" ng-click="$ctr.next()">
+                                                Next <span ng-show="$ctr.currentVendor.is_last">- Recipe Setup</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

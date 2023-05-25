@@ -1,0 +1,98 @@
+<div class="inmodal">
+    <form name="form" novalidate autocomplete="off" role="form" ng-submit="$ctr.submit(form)">
+        <div class="modal-header">
+            <h4 class="modal-title">Full Audit</h4>
+        </div>
+        <div class="modal-body">
+            <div>
+                <div class="row">
+                    <!--<p style="padding-left: 15px;">-->
+                        <!--Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab, accusamus consectetur cum dicta dolore iste itaque provident quae quas, sed soluta sunt! Neque nobis nulla quibusdam quidem tempora unde voluptatibus!-->
+                    <!--</p>-->
+
+					<div class="col-sm-12 col-md-6 col-lg-6">
+                        <div ui-sref="foodSetup.foodInventory({typeInventory: 'full'})" class="widget style1 btn-warning cursor-pointer">
+                            <div class="text-center button-element">
+                                <a class="pos-title color-black font-bold">Full Inventory Audit</a>
+                            </div>
+                        </div>
+                        <p class="text-justify">
+                            <strong>Warning:</strong> if you start a Full Inventory Audit you will be required to count ALL items. Any items left with a
+                            zero quantity will be recorded as zero quantity. If you only wish to count certain items please go back
+                            and select “Audit Adjustment”.
+                            <br><br>
+                            <strong>Note:</strong> If any deliveries were received from 12am – now, please DO NOT include those items in your
+                            count otherwise your delivery amounts will be doubled. If your count has not been completed by 12am,
+                            your inventory will void and you may be required to begin your count again.
+                            <br><br>
+                            We encourage you not to do your inventory audit while the restaurant is actively selling product
+                            because it has the ability to cause an incorrect result. <br>
+                            Inventory counted before opening will show immediate accurate results. Inventory counted after closing
+                            may not show accurate results until after sales data is pulled, typically the next morning 3am depending
+                            on your POS System.
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div ui-sref="recipeAudit({typeInventory: 'full'})" class="widget style1 btn-warning cursor-pointer">
+                            <div class="text-center button-element">
+                                <a class="pos-title color-black font-bold">Pre-prepped Batch Audit</a>
+                            </div>
+                        </div>
+                        <p class="text-justify">
+                            Batch audit instructions and notes...
+                        </p>
+                    </div>
+					
+                    <!--<div class="col-sm-12 col-md-6 col-lg-6">
+                        <div ui-sref="foodSetup.foodInventory({typeInventory: 'full'})" class="widget style1 btn-warning cursor-pointer">
+                            <div class="text-center button-element">
+                                <a class="pos-title color-black font-bold">Full Inventory Audit</a>
+                            </div>
+                        </div>
+                        <p class="text-justify">
+                            <strong>Warning:</strong> if you start a Full Inventory Audit you will be required to count ALL items. Any items left with a
+                            zero quantity will be recorded as zero quantity. If you only wish to count certain items please go back
+                            and select “Audit Adjustment”.
+                            <br><br>
+                            <strong>Note:</strong> If any deliveries were received from 12am – now, please DO NOT include those items in your
+                            count otherwise your delivery amounts will be doubled. If your count has not been completed by 12am,
+                            your inventory will void and you may be required to begin your count again.
+                            <br><br>
+                            We encourage you not to do your inventory audit while the restaurant is actively selling product
+                            because it has the ability to cause an incorrect result. <br>
+                            Inventory counted before opening will show immediate accurate results. Inventory counted after closing
+                            may not show accurate results until after sales data is pulled, typically the next morning 3am depending
+                            on your POS System.
+                        </p>
+                    </div>
+                    <div class="col-sm-12 col-md-6 col-lg-6">
+                        <div ui-sref="foodSetup.foodInventory({typeInventory: 'adjustment'})" class="widget style1 btn-warning cursor-pointer">
+                            <div class="text-center button-element">
+                                <a class="pos-title color-black font-bold">Adjustment Inventory Audit</a>
+                            </div>
+                        </div>
+                        <p class="text-justify">
+                            <strong>Warning:</strong> You may use this feature to adjust the quantity of specific items without effecting ALL items,
+                            however adjustments are typically considered a negative procedure and will count against you on your
+                            Performance Score. If you wish to do a full inventory count please go back and select “Full inventory
+                            Audit”.
+                            <br><br>
+                            <strong>Note:</strong> If any deliveries were received from 12am – now, please DO NOT include those items in your
+                            count otherwise the delivery amounts will be doubled. If your adjustments have not been saved by
+                            12am, your adjustments will void and you may be required to begin again.
+                            <br><br>
+                            Adjustment made before opening will show immediate accurate results. Adjustments made after closing
+                            may not show accurate results until after sales data is pulled, typically the next morning 3am depending
+                            upon your POS System.
+                        </p>
+                    </div>-->
+                </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-white" ng-click="cancel()">Cancel</button>
+        </div>
+    </form>
+</div>
+
+

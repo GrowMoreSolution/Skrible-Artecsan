@@ -1,0 +1,126 @@
+<nav class="navbar-default navbar-static-side" role="navigation">
+    <div class="sidebar-collapse">
+        <ul side-navigation class="nav metismenu" id="side-menu">
+            <li class="nav-header">
+                <div class="dropdown profile-element">
+                    <span>
+                        <img alt="image" src="img/profile_icon.png" width="50px">
+                    </span>
+                    <a data-toggle="dropdown" class="dropdown-toggle" href="" aria-expanded="false">
+                            <span class="clear">
+                                <span class="block m-t-xs">
+                                    <strong class="font-bold">{{$ctr.user.first_name}} {{$ctr.user.last_name}}</strong>
+                                </span>
+                                <span class="text-muted text-xs block">
+                                    {{$ctr.user.email}}
+                                    <b class="caret"></b>
+                                </span>
+                            </span>
+                    </a>
+                    <ul class="dropdown-menu animated fadeInRight m-t-xs">
+                        <li><a href="" ng-click="$ctr.myProfile()">Account Settings</a></li>
+                        <li class="divider"></li>
+                        <li><a href="" ng-click="$ctr.logOut()">Logout</a></li>
+                    </ul>
+                </div>
+                <div class="logo-element">
+                    AR
+                </div>
+            </li>
+            <li ui-sref-active="active"  id="select_restaurant">
+                <a ui-sref="home"><i class="fa fa-home"></i> <span class="nav-label">{{ 'Select Restaurant' }}</span> </a>
+            </li>
+			<li ui-sref-active="active" id="compare_restaurants">
+				<a href="" ng-show="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')"><i class="fa fa-cubes"></i> <span class="nav-label">{{ 'Compare Restaurants' }}</span></a>
+				<ul class="nav nav-second-level collapse" ng-class="{in: $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')}">
+                    <li ui-sref-active="active"><a ui-sref="compareRestaurants">Reports</a></li>
+                    <li ui-sref-active="active"><a ui-sref="compareRestaurantsMapping">Mapping</a></li>
+                </ul>
+            </li>
+			<li ui-sref-active="active"  id="select_restaurant">
+                <a ng-show="!$ctr.state.includes('home') && !$ctr.state.includes('compareRestaurants') && !$ctr.state.includes('compareRestaurantsMapping') && !$ctr.SetUpStatus && $ctr.subscription_type_id != 4" ui-sref="admin.support"><i class="fa fa-wrench"></i> <span class="nav-label">{{ 'Setup Assistance' }}</span> 
+				<i class="fa fa-warning fa-lg pull-right m-t-xs text-warning" ></i>
+				</a>
+            </li>
+            <li ng-if="!$ctr.SetUpStatus" ng-show="($ctr.permissions['5'].r && !$ctr.state.includes('home') && $ctr.state.includes('foodSetup')) ||
+                           !$ctr.state.includes('home') && ($ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 7) && ($ctr.state.includes('foodSetup') || $ctr.state.includes('alcoholSetup')) || $ctr.state.includes('admin.inventoryAuditAsk') || (!$ctr.state.includes('home') && ($ctr.subscription_type_id == 2 || $ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 6 || $ctr.subscription_type_id == 7) && ($ctr.state.includes('admin.support') || $ctr.state.includes('administrator.posSync') || $ctr.state.includes('admin.analytics') || $ctr.state.includes('setupFirstAudit')))"
+                ng-class="{'active': $ctr.state.includes('foodSetup') && !$ctr.state.includes('foodSetup.posSync') && !$ctr.state.includes('foodSetup.addPosHere')}"  id="food">
+                <a href=""><i class="fa fa-shopping-cart"></i> <span class="nav-label">{{ 'Food Setup' }}</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" ng-class="{in: $ctr.state.includes('foodSetup') && !$ctr.state.includes('foodSetup.posSync') && !$ctr.state.includes('foodSetup.addPosHere')}">
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['6'].r" id="food_vendor_setupv"><a ui-sref="foodSetup.vendor">Vendor Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['7'].r" id="food_inventory_setup"><a ui-sref="foodSetup.inventory">Inventory Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['8'].r" id="food_recipe_setup"><a ui-sref="foodSetup.recipe">Recipe Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['9'].r" id="food_menu_setup"><a ui-sref="foodSetup.menu">Menu Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['10'].r" id="delivery_shedule"><a ui-sref="foodSetup.delivery">Order Schedule</a></li>
+                </ul>
+            </li>
+            <li ng-if="!$ctr.SetUpStatus" ng-class="{'active': $ctr.state.includes('alcoholSetup') && !$ctr.state.includes('alcoholSetup.posSync') && !$ctr.state.includes('alcoholSetup.addPosHere')}"  id="alcohol"
+                ng-show="($ctr.permissions['11'].r && !$ctr.state.includes('home') && $ctr.state.includes('alcoholSetup')) ||
+                          !$ctr.state.includes('home') && ($ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 7) && ($ctr.state.includes('alcoholSetup') || $ctr.state.includes('foodSetup')) || $ctr.state.includes('admin.inventoryAuditAsk') || (!$ctr.state.includes('home') && ($ctr.subscription_type_id == 1 || $ctr.subscription_type_id == 3 || $ctr.subscription_type_id == 5 || $ctr.subscription_type_id == 7) && ($ctr.state.includes('admin.support') || $ctr.state.includes('administrator.posSync') || $ctr.state.includes('admin.analytics') || $ctr.state.includes('setupFirstAudit')))">
+                <a href=""><i class="fa fa-glass"></i> <span class="nav-label">Bar Setup</span><span class="fa arrow"></span></a>
+                <ul class="nav nav-second-level collapse" ng-class="{in: $ctr.state.includes('alcoholSetup') && !$ctr.state.includes('alcoholSetup.posSync') && !$ctr.state.includes('alcoholSetup.addPosHere')}">
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['12'].r" id="alcohol_vendor_setupv"><a ui-sref="alcoholSetup.vendor">Vendor Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['13'].r" id="alcohol_inventory_setup"><a ui-sref="alcoholSetup.inventory">Inventory Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['15'].r" id="alcohol_serving_details"><a ui-sref="alcoholSetup.serving-details">Bar Serving Details</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['15'].r" id="alcohol_recipe_setup"><a ui-sref="alcoholSetup.menu">Menu Setup</a></li>
+                    <li ui-sref-active="active" ng-if="$ctr.permissions['16'].r" id="alcohol_delivery_shedule"><a ui-sref="alcoholSetup.delivery">Order Schedule</a></li>
+                </ul>
+            </li>
+            <li ng-class="{'active': ($ctr.state.includes('foodSetup.posSync') || $ctr.state.includes('foodSetup.addPosHere')) || ($ctr.state.includes('alcoholSetup.posSync') || $ctr.state.includes('alcoholSetup.addPosHere')) || $ctr.state.includes('admin.inventoryAuditAsk')}" ng-if="$ctr.subscription_type_id !=4 && !$ctr.SetUpStatus && $ctr.permissions['17'].r" id="p.o.s.sync" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="administrator.posSync"><i class="fa fa-print"></i> <span class="nav-label">{{ 'POS Sync' }}</span> </a>
+            </li>
+			<li ng-class="{'active': ($ctr.state.includes('foodSetup.posSync') || $ctr.state.includes('foodSetup.addPosHere')) || ($ctr.state.includes('alcoholSetup.posSync') || $ctr.state.includes('alcoholSetup.addPosHere')) || $ctr.state.includes('admin.inventoryAuditAsk')}" ng-if="$ctr.subscription_type_id ==4 && !$ctr.SetUpStatus" id="p.o.s.sync" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="administrator.posSync"><i class="fa fa-print"></i> <span class="nav-label">{{ 'POS Sync' }}</span> </a>
+            </li>
+            <!--<li ng-if="$ctr.subscription_type_id !=4 && !$ctr.SetUpStatus" id="payroll_setup" ng-hide="$ctr.state.includes('home')">
+                <a ui-sref="admin.comingSoon"><i class="fa fa-money"></i> <span class="nav-label">{{ 'Payroll' }}</span> </a>
+            </li>
+            <li ng-if="$ctr.subscription_type_id !=4 && !$ctr.SetUpStatus" id="accounting" ng-hide="$ctr.state.includes('home')">
+                <a ui-sref="admin.comingSoon"><i class="fa fa-calculator"></i> <span class="nav-label">{{ 'Accounting' }}</span> </a>
+            </li>-->
+            <!--Analytics -->
+            <li ng-if="!$ctr.SetUpStatus && $ctr.permissions['25'].r" id="analytics" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="admin.analytics"><i class="fa fa-question-circle"></i> <span class="nav-label">{{ 'Analytics' }}</span> </a>
+            </li>
+            <li ng-if="$ctr.subscription_type_id !=4 && !$ctr.SetUpStatus" id="users" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ng-click="$ctr.linkInventory();"><i class="fa fa-table"></i> <span class="nav-label">{{ 'Inventory' }}</span> </a>
+            </li>
+
+            <!--<hr ng-if="$ctr.state.includes('foodSetup') || $ctr.state.includes('alcoholSetup') || $ctr.state.includes('admin.inventoryAuditAsk')">-->
+
+            <li ui-sref-active="active" ng-if="$ctr.subscription_type_id !=4 && $ctr.SetUpStatus && $ctr.permissions['20'].r" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="admin.homeMenu"><i class="fa fa-diamond"></i> <span class="nav-label">{{ 'Home' }}</span> </a>
+            </li>
+            <li ui-sref-active="active" ng-if="$ctr.SetUpStatus && $ctr.permissions['21'].r" id="management" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="admin.managementCategories"><i class="fa fa-edit"></i> <span class="nav-label">{{ 'Management' }}</span> </a>
+            </li>
+            <li ui-sref-active="active" ng-if="$ctr.subscription_type_id !=4 && $ctr.SetUpStatus && $ctr.permissions['26'].r" id="inventory" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ng-click="$ctr.linkInventoryMain();"><i class="fa fa-table"></i> <span class="nav-label">{{ 'Inventory' }}</span> </a>
+            </li>
+            <!--<li ng-if="$ctr.subscription_type_id !=4 && $ctr.SetUpStatus && $ctr.permissions['42'].r" id="consumer_reviews" ng-hide="$ctr.state.includes('home')">
+                <a ui-sref="admin.comingSoon"><i class="fa fa-envelope"></i> <span class="nav-label">{{ 'Consumer Reviews' }}</span> </a>
+            </li>-->
+            <!--<li ng-if="$ctr.subscription_type_id > 4 && $ctr.SetUpStatus && $ctr.permissions['50'].r" ui-sref-active="active" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping') || $ctr.subscription_type_id <= 4">
+                <a ui-sref="admin.performanceScore"><i class="fa fa-bar-chart-o"></i> <span class="nav-label">{{ 'Performance Score' }}</span> </a>
+            </li>-->
+            <li ui-sref-active="active" ng-class="{'active': $ctr.state.includes('reports')}" ng-if="$ctr.SetUpStatus && $ctr.permissions['43'].r" id="reports" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="reports.reportsCategory"><i class="fa fa-pie-chart"></i> <span class="nav-label">{{ 'Reports' }}</span>
+
+                    <i class="fa fa-warning fa-lg pull-right m-t-xs text-warning" ng-show="$ctr.report_items_match_to_show"></i>
+                </a>
+            </li>
+            <li ui-sref-active="active" ng-class="{'active': $ctr.state.includes('administrator')}" ng-if="$ctr.permissions['51'].r" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="administrator.menu"><i class="fa fa-globe"></i> <span class="nav-label">{{ 'Administrator' }}</span> </a>
+            </li>
+            <li ng-if="$ctr.SetUpStatus && $ctr.permissions['57'].r" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="admin.faq"><i class="fa fa-flask"></i> <span class="nav-label">{{ 'Frequent Q&A' }}</span> </a>
+            </li>
+			<li ng-if="$ctr.subscription_type_id !=4 && $ctr.permissions['58'].r" ui-sref-active="active" ng-hide="$ctr.state.includes('home') || $ctr.state.includes('compareRestaurants') || $ctr.state.includes('compareRestaurantsMapping')">
+                <a ui-sref="admin.dataEntry"><i class="fa fa-database"></i> <span class="nav-label">{{ 'Data Entry' }}</span> </a>
+            </li>
+            <li >
+                <a href="" ng-click="$ctr.logOut()"><i class="fa fa-sign-out"></i> <span class="nav-label">{{ 'Logout' }}</span> </a>
+            </li>
+        </ul>
+    </div>
+</nav>

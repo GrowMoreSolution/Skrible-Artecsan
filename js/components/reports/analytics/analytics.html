@@ -1,0 +1,289 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['45'].r || $ctr.permissions['46'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row" id="top-section">
+				<div class="row" style="padding: 0px 9px;">
+					<div class="col-sm-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.alcohol.alcoholDetail">Overview</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.alcoholCostOfSummary">Inventory Count</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.dailyOnHand">On-Hand</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.salesReport">Sales</button>
+										<button class="btn btn-primary active" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.analytics({typeInventory: $ctr.detail_type})">Usage</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.pmix({typeInventory: 'alcohol'})">PMIX</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.costChangeReport">Cost Change</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'alcohol'" ui-sref="reports.usageVsPurchase">Purchases</button>
+										
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.food.foodDetail">Overview</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.foodCostOfSummary">Inventory Count</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.foodOnHand">On-Hand</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.foodSalesReport">Sales</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.batchReport">Batches</button>
+										<button class="btn btn-primary active" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.analytics({typeInventory: 'food'})">Usage</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.pmix({typeInventory: 'food'})">PMIX</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.foodCostChangeReport">Cost Change</button>
+										<button class="btn btn-primary" ng-if="$ctr.detail_type == 'food'" ui-sref="reports.foodUsageVsPurchase">Purchases</button>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class="row wrapper border-bottom white-bg page-heading" style="padding: 0px 29px">
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="font-noraml">Date From</label>
+							<input type="date" ng-model="$ctr.start_date"/>
+							<!--<div class="input-group date">
+									<input type="datetime" class="form-control" date-time ng-model="$ctr.start_date" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							</div>-->
+						</div>
+					</div>
+					<div class="col-sm-2">
+						<div class="form-group">
+							<label class="font-noraml">Date To</label>
+							<input type="date" ng-model="$ctr.end_date"/>
+							<!--<div class="input-group date">
+									<input type="datetime" class="form-control" date-time ng-model="$ctr.end_date" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+									<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+							</div>-->
+						</div>
+					</div>
+					<div class="col-sm-1 search-button">
+						<div class="form-group">
+								<button ng-if="!$ctr.loading" class="btn btn-primary" ng-click="$ctr.loadDetails()">Search</button>
+								<button ng-if="$ctr.loading" class="btn btn-primary" disabled>Loading...</button>
+						</div>
+					</div>
+					<div class="col-sm-2 search-button float-right">
+						<div class="form-group">
+								<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.downloadCSV()" ng-if="!$ctr.export_loading">Export Report
+								</button>
+								<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+								</button>
+						</div>
+					</div>
+				</div>
+				
+				<div class="wrapper wrapper-content  animated fadeInRight">
+					<div class="row">
+						<div class="col-md-12 col-lg-12">
+							<div class="table-responsive">
+								<table class="table table-bordered table-sm" style="table-layout: fixed;">
+									<thead class="th-text-center">
+										<tr>
+											<th colspan="4" style="width: 152px;">
+												Select a category
+											</th>
+											
+											<th style="width: 153px;">
+												Purchase vs Sold %
+											</th>
+											<th ng-if="$ctr.detail_type=='alcohol'" style="width: 153px;">
+												Slow Movers %
+											</th>
+											<th style="width: 122px;">
+												Purchases Units
+											</th>
+											<th style="width: 185px;">
+												POS Inventory Units Sold
+											</th>
+											<!--<th>
+												Estimated Loss
+											</th>-->
+											<th style="width: 164px;">
+												Ending On-Hand Units
+											</th>
+											<th style="width: 72px;">
+												Usage %
+											</th>
+											<th style="width: 106px;">
+												Stale Items %
+											</th>
+										</tr>
+									</thead>
+									<tbody class="text-center">
+										<tr>
+											<td colspan="4" style="width: 152px;">
+												<select ng-model="$ctr.score_category" ng-change="$ctr.change_category()" ng-options="value as value for value in $ctr.categories">
+												</select>
+											</td>
+											<td style="width: 153px;">{{$ctr.score_summary.pvs | number : 2}}</td>
+											<td style="width: 153px;" ng-if="$ctr.detail_type=='alcohol'">{{$ctr.score_summary.slow | number : 2}}</td>
+											<td style="width: 122px;">{{$ctr.score_summary.purchases | number : 2}}</td>
+											<td style="width: 185px;">{{$ctr.score_summary.sold | number : 2}}</td>
+											<!--<td>{{$ctr.score_summary.q_var | number : 2}}</td>-->
+											<td style="width: 164px;">{{$ctr.score_summary.oh | number : 2}}</td>
+											<td style="width: 72px;">{{$ctr.score_summary.usage | number : 2}}</td>
+											<td style="width: 106px;">{{$ctr.score_summary.stale | number : 2}}</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+					
+					<div class="row">
+						<div class="col-sm-12" style="padding: 0px 0px; margin: -18px 0px;">
+							<div class="ibox float-e-margins">
+								<div class="ibox-content">
+									<div class="col-md-12 col-lg-12">
+										<div class="table-responsive">
+											<table class="table table-bordered table-sm" style="margin-top: 0; margin-bottom: 0;table-layout: fixed;">
+												<thead class="th-text-center">
+													<tr>
+														<th style="width: 304px;">
+															Name
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<th style="width: 62px;">
+															Size
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<!--<th>
+															Purchases $
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<th style="width: 95px;">
+															Purchases Units
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<!--<th>
+															Suggested $
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<th style="width: 98px;">
+															Suggested Units
+															<span  class="footable-sort-indicator"></span>
+														</th >
+														<!--<th>
+															POS Inventory $ Sold
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<th style="width: 144px;">
+															POS Inventory Units Sold 
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<!--<th>
+															Cost Variance
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<!--<th>
+															Estimated Loss
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<!--<th>
+															Total On-Hand Inventory $
+															<span  class="footable-sort-indicator"></span>
+														</th>-->
+														<th style="width: 135px;">
+															Ending On-Hand Units
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<th style="width: 66px;">
+															Usage %
+															<span  class="footable-sort-indicator"></span>
+														</th>
+														<th style="width: 100px;">
+															# of Zero Sale Days
+															<span  class="footable-sort-indicator"></span>
+														</th>
+													</tr>
+												</thead>
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+						
+			<div class="row" id="content-table-section" style="padding: 0px 10px;">
+				<div class="ibox float-e-margins" style="margin-top: 22px;">
+					<div class="ibox-content ir adjust-pad">
+						<table class="table table-bordered table-sm" style="table-layout: fixed;">
+							<tbody>
+								<tr ng-repeat="m in $ctr.score_details">
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="text-align: left;width: 304px;">{{m.item_name}}</td>
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 62px;" >{{m.size}}</td>
+									<!--<td>{{m.purchases | number : 2}}</td>-->
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 95px;" title="Purchases Units">{{m.purchases_units | number : 2}}</td>
+									<!--<td>{{m.suggested | number : 2}}</td>-->
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 98px;" title="Suggested Units">{{m.suggested_units | number : 2}}</td>
+									<!--<td>{{m.sales | number : 2}}</td>-->
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 144px;" title="POS Inventory Units Sold">{{m.sold_units | number : 2}}</td>
+									<!--<td>{{m.cost_variance | number : 2}}</td>-->
+									<!--<td title="Quantity Variance">{{m.unit_variance | number : 2}}</td>-->
+									<!--<td>{{m.oh_value | number : 2}}</td>-->
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 135px;" title="Ending On-Hand Units">{{m.oh_units | number : 2}}</td>
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 66px;" title="Usage %">{{m.usage_percent | number : 2}}</td>
+									<td ng-class='{COS_red_alert : m.is_new_item}' style="width: 100px;" title="# of Days not Sold">{{m.stale_days}}</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir select, .ir input {
+    height: 35px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+
+#content-table-section {
+    max-height: 55vh;
+    overflow-y: scroll;
+	margin-top: 391px;
+}
+
+.adjust-pad {
+    padding-right: 2px;
+    padding-top: 0
+}
+
+#top-section {
+    position: absolute;
+}
+
+.bottomless {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            var height = document.getElementById('top-section').clientHeight;
+            $('#content-table-section').css('margin-top', height + 'px');
+        }, 2000);
+    });
+</script>

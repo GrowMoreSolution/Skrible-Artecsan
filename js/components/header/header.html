@@ -1,0 +1,86 @@
+<div class="row border-bottom menu-button">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="padding-left-20">
+            <a class="navbar-brand navbar-link" href="" ui-sref="login" ng-if="!$ctr.isAuth">
+                <span>
+                  <img class="main_cookstime_logo" src="img/1.png">  <span
+                        ng-show="$ctr.restaurantName"> - {{$ctr.restaurantName}} </span>
+                </span>
+            </a>
+            <a class="navbar-brand navbar-link" href="" ui-sref="home" ng-if="$ctr.isAuth">
+                <!-- <i class="glyphicon glyphicon-cutlery"></i>-->
+                <span>
+                  <img class="main_cookstime_logo" src="img/1.png">  <span
+                        ng-show="$ctr.restaurantName"> - {{$ctr.restaurantName}} </span>
+                </span>
+            </a>
+        </div>
+        <ul class="nav navbar-top-links navbar-right" ng-if="$ctr.isAuth">
+            <li>
+                <a href="" ng-click="$ctr.logout()">
+                    <i class="fa fa-sign-out"></i> Log out
+                </a>
+            </li>
+        </ul>
+
+        <div ng-if="!($ctr.state.includes('home')) && $ctr.isAuth"
+             class="form-inline float-right padding-left-20 padding-right-20" style="padding-top: 7px;">
+            <select class="form-control" ng-model="$ctr.current_rest"
+                    ng-options="item.id as item.restaurant_name for item in $ctr.rest_list" required>
+            </select>
+            <button class="btn btn-primary btn-sm" ng-click="$ctr.selectRestaurant($ctr.current_rest)">
+                Go!
+            </button>
+        </div>
+
+        <div class="float-right padding-left-20 padding-right-20" style="padding-top: 7px;">
+            <span>
+                   <strong>Contact Customer Support</strong><br>
+                <!--{{$ctr.settings.default_business_hours}}<br>-->
+                    <a href="mailto:{{$ctr.settings.default_contact_email}}">{{$ctr.settings.default_contact_email}}</a><br>
+                <!--<a href="tel:{{$ctr.settings.default_contact_phone_number}}">{{$ctr.settings.default_contact_phone_number}}</a>-->
+               </span>
+
+        </div>
+
+        <div class="float-left" style="padding-top: 15px;" ng-if="!$ctr.isAuth">
+            <a class="padding-left-20 padding-right-20" href="https://www.cookstime.com">
+                Home
+            </a>
+            <a class="padding-left-20 padding-right-20" href="https://www.cookstime.com/features">
+                Features
+            </a>
+            <a class="padding-left-20 padding-right-20" href="https://www.cookstime.com/request-a-demo">
+                Request A Demo
+            </a>
+            <a class="padding-left-20 padding-right-20"
+               href="https://play.google.com/store/apps/details?id=com.cw.skrible">
+                Get the App
+            </a>
+        </div>
+
+    </nav>
+</div>
+<div class="row border-bottom menu-button-xs">
+    <nav class="navbar navbar-static-top" role="navigation" style="margin-bottom: 0">
+        <div class="padding-left-20">
+            <a class="navbar-brand navbar-brand-xs navbar-link" href="" ui-sref="login" ng-if="!$ctr.isAuth">
+                <i class="glyphicon glyphicon-cutlery"></i>
+            </a>
+            <a class="navbar-brand navbar-brand-xs navbar-link" href="" ui-sref="home" ng-if="$ctr.isAuth">
+                <i class="glyphicon glyphicon-cutlery"></i>
+            </a>
+        </div>
+        <div class="padding-left-5 padding-right-5 float-left" style="padding-top: 2px;">
+                <span>
+                   <strong>Contact Customer Support</strong><br>
+                   {{$ctr.settings.default_business_hours}}<br>
+                    <a href="mailto:{{$ctr.settings.default_contact_email}}">{{$ctr.settings.default_contact_email}}</a>
+                    <!--<a href="tel:{{$ctr.settings.default_contact_phone_number}}">{{$ctr.settings.default_contact_phone_number}}</a>-->
+                </span>
+        </div>
+        <div class="navbar-header float-right margin-right-10" ng-if="$ctr.isAuth">
+            <span minimaliza-sidebar></span>
+        </div>
+    </nav>
+</div>

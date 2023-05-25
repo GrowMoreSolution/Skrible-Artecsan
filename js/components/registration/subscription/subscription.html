@@ -1,0 +1,188 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+   <header-component></header-component>
+    <!-- Navigation -->
+    <!--<div ng-include="'views/common/navigation.html'"></div>-->
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg navigation-hide" ng-class="{'navigation-hide' : !main.isFoodSetup && main.isRegistration}">
+
+
+        <!-- Main view  -->
+
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Account Level</h2>
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row padding-top-50">
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="$ctr.select(sub)" ng-repeat="sub in $ctr.subscriptions.slice(4,7) track by $index">
+                    <div class="ibox">
+                        <div class="ibox-content product-box">
+
+                            <div class="product-imitation" ng-class="{'product-color' : sub.subscription_id == $ctr.restaurant.subscription_type_id}">
+                                <div class="top-title">
+                                    <p>{{sub.name}} 
+									<!--<br> {{sub.description_lite}}-->
+									</p>
+                                </div>
+                                <span class="price-big">${{sub.price_month}}</span> 
+								<span class="color-black"> / month</span>
+                                <p ng-if="sub.description_lite == '(alcohol only)'">(contact us for audit rates)</p>
+								<p ng-if="sub.description_lite == '(food only)'">(contact us for audit rates)</p>
+								<p ng-if="sub.description_lite == '(food & alcohol)'">(contact us for audit rates)</p>
+                            </div>
+                            <div class="product-desc">
+                                <p class="text-pos-description color-black" ng-repeat="f in sub.feature_list track by $index">
+                                    {{f}}
+                                </p>
+                            </div>
+                            <div class="text-center padding-20">
+                                <button class="btn" ng-class="{'btn-primary' : sub.subscription_id == $ctr.restaurant.subscription_type_id, 'btn-default' :  sub.subscription_id != $ctr.restaurant.subscription_type_id}" type="button"
+                                        ng-click="$ctr.select(sub, true)">
+                                    Sign up
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="$ctr.select(0)">
+                    <div class="ibox">
+                        <div class="ibox-content product-box">
+
+                            <div class="product-imitation" ng-class="{'product-color' : $ctr.restaurant.subscription_type_id == 0}">
+                                <div class="top-title">
+                                    <p>Enterprise <br> 10+ Locations</p>
+                                </div>
+                                <div class="">
+                                    <p class="color-black">Contact Sales/Support</p>
+                                    <!--<p class="color-black">Phone: <a href="tel:{{$ctr.settings.default_contact_phone_number}}">{{$ctr.settings.default_contact_phone_number}}</a> </p>-->
+                                    <p class="color-black">Email: <a href="mailto:{{$ctr.settings.default_contact_email}}">{{$ctr.settings.default_contact_email}}</a></p>
+                                    <p class="color-black">{{$ctr.settings.default_business_hours}}</p>
+                                </div>
+                            </div>
+                            <div class="product-desc">
+
+                            </div>
+                            <div class="text-center padding-20">
+                                <button class="btn" ng-class="{'btn-primary' : $ctr.restaurant.subscription_type_id == 0, 'btn-default' :  $ctr.restaurant.subscription_type_id != 0}" type="button" ng-click="$ctr.contactUsPopup()">Contact us</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<!--<div class="row padding-top-20">
+				<div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="$ctr.select(sub)" ng-repeat="sub in $ctr.subscriptions.slice(0,4) track by $index">
+                    <div class="ibox">
+                        <div class="ibox-content product-box">
+
+                            <div class="product-imitation" ng-class="{'product-color' : sub.subscription_id == $ctr.restaurant.subscription_type_id}">
+                                <div class="top-title">
+                                    <p>{{sub.name}} <br> {{sub.description_lite}}</p>
+                                </div>
+                                <span class="price-big">${{sub.price_month}}</span> 
+								<span class="color-black"> / month</span>
+                                <p ng-if="sub.description_lite != 'Restaurant Shared Dashboard'">+ Audit rates starting at $199 per Audit (requires minimum 4 audits per year)</p>
+                            </div>
+                            <div class="product-desc">
+                                <p class="text-pos-description color-black" ng-repeat="f in sub.feature_list track by $index">
+                                    {{f}}
+                                </p>
+                            </div>
+                            <div class="text-center padding-20">
+                                <button class="btn" ng-class="{'btn-primary' : sub.subscription_id == $ctr.restaurant.subscription_type_id, 'btn-default' :  sub.subscription_id != $ctr.restaurant.subscription_type_id}" type="button"
+                                        ng-click="$ctr.select(sub, true)">
+                                    Sign up
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+			</div>-->
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+
+<script type="text/ng-template" id="contact_us.html">
+<div class="inmodal">
+        <form novalidate autocomplete="off" name="vm.form" ng-submit="vm.contactUs(vm.form)">
+            <div class="modal-header">
+                <h4 class="modal-title">Contact Us</h4>
+            </div>
+            <div class="modal-body">
+                <fieldset>
+                    <div>
+                        <div class="row">
+                            <div class="col-xs-12 col-md-6 form-group">
+                                <label>First Name <span class="text-danger">*</span></label>
+                                <input type="text" placeholder="First Name" maxlength="50" class="form-control" ng-model="vm.m.first_name" required>
+                            </div>
+                            <div class="col-xs-12 col-md-6 form-group">
+                                <label>Last Name <span class="text-danger">*</span></label>
+                                <input type="text" placeholder="At least two characters" minlength="2" maxlength="50" class="form-control" ng-model="vm.m.last_name" required>
+                            </div>
+                            <div class="col-xs-12 col-md-6 form-group">
+                                <label>Phone number <span class="text-danger">*</span></label>
+                                <!--<input type="number" placeholder="Phone number" class="form-control" ng-model="vm.m.phone_number" required>-->
+                                <div class="phone-input">
+                                    <div>
+                                        <div class="phone-code">
+                                            <div>+1</div>
+                                        </div>
+                                    </div>
+                                    <input name="phone" type="text" class="form-control"
+                                           required only-digits
+                                           ng-model="vm.m.phone_number" ac-phone maxlength="10" placeholder="Phone Number">
+                                </div>
+
+                                <span class="field-descriptions">(No dashes or special characters)</span>
+                            </div>
+                            <div class="col-xs-12 col-md-6 form-group">
+                                <label>Email <span class="text-danger">*</span></label>
+                                <input type="text" placeholder="Email" class="form-control" ng-model="vm.m.email" required
+                                       ng-pattern="/^[_a-z0-9]+(\.[_a-z0-9]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                            </div>
+                            <div class="col-xs-12 col-md-12 form-group">
+                                <label>Message <span class="text-danger">*</span></label>
+                                <textarea placeholder="Message" class="form-control no-resize" ng-model="vm.m.message" required rows="5">
+
+                                </textarea>
+                            </div>
+                        </div>
+                    </div>
+                </fieldset>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-white" ng-click="vm.close()">Cancel</button>
+                <button type="submit" class="btn btn-primary">Submit</button>
+            </div>
+        </form>
+    </div>
+</script>
+<!--<script type="text/javascript" id="hs-script-loader" async defer src="//js.hs-scripts.com/2363958.js"></script>-->
+<script type="text/ng-template" id="promo_container.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+				<img ng-src="{{qt.promo_URL}}" alt="{{qt.promo_URL_alt}}">
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white float-left" ng-click="qt.skip()">Got It!</button>
+		</div>
+	</div>
+</script>

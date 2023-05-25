@@ -1,0 +1,196 @@
+<div class="inmodal">
+    <div class="modal-header">
+        <h4 class="modal-title">Invite User</h4>
+    </div>
+    <div class="modal-body max-height-340">
+
+            <form name="form" ng-model="vm.user" novalidate="" role="form">
+                <fieldset>
+                    <div class="form-group">
+                        <div class="col-md-12 no-padding">
+                            <label>First Name</label>
+                            <input type="text" placeholder="First Name" class="form-control" ng-model="vm.user.firstName">
+                        </div>
+                        <div class="col-md-12 no-padding">
+                            <label>Last Name</label>
+                            <input type="text" placeholder="Last Name" class="form-control" ng-model="vm.user.lastName">
+                        </div>
+                        <div class="col-md-12 no-padding">
+                            <label>Email</label>
+                            <input type="text" placeholder="Email" class="form-control" ng-model="vm.user.email">
+                        </div>
+                        <div class="col-md-12 no-padding">
+                            <label>User Type</label>
+                            <select class="form-control" ng-required="true" ng-model="vm.user.userType">
+                                <option value="? undefined:undefined ?"></option>
+                                <option value="Administrator">Administrator</option>
+                                <option value="Area Manager">Area Manager</option>
+                                <option value="General Manager">General Manager</option>
+                                <option value="Kitchen Manager">Kitchen Manager</option>
+                                <option value="Bar Manager">Bar Manager</option>
+                                <option value="Food Auditor">Food Auditor</option>
+                                <option value="Bar Auditor">Bar Auditor</option>
+                                <option value="Custom Roles">Custom Roles</option>
+                            </select>
+                        </div>
+                    </div>
+                </fieldset>
+                <fieldset ng-if="vm.user.userType == 'Custom Roles'">
+                    <div class="ibox-content padding-top-20">
+                        <h3 class="text-center">Permissions Management</h3>
+                        <table class="table table-stripped">
+                            <tbody>
+                            <tr>
+                                <td>Restaurant Module</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Billing</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Users</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Setup Wizard</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Food</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>POS Setup</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Management</td>
+                                <td></td>
+                                <td>
+                                    <label class="switch">
+                                    <input type="checkbox"><i></i>
+                                </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Inventory</td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Food</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Begin Food Inventory Count</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Consumer Reviews</td>
+                                <td></td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Dashboard / Reports</td>
+                                <td></td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Food Details</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Performance Score</td>
+                                <td></td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Administrator</td>
+                                <td></td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Billing</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td>Users</td>
+                                <td>
+                                    <label class="switch">
+                                        <input type="checkbox"><i></i>
+                                    </label>
+                                </td>
+                            </tr>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </fieldset>
+            </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-white" ng-click="cancel()">Cancel</button>
+        <button type="button" class="btn btn-primary" ng-click="ok(vm.user)">Invite</button>
+    </div>
+</div>
+

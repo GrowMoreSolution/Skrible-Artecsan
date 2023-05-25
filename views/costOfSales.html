@@ -1,0 +1,131 @@
+<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Cost Of Sales Summary Report</h2>
+        <ol class="breadcrumb">
+        <li ui-sref="admin.dashboardSubCategories">
+            <a>Reports</a>
+        </li>&nbsp;/&nbsp;
+        <li ui-sref="food.foodDetail">
+            <a>Food Detail Report</a>
+        </li>&nbsp;/&nbsp;
+        <li class="active-page">
+                <a>Cost Of Sales Summary Report</a>
+            </li>
+        </ol>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-sm-12">
+            <div class="ibox float-e-margins">
+                <div class="ibox-content overflow-x-auto">
+                    <div class="row">
+                        <div class="col-xs-12">
+                            <button class="btn btn-primary"  onclick="window.history.go(-1); return false;">&lt;&lt; Back</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-noraml">Date From</label>
+
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="font-noraml">Date To</label>
+
+                                <div class="input-group date">
+                                    <input type="datetime" class="form-control" date-time ng-model="sampleDate" view="date" auto-close="true" min-view="date" format="YYYY-MM-DD">
+                                    <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 search-button">
+                            <button class="btn btn-primary">Search</button>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
+                            <div class="table-responsive">
+                        <table class="table table-bordered">
+                        <thead class="th-text-center">
+                        <tr>
+                            <th style="text-align: left;">Item</th>
+                            <th class="width-100">Amount</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            <td>Gross Food Sales</td>
+                            <td class="text-center">$25,000</td>
+                        </tr>
+                        <tr>
+                            <td>Discounts/Comps Food</td>
+                            <td class=" border-bottom-td text-center">$10,000</td>
+                        </tr>
+                        <tr>
+                            <td>Total Food Sales</td>
+                            <td class="text-center">$35,000</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Inventory Values Last Period</td>
+                            <td class="text-center">$12,000</td>
+                        </tr>
+                        <tr>
+                            <td>Value of Purchased Inventory</td>
+                            <td class="text-center">$13,000</td>
+                        </tr>
+                        <tr>
+                            <td>Inventory Value this Period</td>
+                            <td class="border-bottom-td text-center">$11,500</td>
+                        </tr>
+                        <tr>
+                            <td>Value of Inventory Used</td>
+                            <td class="text-center">$13,500</td>
+                        </tr>
+                        <tr>
+                            <td> &nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Food Cost Percentage</td>
+                            <td class="text-center">38.57%</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Target Food Cost Percentage</td>
+                            <td class="text-center">36.20%</td>
+                        </tr>
+                        <tr>
+                            <td>&nbsp;</td>
+                            <td></td>
+                        </tr>
+                        <tr>
+                            <td>Over/Short Percentage Variance</td>
+                            <td class="text-center">38.57%</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

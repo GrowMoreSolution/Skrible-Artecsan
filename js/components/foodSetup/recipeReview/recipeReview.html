@@ -1,0 +1,546 @@
+<style>
+    table tr td {
+        width: 33.3%;
+    }
+
+    .recipe_card {
+        margin-bottom: 1rem;
+        box-shadow: 3px 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .bg-dark {
+        background: #585b5f;
+        color: #fff;
+    }
+</style>
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+    <div id="page-wrapper" class="white-bg">
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Recipe Guide</h2>
+            </div>
+            <div class="col-lg-6" style="padding-top: 20px;">
+                <button class="btn btn-primary float-right" ng-if="!print_loading" ng-click="generatePDF()"><i
+                        class="fa fa-print"></i> Print
+                </button>
+                <button class="btn btn-primary float-right" ng-if="print_loading" ng-click="generatePDF()"><i
+                        class="fa fa-spinner fa-spin"></i> Printing...
+                </button>
+            </div>
+        </div>
+
+        <div class="ibox">
+            <div class="ibox-content">
+                <div class="row">
+                    <div class="col-xs-6 col-sm-2 text-left padding-top-20">
+                        <button scroll-top class="btn btn-primary" ui-sref="foodSetup.recipe">
+                            Recipe Setup
+                        </button>
+                    </div>
+					
+                    <div class="col-xs-12 col-sm-2">
+                        <label for="filter">Filter</label>
+                        <select id="filter" ng-model="$ctr.searchModel.recipe_type"
+                                ng-options="value.id as value.name for value in $ctr.get_refbooks.dd_recipe_types_filter"
+                                class="form-control">
+                        </select>
+                    </div>
+					<div class="col-xs-6 col-sm-2">
+                        <label>Recipe Name</label>
+                        <input type="text" class="form-control  m-b-xs"
+                               placeholder="Name" ng-model="$ctr.searchModel.recipe_name">
+                    </div>
+					<div class="col-xs-6 col-sm-1 padding-top-20">
+                        <button ng-click="$ctr.changeList()" type="submit" class="btn btn-primary">Search</button>
+                    </div>
+                    <div class="col-xs-6 col-sm-4 text-center">
+                        <ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+                            ng-model="$ctr.searchModel.paginationOffset"
+                            max-size="10"
+                            items-per-page="$ctr.searchModel.paginationCount"
+                            ng-change="$ctr.getAllRecipes()"
+                            boundary-link-numbers="true"
+                            rotate="false"></ul>
+                    </div>
+                    <div class="col-xs-6 col-sm-1 text-right padding-top-20">
+                        <button scroll-top class="btn btn-primary margin-right-10 float-right"
+                                ui-sref="foodSetup.menu" ng-disabled="!$ctr.recipes.length">Menu Setup
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="animated white-bg">
+            <div id="recipes-wrapper" class="wrapper wrapper-content">
+                <div ng-repeat="(index,item) in $ctr.recipes" class="row recipe_card white-bg">
+                    <div class="col-sm-12 prevent-split">
+                        <div>
+                            <h3 class="text-center h3">{{ item.recipe_name }}</h3>
+							
+                        </div>
+						<button id="exclude-recipes-wrapper" class="btn btn-warning " type="button"
+								ng-click="$ctr.edit(item, index)"><i class="fa fa-edit"></i>&nbsp;Edit
+							</button>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4 class="text-center">INGREDIENTS DETAILS</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="bg-dark">
+                                <tr>
+                                    <th class="text-center">Ingredients</th>
+                                    <th class="text-center">Uom</th>
+                                    <th class="text-center">Size</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr ng-repeat="ingredients in item.recipe_items">
+                                    <td style="width: 50%;">{{ ingredients.item_name }}</td>
+                                    <td style="width: 25%;text-align: center">{{ ingredients.uom_id }}</td>
+                                    <td style="width: 25%;text-align: center">{{ ingredients.amount }}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <div style="padding-top: 20px">
+                            <!--                        <label for="image-{{index}}">-->
+                            <input id="image-{{index}}" style="display: none" type="file"
+                                   ng-file-select="$ctr.onFileSelect($files)"
+                                   callback-fn="getFile(file,index)" accept="image/*">
+
+                            <img alt="recipe_image" class="img-preview img-shadow recipe_image"
+                                 crossorigin="anonymous" ng-if="item.recipe_image_url"
+                                 ng-src=" {{item.recipe_image_url}}" onerror="this.src='img/png/Coming-Soon.png'">
+                            <img alt="recipe_image" class="img-preview img-shadow " ng-if="!item.recipe_image_url"
+                                 ng-src="img/png/Coming-Soon.png">
+                            <!--                        </label>-->
+                            <button id="fileBtn-{{index}}" ng-click="tfile(index)"
+                                    class="float-right btn btn-sm margin-0-auto">
+                                <i class="fa fa-edit"></i>
+                            </button>
+                            <button id="cancelBtn-{{index}}" ng-click="cancelUpload(index)"
+                                    class="float-right btn btn-sm margin-0-auto" style="display: none">
+                                <i class="fa fa-close"></i>
+                            </button>
+                            <button id="uploadBtn-{{index}}" ng-click="uploadFile(index)"
+                                    class="float-right btn btn-sm margin-0-auto" style="display: none">
+                                <i class="fa fa-upload"></i> Confirm
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-sm-4">
+                        <h4 class="text-center">COOKING DETAILS</h4>
+                        <div class="table-responsive">
+                            <table class="table">
+                                <thead class="bg-dark">
+                                <tr>
+                                    <th class="text-center">Est Prep Time</th>
+                                    <th class="text-center">Cook Method</th>
+                                    <th class="text-center">Est cook Time</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr >
+                                    <td style="text-align: center">{{ item.prep_time}}</td>
+                                    <td style="text-align: center">{{ item.cook_method}}</td>
+                                    <td style="text-align: center">{{ item.cook_time}}</td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div ng-if="(item.recipe_type_id === 1 ||item.recipe_type_id === 2)">
+                            <h4 class="text-center">RELATED MENU ITEMS</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-dark">
+                                    <tr>
+                                        <th class="text-center">Menu Name</th>
+                                        <th class="text-center">Serving Size</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="mitem in item.menu_items">
+                                        <td style="">{{ mitem.menu_item_name}}</td>
+                                        <td ng-if="(item.recipe_type_id === 1)" style="text-align: center">{{ mitem.recipes_amount}} {{' servings'}}</td>
+										<td ng-if="(item.recipe_type_id === 2)" style="text-align: center">{{ mitem.recipes_amount}} {{' oz'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div ng-if="(item.recipe_type_id === 3 ||item.recipe_type_id === 4)">
+                            <h4 class="text-center">USED BY RECIPES</h4>
+                            <div class="table-responsive">
+                                <table class="table">
+                                    <thead class="bg-dark">
+                                    <tr>
+                                        <th class="text-center">Recipe Name</th>
+                                        <th class="text-center">Serving Size</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="item in item.used_by_recipes">
+                                        <td>{{ item.recipe_name}}</td>
+                                        <td style="text-align: center">{{ item.pp_amount}} {{' oz'}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12">
+                        <div class="form-group">
+                            <label for="in-comment">Comments</label>
+                            <textarea readonly rows="8" id="in-comment" class="form-control"
+                                      name="comment">{{item.description}}</textarea>
+                        </div>
+                    </div>
+                    <div ng-if="$ctr.recipes.length > index+1" class="col-sm-12 page-break"></div>
+                </div>
+            </div>
+            <div ng-if="$ctr.recipes.length" class="row">
+                <div class="col-xs-12 text-center">
+                    <ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+                        ng-model="$ctr.searchModel.paginationOffset"
+                        max-size="10"
+                        items-per-page="$ctr.searchModel.paginationCount"
+                        ng-change="$ctr.getAllRecipes()"
+                        boundary-link-numbers="true"
+                        rotate="false"></ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="//kendo.cdn.telerik.com/2016.3.914/js/kendo.all.min.js"></script>
+
+<script type="text/ng-template" id="add_new_recipe_item.html">
+    <div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <div class="modal-header">
+                <h4 class="modal-title" ng-if="!$ctr.recipe">Create Recipe</h4>
+                <h4 class="modal-title" ng-if="$ctr.recipe">Edit Recipe</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row m-b">
+                    <div ng-mouseover="$ctr.update_note('rname')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-6">
+                        <label>Recipe Name <span class="text-danger">*</span></label>
+                        <input type="text" placeholder="Recipe Name" class="form-control" ng-model="$ctr.model.recipe_name" required>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('yield')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label>Yield (%)</label>
+                        <input type="number" min="0" placeholder="# Yield %" class="form-control" ng-model="$ctr.model.yield" readonly>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('cost')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label>Cost ($)</label>
+                        <input type="number"  placeholder="$0.00" class="form-control" ng-model="$ctr.model.cost" required readonly>
+                    </div>
+					<div ng-mouseover="$ctr.update_note('slife')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2" ng-show="$ctr.model.recipe_type != 1">
+                        <label>Shelf Life<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="# Shelf Life-days" class="form-control"
+                               ng-model="$ctr.model.shelf_life" min="0" ng-required="$ctr.model.recipe_type != 1">
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-mouseover="$ctr.update_note('rtype')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-4">
+                        <label>Recipe Type</label>
+                        <select class="form-control" ng-model="$ctr.model.recipe_type" required
+                                ng-options="value.id as value.name for value in $ctr.get_refbooks.dd_recipe_types"
+								ng-change="$ctr.updateIngredients()">
+                        </select>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('serv')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label ng-if="$ctr.model.recipe_type == 1">Servings <span class="text-danger">*</span></label>
+						<label ng-if="$ctr.model.recipe_type != 1">Total Ounces <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" ng-model="$ctr.model.servings" required readonly>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <label>Prep time (min)<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="Prep time in minutes" class="form-control"
+                               ng-model="$ctr.model.prep_time" min="0" required>
+                    </div>
+					<div class="col-xs-12 col-sm-2">
+                        <label>Cook time (min)<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="Cook time in minutes" class="form-control"
+                               ng-model="$ctr.model.cook_time" min="0" required>
+                    </div>
+					<div class="col-xs-12 col-sm-2">
+                        <label>Cook Method<span class="text-danger">*</span></label>
+                        <select class="form-control" ng-model="$ctr.model.cook_method" required
+                                ng-options="value.name as value.name for value in $ctr.get_refbooks.recipe_cooking_methods">
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+                <div ng-mouseover="$ctr.update_note('i')" ng-mouseleave="$ctr.reset_note()" class="col-md-2 no-padding">
+                    <h3>Ingredients</h3>
+                </div>
+
+                <div class="col-md-10 no-padding">
+                    <hr>
+                </div>
+
+                <div class="form-group">
+                    <table class="table ng-scope" ng-if="$ctr.model.ingredients.length">
+                        <thead>
+                        <tr>
+                            <th ng-mouseover="$ctr.update_note('iname')" ng-mouseleave="$ctr.reset_note()" style="width:30%">Ingredient Name <span class="text-danger">*</span></th>
+							<!--<th>
+							</th>-->
+                            <th ng-mouseover="$ctr.update_note('mtype')" ng-mouseleave="$ctr.reset_note()" style="width:10%">Measurement Type <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('mlike')" ng-mouseleave="$ctr.reset_note()" style="width:20%">Measure Like <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('uom')" ng-mouseleave="$ctr.reset_note()" style="width:12%">Unit of Measure <span class="text-danger">*</span></th>
+							<th ng-mouseover="$ctr.update_note('opu')" ng-mouseleave="$ctr.reset_note()" style="width:7%" ng-if="$ctr.model.recipe_type  != 1">Unit wt in Oz <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('amt')" ng-mouseleave="$ctr.reset_note()" style="width:10%">Amount <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('icost')" ng-mouseleave="$ctr.reset_note()" >Cost($)</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="i in $ctr.model.ingredients track by i.time">
+                        <ng-form name="ingredientForm">
+                            <tr>
+                                <td style="width:30%" ng-mouseover="$ctr.update_note('iname')" ng-mouseleave="$ctr.reset_note()" >
+                                    <div class="input-group">
+										<select class="form-control" ng-model="i.model"
+												ng-change="$ctr.ingredientSelected(i.model, $index); $ctr.calculate($index); $ctr.get_measure_units(i, $index);"
+												ng-options="value.item_name for value in $ctr.ingredients | orderBy:'item_name'" required>
+										</select>
+									</div>
+                                </td>
+								<!--<td>
+									<button type="button" class="btn btn-info" ng-click="$ctr.editSKUItem()"><i class="glyphicon glyphicon-pencil"></i></button>
+								</td>-->
+                                <td style="width:10%" ng-mouseover="$ctr.update_note('mtype')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.measurement_type" ng-required="i.itype !== 'PP'"
+                                            ng-change="$ctr.calculate($index); $ctr.get_measure_units(i, $index);"
+                                            ng-options="value.id as value.name for value in i.mtypes | orderBy:'name'"
+											ng-disabled="i.itype === 'PP'">
+                                    </select>
+                                </td>
+                                <td style="width:20%" ng-mouseover="$ctr.update_note('mlike')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.measurement_like" ng-required="((i.measurement_type === 1 && !(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)) || i.measurement_type === 4) && i.itype !== 'PP'"
+                                            ng-change="$ctr.calculate($index)"
+                                            ng-disabled="i.measurement_type === 2 || i.itype === 'PP' || i.measurement_type == 3 || (i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)"
+											ng-options="value.name for value in $ctr.get_refbooks.measurement_likes | orderBy:'name'"
+											<!--ng-options="value.name group by value.category_name for value in $ctr.get_refbooks.measurement_likes | orderBy:'name'"-->>
+                                    </select>
+                                </td>
+                                <td style="width:12%" ng-mouseover="$ctr.update_note('uom')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.uom_id" ng-required="i.itype !== 'PP' && i.measurement_type != 3"
+                                            ng-change="$ctr.calculate($index)"
+                                            ng-options="value.measure_unit_id as value.name for value in $ctr.measurement_units[$index]"
+											ng-disabled="i.itype === 'PP' || i.measurement_type == 3">
+                                    </select>
+                                </td>
+								<td style="width:7%" ng-if="$ctr.model.recipe_type  != 1" ng-mouseover="$ctr.update_note('opu')" ng-mouseleave="$ctr.reset_note()">
+									<span ng-if="!(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)">-</span>
+                                    <input ng-if="(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)" min="0" type="number" placeholder="0" class="form-control" ng-model="i.oz_per_unit"  required
+                                           ng-change="$ctr.calculate($index)">
+                                </td>
+                                <td style="width:10%" ng-mouseover="$ctr.update_note('amt')" ng-mouseleave="$ctr.reset_note()">
+                                    <input type="number" placeholder="0" class="form-control" ng-model="i.amount"  required
+                                           ng-change="$ctr.calculate($index)" ng-disabled="i.model.recipe_type_id == 4">
+                                </td>
+                                <td  ng-mouseover="$ctr.update_note('icost')" ng-mouseleave="$ctr.reset_note()" >
+                                    <input type="number" placeholder="$0.00" class="form-control" 
+                                           ng-change="$ctr.calculate($index)"
+                                           ng-model="i.cost" required readonly>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-danger btn-circle" type="button"
+                                            ng-click="$ctr.removeIngredient($index, i)" ><i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-form>
+                        </tbody>
+                    </table>
+                    <div ng-mouseover="$ctr.update_note('i')" ng-mouseleave="$ctr.reset_note()" class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" id="btnAddRecipe" name="btnAddRecipe" class="btn btn-info"
+                                    ng-click="$ctr.addIngredient()"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+				
+				<!-- Used in recipes -->
+				<div ng-if="!$ctr.showUsedIn && ($ctr.recipe.recipe_type_id == 3 || $ctr.recipe.recipe_type_id == 4)">
+					<div class="col-md-3 no-padding">
+						<h3>Recipe Builds Attached To
+						</h3>
+					</div>
+					
+					<div class="col-md-1 no-padding">
+						<button type="button" class="btn btn-info btn-circle" type="button" ng-click="$ctr.revealUsedIn(true)">
+							<i class="glyphicon glyphicon-chevron-down"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-9 no-padding">
+						<hr>
+					</div>
+				</div>
+				
+				<div ng-if="$ctr.showUsedIn && ($ctr.recipe.recipe_type_id == 3 || $ctr.recipe.recipe_type_id == 4)">
+					<div class="col-md-3 no-padding">
+						<h3>Recipe Builds Attached To
+						</h3>
+					</div>
+					
+					<div class="col-md-1 no-padding">
+						<button type="button" class="btn btn-info btn-circle" type="button" ng-click="$ctr.revealUsedIn(false)">
+							<i class="glyphicon glyphicon-chevron-up"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-9 no-padding">
+						<hr>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 150px;" ng-if="$ctr.recipes_using_subrecipe_list.length">
+							<table class="table ng-scope">
+								<thead>
+								<tr>
+									<th style="width:55%">Recipe Name</th>
+									<th style="width:15%">Recipe Type</th>
+									<th style="width:10%">Recipe Cost</th>
+									<th style="width:10%">Oz Used</th>
+									<th style="width:10%">Ingredient Cost</th>
+								</tr>
+								</thead>
+								<tbody ng-repeat="i in $ctr.recipes_using_subrecipe_list">
+									<tr>
+										<td style="width:55%">
+											<input type="text" class="form-control" ng-model="i.recipe_name" readonly>
+										</td>
+										<td style="width:15%">
+											<input type="text" class="form-control" ng-model="i.recipe_type" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.cost" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.pp_amount" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.pp_cost" readonly>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 50px;" ng-if="!$ctr.recipes_using_subrecipe_list.length">
+							Nothing to show
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- Used in recipes -->
+				
+				<!-- Menu cost % -->
+				<div ng-if="!$ctr.showMCP">
+					<div class="col-md-2 no-padding">
+						<h3>Menu Cost Percentages
+						</h3>
+					</div>
+					
+					<div class="col-md-1 no-padding">
+						<button type="button" class="btn btn-info btn-circle" type="button" ng-click="$ctr.revealMCP(true)">
+							<i class="glyphicon glyphicon-chevron-down"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-9 no-padding">
+						<hr>
+					</div>
+				</div>
+				
+				<div ng-if="$ctr.showMCP">
+					<div class="col-md-2 no-padding">
+						<h3>Menu Cost Percentages
+						</h3>
+					</div>
+					
+					<div class="col-md-1 no-padding">
+						<button type="button" class="btn btn-info btn-circle" type="button" ng-click="$ctr.revealMCP(false)">
+							<i class="glyphicon glyphicon-chevron-up"></i>
+						</button>
+						<button type="button" class="btn btn-warning btn-circle" type="button" ng-click="$ctr.updateMCP()" ng-if="$ctr.menus_using_this_recipe.length">
+							<i class="fa fa-refresh"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-9 no-padding">
+						<hr>
+					</div>
+					<div class="form-group">
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 150px;" ng-if="$ctr.menus_using_this_recipe.length">
+							<table class="table ng-scope">
+								<thead>
+								<tr>
+									<th style="width:60%">Menu Item Name</th>
+									<th style="width:10%">Pricing Level</th>
+									<th style="width:10%">Price $</th>
+									<th style="width:10%">Cost $</th>
+									<th style="width:10%">Cost %</th>
+								</tr>
+								</thead>
+								<tbody ng-repeat="i in $ctr.menus_using_this_recipe">
+									<tr>
+										<td style="width:60%">
+											<input type="text" class="form-control" ng-model="i.menu_item_name" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.pricing_level" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.price" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.calc_cost" readonly>
+										</td>
+										<td style="width:10%">
+											<input type="text" class="form-control" ng-model="i.calc_cost_percent" readonly>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 50px;" ng-if="!$ctr.menus_using_this_recipe.length">
+							Nothing to show
+						</div>
+					</div>
+				</div>
+				
+				
+				<!-- Menu cost % -->
+				
+				<div ng-mouseover="$ctr.update_note('c')" ng-mouseleave="$ctr.reset_note()" class="form-group">
+                        <label class="col-md-3">Comments</label>
+                        <div class="col-md-9 no-padding">
+                            <textarea class="form-control" ng-model="$ctr.model.description"></textarea>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+				<label class="label-left">{{$ctr.current_note}}</label>
+				<button class="btn btn-primary" ui-sref="foodSetup.menu" ng-disabled="!$ctr.all_recipes.length">View Menus</button>
+				<button type="button" ng-if="$ctr.recipe" class="btn btn-info" ng-disabled="$ctr.mindex==0" ng-click="$ctr.prev_recipe()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                <button type="button" class="btn btn-primary" ng-click="$ctr.cancel()">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+				<button type="button" ng-if="$ctr.recipe" class="btn btn-info" ng-disabled="$ctr.mindex==$ctr.all_recipes.length - 1" ng-click="$ctr.next_recipe()"><i class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+        </form>
+    </div>
+</script>

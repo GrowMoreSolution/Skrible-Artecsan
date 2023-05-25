@@ -1,0 +1,312 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['6'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Vendor Setup</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle blink" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+            <div class="row">
+                <div class="col-xs-12 col-lg-8">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <h3 class="text-center">Vendor Search</h3>
+                                    <div class="row">
+                                        <form novalidate autocomplete="off" name="form" ng-submit="$ctr.search()">
+                                            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                                                <div class="col-xs-4">
+                                                    <label>Name</label>
+                                                    <input type="text" class="form-control  m-b-xs" placeholder="Name" ng-model="$ctr.searchModel.vendor_name">
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label>City</label>
+                                                    <input type="text" class="form-control  m-b-xs" placeholder="City" ng-model="$ctr.searchModel.city">
+                                                </div>
+                                                <div class="col-xs-4">
+                                                    <label>Zip Code</label>
+                                                    <input type="text" class="form-control  m-b-xs"
+                                                           placeholder="ZipCode" ng-model="$ctr.searchModel.zip_code">
+                                                </div>
+                                                <div class="col-xs-12 text-right padding-top-20">
+                                                    <button type="submit" class="btn btn-primary">Search</button>
+                                                </div>
+                                            </fieldset>
+                                        </form>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="footable footable-custom table-stripped toggle-arrow-tiny table" data-page-size="25">
+                                            <thead>
+                                            <tr>
+                                                <th ng-click="$ctr.search('id')"
+                                                    class="cursor-pointer min-width-90"
+                                                    data-sort-ignore="true"
+                                                    ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'id' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'id' && $ctr.searchModel.order_way == 'ASC')}">
+                                                    ID
+                                                    <span  class="footable-sort-indicator"></span>
+                                                </th>
+                                                <th ng-click="$ctr.search('vendor_name')"
+                                                    class="cursor-pointer min-width-90"
+                                                    data-sort-ignore="true"
+                                                    ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'vendor_name' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'vendor_name' && $ctr.searchModel.order_way == 'ASC')}">
+                                                    Name
+                                                    <span  class="footable-sort-indicator"></span>
+                                                </th>
+                                                <th ng-click="$ctr.search('city')"
+                                                    class="cursor-pointer min-width-90"
+                                                    data-sort-ignore="true"
+                                                    ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'city' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'city' && $ctr.searchModel.order_way == 'ASC')}">
+                                                    City
+                                                    <span  class="footable-sort-indicator"></span>
+                                                </th>
+                                                <!--<th ng-click="$ctr.search('created_at')"
+                                                    class="cursor-pointer min-width-90"
+                                                    data-sort-ignore="true"
+                                                    ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'created_at' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'created_at' && $ctr.searchModel.order_way == 'ASC')}">
+                                                    Date
+                                                    <span  class="footable-sort-indicator"></span>
+                                                </th>-->
+                                                <th ng-click="$ctr.search('zip_code')"
+                                                    class="cursor-pointer min-width-90"
+                                                    data-sort-ignore="true"
+                                                    ng-class="{'footable-sorted-desc': ($ctr.searchModel.order_by == 'zip_code' && $ctr.searchModel.order_way == 'DESC'), 'footable-sorted': ($ctr.searchModel.order_by == 'zip_code' && $ctr.searchModel.order_way == 'ASC')}">
+                                                    Zip Code
+                                                    <span  class="footable-sort-indicator"></span>
+                                                </th>
+												<th class="width-50" data-sort-ignore="true">Add/Remove</th>
+                                                <th class="width-50" data-sort-ignore="true"></th>
+                                            </tr>
+                                            </thead>
+                                            <tbody>
+                                            <tr ng-repeat="vendor in $ctr.vendorList">
+                                                <td>{{vendor.id}}</td>
+                                                <td>{{vendor.vendor_name}}</td>
+                                                <td>{{vendor.city}}</td>
+                                                <!--<td>{{vendor.created_at | date: 'MM/DD/YY'}}</td>-->
+                                                <td>{{vendor.zip_code}}</td>
+                                                <td class="text-right">
+                                                    <label class="switch">
+                                                        <input ng-disabled="vendor.is_has_active_sku_uses || !$ctr.permissions['6'].w" type="checkbox" ng-model="vendor.is_used" ng-true-value="1" ng-false-value="0" ng-change="$ctr.addVendor(vendor)"><i></i>
+                                                    </label>
+                                                </td>
+												<td><button class="btn btn-warning " type="button" ng-click="$ctr.editVendor(vendor)"><i class="fa fa-edit"></i>&nbsp;Edit
+                                                </button></td>
+                                            </tr>
+                                            <tr ng-show="!$ctr.vendorList.length">
+                                                <td colspan="6" class="text-center">
+                                                    No results
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div class="pull-right">
+                                            <ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+                                                ng-model="$ctr.searchModel.paginationOffset"
+                                                max-size="10"
+                                                class="pagination-sm"
+                                                items-per-page="$ctr.searchModel.paginationCount"
+                                                ng-change="$ctr.search()"
+                                                boundary-link-numbers="true"
+                                                rotate="false"></ul>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12">
+                                    <div class="row">
+                                        <div class="col-xs-6 text-left">
+                                            <button scroll-top class="btn btn-primary" ui-sref="alcoholSubCategories">&lt;&lt; Back</button>
+                                        </div>
+                                        <div class="col-xs-6">
+                                            <button ng-if="!SetUpStatus" scroll-top type="button" ng-click="$ctr.next()"
+                                                    class="btn btn-primary block m-b float-right">Next - Inventory Setup
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-xs-12 col-lg-4">
+                    <div class="ibox ">
+                        <div class="ibox-content">
+                            <div class="tab-content">
+                                <div class="tab-pane active">
+									<div class="col-xs-12">
+										<div class="row">
+											<div class="col-xs-6 text-left">
+												<button scroll-top class="btn btn-primary" ng-click="$ctr.addNewVendor()">Add a new Vendor</button>
+											</div>
+											
+											<div ng-if="SetUpStatus" class="col-xs-6 text-right">
+												<button scroll-top class="btn btn-primary" ui-sref="food.newFoodOrder">Place an Order</button>
+											</div>
+										</div>
+									</div>
+                                    <div class="row">
+                                        <div class="col-lg-12 text-center">
+                                            <h2>Selected Vendors</h2>
+                                            <hr/>
+                                        </div>
+                                    </div>
+                                    <div class="">
+                                        <div class="full-height-scroll" full-scroll>
+                                            <table class="table table-stripped">
+                                                <thead>
+                                                <tr>
+                                                    <th>ID</th>
+                                                    <th>Name</th>
+                                                    <th></th>
+                                                </tr>
+                                                </thead>
+                                                <tbody>
+                                                <tr ng-repeat="vendor in $ctr.vendorsSelected">
+                                                    <td>{{vendor.id}}</td>
+                                                    <td>{{vendor.vendor_name}}</td>
+                                                    <td>
+                                                        <a href="" class="btn btn-danger btn-circle" ng-if="$ctr.permissions['6'].d" ng-click="$ctr.deleteVendor(vendor)" ><i class="fa fa-times"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr ng-show="!$ctr.vendorsSelected.length">
+                                                    <td class="text-center" colspan="2">
+                                                        No selected vendors
+                                                    </td>
+                                                </tr>
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="add_new_vendor.html">
+  <div class="inmodal">
+      <form novalidate autocomplete="off" name="form" ng-submit="$ctr.submit(form)">
+          <div class="modal-header">
+              <h4 class="modal-title" ng-if="$ctr.is_add">Add a new Vendor</h4>
+              <h4 class="modal-title" ng-if="!$ctr.is_add">Edit Vendor</h4>
+          </div>
+          <div class="modal-body">
+              <fieldset>
+                <div class="form-group">
+                    <label>Name <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Vendor Name" ng-disabled="!$ctr.is_add && $ctr.model.restaurant_id == null" ng-model="$ctr.model.vendor_name" required>
+                </div>
+				<!--<ul style="list-style: none;">
+					<li>-->
+						<div ng-if="$ctr.showPrimaryVendor" class="form-group">
+							<label>Is a local distributor of: </label>
+							<select class="form-control" ng-model="$ctr.model.primary_vendor" ng-options="item.id as item.vendor_name for item in $ctr.global_Vendors"></select>
+						</div>
+				<!--	</li>
+				</ul>-->
+                <!--<div class="form-group">
+                    <label>Type <span class="text-danger">*</span></label>
+                    <select class="form-control" ng-model="$ctr.model.vendor_type_id" required ng-options="type.id as type.name for type in $ctr.get_refbooks.entity_types"></select>
+                </div>-->
+                <div class="form-group">
+                    <label>Street Address <span class="text-danger">*</span></label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Street Address" ng-disabled="!$ctr.is_add && $ctr.model.restaurant_id == null" ng-model="$ctr.model.address" required>
+                </div>
+                <div class="form-group">
+                    <label>Zip code <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="Zip code" ng-disabled="!$ctr.is_add && $ctr.model.restaurant_id == null" ng-model="$ctr.model.zip" required
+                           ng-pattern="/^\d+$/" minlength="3" maxlength="6"
+                           ng-change="$ctr.onZipChanged($ctr.model.zip)" name="zip">
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>City <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="City" ng-disabled="!$ctr.is_add && $ctr.model.restaurant_id == null" ng-model="$ctr.model.city" required readonly>
+                </div>
+                <div class="form-group dropdown-overflow">
+                    <label>State <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" placeholder="State" ng-disabled="!$ctr.is_add && $ctr.model.restaurant_id == null" ng-model="$ctr.model.state" required readonly>
+                </div>
+                <div class="form-group">
+                    <label>Sales Rep Name <span class="text-danger" ng-if="$ctr.is_add">*</span></label>
+                    <input type="text" class="form-control" maxlength="50" placeholder="Sales Representative Name" ng-required="$ctr.is_add" ng-model="$ctr.model.sales_rep">
+                </div>
+				<div class="form-group">
+					<label>Phone Number </label>
+					<!--<input type="text" class="form-control" only-digits placeholder="Phone Number" ng-model="$ctr.model.phone_number" required>-->
+					<div class="phone-input">
+						<div>
+							<div class="phone-code">
+								<div>+1</div>
+							</div>
+						</div>
+						<input name="phone" type="text" class="form-control"
+						   only-digits
+						   ng-model="$ctr.model.phone_number" ac-phone maxlength="10" placeholder="Phone Number">
+					</div>
+
+					<span class="field-descriptions">(No dashes or special characters)</span>
+				</div>
+                <div class="form-group">
+                  <label>Primary Email </label>
+                  <input type="text" placeholder="Email for Orders" class="form-control" ng-model="$ctr.model.primary_email" ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+				  <label>Secondary Email 1 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_1" ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+				  <label>Secondary Email 2 </label>
+                  <input type="text" placeholder="Optional" class="form-control" ng-model="$ctr.model.secondary_email_2" ng-pattern="/^[_a-z0-9-]+(\.[_a-z0-9-]+)*@[a-z0-9-]+(\.[a-z0-9-]+)*(\.[a-z]{2,4})$/">
+                </div>
+                <div class="form-group">
+                    <label>Account No. <span class="text-danger" ng-if="$ctr.is_add">*</span></label>
+                    <input maxlength="50" type="text" class="form-control" placeholder="Account Number" ng-required="$ctr.is_add" ng-model="$ctr.model.account_no">
+                </div>
+              </fieldset>
+          </div>
+          <div class="modal-footer">
+              <button type="button" class="btn btn-white" ng-click="$ctr.cancel()">Cancel</button>
+              <button type="submit" class="btn btn-primary">Save</button>
+          </div>
+      </form>
+  </div>
+</script>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

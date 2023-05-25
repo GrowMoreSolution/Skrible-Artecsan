@@ -1,0 +1,655 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['8'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Recipe Setup</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+			<div class="row" id="top-section">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="ibox float-e-margins bottomless" style="margin-bottom: 0;">
+							<div class="ibox-content bottomless">
+								<div class="row">
+									<div class="col-xs-12">
+										<h3 class="text-center">Recipes</h3>
+										<div class="row">
+											<button class="btn btn-primary" ng-if="$ctr.permissions['8'].w" ng-click="$ctr.add()">Add Recipe
+											</button>
+											<button scroll-top class="btn btn-primary margin-right-10 float-right"
+													ui-sref="foodSetup.menu" ng-disabled="!$ctr.recipes.length">Menu Setup
+											</button>
+											<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.downloadCSV()" ng-disabled="!$ctr.recipes.length" ng-if="!$ctr.export_loading">Export Recipes
+											</button>
+											<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+											</button>
+											<button scroll-top ui-sref="foodSetup.recipeReview" class="btn btn-primary margin-right-10 float-right">Recipe Review</button>
+										</div>
+										<div class="row">
+											<div class="col-xs-12 col-sm-2">
+												<label>Status</label>
+												<select ng-model="$ctr.status" ng-change="$ctr.changeList('status')" class="form-control">
+													<option value="active">Active</option>
+													<option value="inactive">Inactive</option>
+												</select>
+											</div>
+											<div class="col-xs-12 col-sm-2">
+												<label>Filter</label>
+												<select ng-model="$ctr.type_filter" ng-change="$ctr.changeList()" ng-options="value.id as value.name for value in $ctr.get_refbooks.dd_recipe_types_filter" class="form-control">
+												</select>
+											</div>
+											<div class="col-xs-12 col-sm-2">
+												<label>Recipe Name</label>
+											  <input type="text" placeholder="Recipe Name" class="form-control" ng-model="$ctr.search_recipe">
+											</div>
+											<div class="col-xs-12 col-sm-2">
+												<label>Ingredient Name</label>
+											  <input type="text" placeholder="Ingredient Name" class="form-control" ng-model="$ctr.search_ingredient">
+											</div>
+											<div class="col-xs-12 col-sm-1">
+												<label></label>
+											  <button style="margin-top: 4px;" class="btn btn-primary" ng-click="$ctr.changeList()">Search</button>
+											</div>
+										</div>
+									</div>
+									<div class="col-xs-12">
+										<div class="table-responsive">
+											<table class="table table-stripped" data-page-size="8" style="margin-top: 10px; margin-bottom: 0;table-layout: fixed;">
+												<thead>
+												<tr>
+													<th style="width: 30%;">Recipe Name</th>
+													<th style="width: 10%;">Type</th>
+													<th style="width: 10%;">Cost ($)</th>
+													<th style="width: 10%;">Yield (%)</th>
+													<th style="width: 10%;">Number of Ingredients</th>
+													<th style="width: 30%;"></th>
+												</tr>
+												</thead>
+												
+											</table>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			
+			<div class="row" id="content-table-section">
+				<div class="ibox float-e-margins">
+					<div class="ibox-content ir adjust-pad">
+						<table class="table table-bordered table-sm" style="table-layout: fixed;">
+							<tbody>
+								<tr ng-repeat="r in $ctr.recipes track by $index">
+									<td style="width: 30%;">{{r.recipe_name}}</td>
+									<td style="width: 10%;">{{$ctr.get_refbooks.recipe_types | recipeTypeFilter : r.recipe_type_id}}</td>
+									<td style="width: 10%;">{{r.cost}}</td>
+									<td style="width: 10%;">{{r.yield}}</td>
+									<td style="width: 10%;" class="text-center">{{r.nof_ingredients}}</td>
+									<td style="width: 30%;" class="text-right">
+										<button class="btn btn-warning " type="button"
+												ng-if="$ctr.permissions['8'].w"
+												ng-click="$ctr.edit(r, $index)"><i class="fa fa-edit"></i>&nbsp;Edit
+										</button>
+										<button class="btn btn-danger" type="button" ng-click="$ctr.delete(r)"
+												ng-if="$ctr.permissions['8'].d">
+											<i class="fa fa-times"></i>&nbsp;Delete
+										</button>
+										<button class="btn btn-danger " type="button"
+												ng-if="$ctr.permissions['8'].w && r.is_active == 1"
+												ng-click="$ctr.deactivate(r.id)"><i class="fa fa-ban"></i>&nbsp;Deactivate
+										</button>
+										<button class="btn btn-success " type="button"
+												ng-if="$ctr.permissions['8'].w && r.is_active == 0"
+												ng-click="$ctr.activate(r.id)"><i class="fa fa-check"></i>&nbsp;Activate
+										</button>
+									</td>
+								</tr>
+								<tr ng-show="!$ctr.recipes.length">
+									<td colspan="4" class="text-center">
+										<span class="m-t-lg m-b-lg">No results</span>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+
+		<div class="row">
+			<div class="ibox float-e-margins">
+				<div class="ibox-content ir">
+					<div class="col-xs-6 text-left">
+						<button scroll-top class="btn btn-primary" ui-sref="foodSetup.inventory">
+							&lt;&lt; Back
+						</button>
+					</div>
+					<div class="col-xs-6">
+						<button scroll-top class="btn btn-primary margin-right-10 float-right"
+								ui-sref="foodSetup.menu" ng-disabled="!$ctr.recipes.length">Menu Setup
+						</button>
+					</div>
+				</div>
+			</div>
+        </div>
+		
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="add_new_recipe_item.html">
+    <div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <div class="modal-header">
+                <h4 class="modal-title" ng-if="!$ctr.recipe">Create Recipe</h4>
+                <h4 class="modal-title" ng-if="$ctr.recipe">Edit Recipe</h4>
+            </div>
+            <div class="modal-body">
+                <div class="row m-b">
+                    <div ng-mouseover="$ctr.update_note('rname')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-4">
+                        <label>Recipe Name <span class="text-danger">*</span></label>
+                        <input type="text" placeholder="Recipe Name" class="form-control" ng-blur="$ctr.checkRecipeName()" ng-model="$ctr.model.recipe_name" required>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('yield')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-1">
+                        <label>Yield (%)</label>
+                        <input type="number" min="0" placeholder="# Yield %" class="form-control" ng-model="$ctr.model.yield" readonly>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('cost')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label>Cost ($)</label>
+                        <input type="number"  placeholder="$0.00" class="form-control" ng-model="$ctr.model.cost" required readonly>
+                    </div>
+					<div ng-mouseover="$ctr.update_note('slife')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-1">
+                        <label>Shelf Life<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="# Shelf Life-days" class="form-control"
+                               ng-model="$ctr.model.shelf_life" min="0" ng-required="$ctr.model.recipe_type != 1" ng-disabled="$ctr.model.recipe_type == 1">
+                    </div>
+					<div ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label>Check Price ($)</label>
+                        <input type="number" min="0" placeholder="Price" class="form-control" ng-model="$ctr.model.price" ng-change="$ctr.calcRecipeCostPercent()">
+                    </div>
+					<div ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label>Check Cost %</label>
+                        <input type="number" min="0" placeholder="Cost %" class="form-control" ng-model="$ctr.model.cost_percent" readonly>
+                    </div>
+                </div>
+                <div class="row">
+                    <div ng-mouseover="$ctr.update_note('rtype')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-4">
+                        <label>Recipe Type</label>
+                        <select class="form-control" ng-model="$ctr.model.recipe_type" required
+                                ng-options="value.id as value.name for value in $ctr.get_refbooks.dd_recipe_types"
+								ng-change="$ctr.updateIngredients()">
+                        </select>
+                    </div>
+                    <div ng-mouseover="$ctr.update_note('serv')" ng-mouseleave="$ctr.reset_note()" class="col-xs-12 col-sm-2">
+                        <label ng-if="$ctr.model.recipe_type == 1">Servings <span class="text-danger">*</span></label>
+						<label ng-if="$ctr.model.recipe_type != 1">Total Ounces <span class="text-danger">*</span></label>
+                        <input type="number" class="form-control" ng-model="$ctr.model.servings" required readonly>
+                    </div>
+                    <div class="col-xs-12 col-sm-2">
+                        <label>Prep time (min)<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="Prep time in minutes" class="form-control"
+                               ng-model="$ctr.model.prep_time" min="0" required>
+                    </div>
+					<div class="col-xs-12 col-sm-2">
+                        <label>Cook time (min)<span class="text-danger">*</span></label>
+                        <input type="number" placeholder="Cook time in minutes" class="form-control"
+                               ng-model="$ctr.model.cook_time" min="0" required>
+                    </div>
+					<div class="col-xs-12 col-sm-2">
+                        <label>Cook Method<span class="text-danger">*</span></label>
+                        <select class="form-control" ng-model="$ctr.model.cook_method" required
+                                ng-options="value.name as value.name for value in $ctr.get_refbooks.recipe_cooking_methods">
+                        </select>
+                    </div>
+                </div>
+
+                <br>
+                <div ng-mouseover="$ctr.update_note('i')" ng-mouseleave="$ctr.reset_note()" class="col-md-2 no-padding">
+                    <h3>Ingredients</h3>
+                </div>
+
+                <div class="col-md-10 no-padding">
+                    <hr>
+                </div>
+
+                <div class="form-group">
+                    <table class="table ng-scope" ng-if="$ctr.model.ingredients.length">
+                        <thead>
+                        <tr>
+                            <th ng-mouseover="$ctr.update_note('iname')" ng-mouseleave="$ctr.reset_note()" >Ingredient Name <span class="text-danger">*</span></th>
+							<!--<th>
+							</th>-->
+                            <th ng-mouseover="$ctr.update_note('mtype')" ng-mouseleave="$ctr.reset_note()" class="width-120">Measurement Type <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('mlike')" ng-mouseleave="$ctr.reset_note()" class="width-180">Measure Like <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('uom')" ng-mouseleave="$ctr.reset_note()" class="width-120">Unit of Measure <span class="text-danger">*</span></th>
+							<th ng-mouseover="$ctr.update_note('opu')" ng-mouseleave="$ctr.reset_note()" class="width-100" ng-if="$ctr.model.recipe_type  != 1">Unit wt in Oz <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('amt')" ng-mouseleave="$ctr.reset_note()" class="width-100">Amount <span class="text-danger">*</span></th>
+                            <th ng-mouseover="$ctr.update_note('icost')" ng-mouseleave="$ctr.reset_note()" class="width-100">Cost($)</th>
+                            <th></th>
+                        </tr>
+                        </thead>
+                        <tbody ng-repeat="i in $ctr.model.ingredients track by i.time">
+                        <ng-form name="ingredientForm">
+                            <tr>
+                                <td ng-mouseover="$ctr.update_note('iname')" ng-mouseleave="$ctr.reset_note()" >
+                                    <div class="input-group">
+										<select class="form-control" ng-model="i.model"
+												ng-change="$ctr.ingredientSelected(i.model, $index); $ctr.calculate($index); $ctr.get_measure_units(i, $index);"
+												ng-options="value.item_name for value in $ctr.ingredients | orderBy:'item_name'" required>
+										</select>
+									</div>
+                                </td>
+								<!--<td>
+									<button type="button" class="btn btn-info" ng-click="$ctr.editSKUItem()"><i class="glyphicon glyphicon-pencil"></i></button>
+								</td>-->
+                                <td ng-mouseover="$ctr.update_note('mtype')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.measurement_type" ng-required="i.itype !== 'PP'"
+                                            ng-change="$ctr.calculate($index); $ctr.get_measure_units(i, $index);"
+                                            ng-options="value.id as value.name for value in i.mtypes | orderBy:'name'"
+											ng-disabled="i.itype === 'PP'">
+                                    </select>
+                                </td>
+                                <td ng-mouseover="$ctr.update_note('mlike')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.measurement_like" ng-required="((i.measurement_type === 1 && !(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)) || i.measurement_type === 4) && i.itype !== 'PP'"
+                                            ng-change="$ctr.calculate($index)"
+                                            ng-disabled="i.measurement_type === 2 || i.itype === 'PP' || i.measurement_type == 3 || (i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)"
+											ng-options="value.name for value in $ctr.get_refbooks.measurement_likes | orderBy:'name'"
+											<!--ng-options="value.name group by value.category_name for value in $ctr.get_refbooks.measurement_likes | orderBy:'name'"-->>
+                                    </select>
+                                </td>
+                                <td ng-mouseover="$ctr.update_note('uom')" ng-mouseleave="$ctr.reset_note()" >
+                                    <select class="form-control" ng-model="i.uom_id" ng-required="i.itype !== 'PP' && i.measurement_type != 3"
+                                            ng-change="$ctr.calculate($index)"
+                                            ng-options="value.measure_unit_id as value.name for value in $ctr.measurement_units[$index]"
+											ng-disabled="i.itype === 'PP' || i.measurement_type == 3">
+                                    </select>
+                                </td>
+								<td ng-if="$ctr.model.recipe_type  != 1" ng-mouseover="$ctr.update_note('opu')" ng-mouseleave="$ctr.reset_note()">
+									<span ng-if="!(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)">-</span>
+                                    <input ng-if="(i.model.uom_id_of_delivery_unit == 10 || i.model.uom_id_of_delivery_unit == 11 || i.model.uom_id_of_delivery_unit == 12 || i.model.uom_id_of_delivery_unit == 13 || i.model.uom_id_of_delivery_unit == 16 || i.model.uom_id_of_delivery_unit == 17 || i.model.uom_id_of_delivery_unit == 18)" min="0" type="number" placeholder="0" class="form-control" ng-model="i.oz_per_unit"  required
+                                           ng-change="$ctr.calculate($index)">
+                                </td>
+                                <td ng-mouseover="$ctr.update_note('amt')" ng-mouseleave="$ctr.reset_note()">
+                                    <input type="number" placeholder="0" class="form-control" ng-model="i.amount"  required
+                                           ng-change="$ctr.calculate($index)" ng-disabled="i.model.recipe_type_id == 4">
+                                </td>
+                                <td ng-mouseover="$ctr.update_note('icost')" ng-mouseleave="$ctr.reset_note()" >
+                                    <input type="number" placeholder="$0.00" class="form-control" 
+                                           ng-change="$ctr.calculate($index)"
+                                           ng-model="i.cost" required readonly>
+                                </td>
+                                <td class="text-right">
+                                    <button type="button" class="btn btn-danger btn-circle" type="button"
+                                            ng-click="$ctr.removeIngredient($index, i)" ><i class="fa fa-times"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                        </ng-form>
+                        </tbody>
+                    </table>
+                    <div ng-mouseover="$ctr.update_note('i')" ng-mouseleave="$ctr.reset_note()" class="row">
+                        <div class="col-md-12 text-right">
+                            <button type="button" id="btnAddRecipe" name="btnAddRecipe" class="btn btn-info"
+                                    ng-click="$ctr.addIngredient()"><i class="glyphicon glyphicon-plus"></i></button>
+                        </div>
+                    </div>
+                </div>
+				
+				<!-- Used in recipes -->
+				<div ng-if="!$ctr.showUsedIn && ($ctr.recipe.recipe_type_id == 3 || $ctr.recipe.recipe_type_id == 4)">
+					<div class="col-md-4 no-padding">
+						<button type="button" class="btn btn-info" type="button" ng-click="$ctr.revealUsedIn(true)">
+							View Attached Recipes <i class="glyphicon glyphicon-chevron-down"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-12 no-padding">
+						<hr/>
+					</div>
+				</div>
+				
+				<div ng-if="$ctr.showUsedIn && ($ctr.recipe.recipe_type_id == 3 || $ctr.recipe.recipe_type_id == 4)">
+					<div class="col-md-4 no-padding">
+						<button type="button" class="btn btn-info" type="button" ng-click="$ctr.revealUsedIn(false)">
+							View Attached Recipes <i class="glyphicon glyphicon-chevron-up"></i>
+						</button>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 150px;" ng-if="$ctr.recipes_using_subrecipe_list.length">
+							<table class="table ng-scope">
+								<thead>
+								<tr>
+									<th>Recipe Name</th>
+									<th class="width-210">Recipe Type</th>
+									<th class="width-150">Recipe Cost</th>
+									<th class="width-120">Oz Used</th>
+									<th class="width-120">Ingredient Cost</th>
+								</tr>
+								</thead>
+								<tbody ng-repeat="i in $ctr.recipes_using_subrecipe_list">
+									<tr>
+										<td>
+											<input type="text" class="form-control" ng-model="i.recipe_name" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.recipe_type" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.cost" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.pp_amount" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.pp_cost" readonly>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 50px;" ng-if="!$ctr.recipes_using_subrecipe_list.length">
+							Nothing to show
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<hr/>
+					</div>
+				</div>
+				
+				
+				<!-- Used in recipes -->
+				
+				<!-- Menu cost % -->
+				<div ng-if="!$ctr.showMCP">
+					<div class="col-md-4 no-padding">
+						<button type="button" class="btn btn-info" type="button" ng-click="$ctr.revealMCP(true)">
+							View Menu Cost Percentages <i class="glyphicon glyphicon-chevron-down"></i>
+						</button>
+					</div>
+					
+					<div class="col-md-12 no-padding">
+						<hr/>
+					</div>
+				</div>
+				
+				<div ng-if="$ctr.showMCP">					
+					<div class="col-md-4 no-padding">
+						<button type="button" class="btn btn-info" type="button" ng-click="$ctr.revealMCP(false)">
+							View Menu Cost Percentages <i class="glyphicon glyphicon-chevron-up"></i>
+						</button>
+						<button type="button" class="btn btn-warning btn-circle" type="button" ng-click="$ctr.updateMCP()" ng-if="$ctr.menus_using_this_recipe.length">
+							<i class="fa fa-refresh"></i>
+						</button>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 150px;" ng-if="$ctr.menus_using_this_recipe.length">
+							<table class="table ng-scope">
+								<thead>
+								<tr>
+									<th>Menu Item Name</th>
+									<th class="width-100">Pricing Level</th>
+									<th class="width-120">Price $</th>
+									<th class="width-120">Cost $</th>
+									<th class="width-120">Cost %</th>
+								</tr>
+								</thead>
+								<tbody ng-repeat="i in $ctr.menus_using_this_recipe">
+									<tr>
+										<td>
+											<input type="text" class="form-control" ng-model="i.menu_item_name" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.pricing_level" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.price" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.calc_cost" readonly>
+										</td>
+										<td>
+											<input type="text" class="form-control" ng-model="i.calc_cost_percent" readonly>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+						<div class="col-sm-12 col-lg-12" style="overflow: auto;  height: 50px;" ng-if="!$ctr.menus_using_this_recipe.length">
+							Nothing to show
+						</div>
+					</div>
+					<div class="col-md-12 no-padding">
+						<hr/>
+					</div>
+				</div>
+				
+				
+				<!-- Menu cost % -->
+				
+				<div ng-mouseover="$ctr.update_note('c')" ng-mouseleave="$ctr.reset_note()" class="form-group">
+                        <label class="col-md-3">Comments</label>
+                        <div class="col-md-9 no-padding">
+                            <textarea class="form-control" ng-model="$ctr.model.description"></textarea>
+                        </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+				<label class="label-left">{{$ctr.current_note}}</label>
+				<button class="btn btn-primary" ui-sref="foodSetup.menu" ng-disabled="!$ctr.all_recipes.length">View Menus</button>
+				<button type="button" ng-if="$ctr.recipe" class="btn btn-info" ng-disabled="$ctr.mindex==0" ng-click="$ctr.prev_recipe()"><i class="glyphicon glyphicon-chevron-left"></i></button>
+                <button type="button" class="btn btn-primary" ng-click="$ctr.cancel()">Close</button>
+                <button type="submit" class="btn btn-primary">Save</button>
+				<button type="button" ng-if="$ctr.recipe" class="btn btn-info" ng-disabled="$ctr.mindex==$ctr.all_recipes.length - 1" ng-click="$ctr.next_recipe()"><i class="glyphicon glyphicon-chevron-right"></i></button>
+            </div>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="add_new_food_inventory_item.html">
+    <div class="inmodal">
+        <form name="$ctr.form" autocomplete="off" novalidate ng-submit="$ctr.submit($ctr.form)">
+            <fieldset ng-disabled="$ctr.searchModel.inRequest">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$ctr.cancel()"><span aria-hidden="true">&times;</span></button>
+                    <h4 class="modal-title">Add New Inventory Item</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="row m-b">
+						<div class="col-sm-2">
+							<div class="form-group">
+								<label class="font-noraml">Select Vendor</label>
+								<select ng-model="$ctr.selected_vendor" ng-change="$ctr.clear()" ng-options="v.id as v.vendor_name for v in $ctr.vendor_list"></select>
+							</div>
+						</div>
+                        <div ng-if="$ctr.selected_vendor != null" class="col-xs-12">
+                            <div class="table-responsive">
+                                <table class="table ng-scope  footable-sort">
+                                    <thead class="th-text-center th-vertical-align-middle ">
+                                    <tr>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+											   SKU <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th>
+											<span class="no-wrap cursor-pointer">
+												 Item name <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Category <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Sub Category
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Unit <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Pack <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-100">
+											<span class="no-wrap cursor-pointer">
+												 Size <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-120">
+											<span class="no-wrap cursor-pointer">
+												 Case ($) <span class="text-danger">*</span>
+											</span>
+                                        </th>
+                                        <th class="width-80">
+											<span class="no-wrap cursor-pointer">
+												 Min Order <span class="text-danger">*</span>
+											</span>
+                                        </th>
+										<th class="width-150">
+											<span class="no-wrap cursor-pointer">
+												 Substitute For 
+											</span>
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <!--<tbody ng-repeat="item in $ctr.uniqueItem | orderBy: $ctr.searchModel.order_by : reverse">-->
+                                    <tbody ng-repeat="item in $ctr.uniqueItem">
+                                    <ng-form name="items">
+                                        <tr>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" required
+                                                       typeahead-wait-ms="500"
+                                                       typeahead-min-length="2"
+                                                       uib-typeahead="sku as sku.vendor_sku for sku in $ctr.sku_lookup($viewValue)" 
+													   typeahead-focus-first="false" ng-model="item.vendor_sku"
+													   typeahead-on-select="$ctr.apply_values($item)">
+                                            </td>
+											<td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" ng-model="item.item_name" required>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_cat_id" required ng-change="$ctr.filterItems()" ng-options="item.id as item.category for item in $ctr.categories | filter : {inventory_type_id: 1}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.vendor_sub_cat_id"  ng-options="item.id as item.sub_category for item in $ctr.sub_categories | filter: {vendor_cat_id: item.vendor_cat_id}"></select>
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'"class="form-control" ng-model="item.uom_id_of_delivery_unit" ng-change="$ctr.filterItems()" required ng-options="item.id as item.name for item in $ctr.deliveryMeasure"></select>
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="text" class="form-control" only-digits ng-model="item.pack" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.size" required minlength="0">
+                                            </td>
+                                            <td>
+                                                <input ng-disabled="$ctr.src == 'l'" type="number" class="form-control" ng-model="item.case_cost"  required min="0">
+                                            </td>
+                                            <td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" required ng-model="item.minimum_order_type">
+                                                    <option value="Case" selected>CASE</option>
+                                                    <option value="Pack">PACK</option>
+                                                    <option value="Each">EACH</option>
+                                                </select>
+                                            </td>
+											<td>
+                                                <select ng-disabled="$ctr.src == 'l'" class="form-control" ng-model="item.substitute_for" ng-options="sku.id as sku.item_name group by sku.vendor_name for sku in $ctr.inventoryListSelected | orderBy:['vendor_name','item_name']"></select>
+                                            </td>
+                                        </tr>
+                                    </ng-form>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary pull-left" ng-click="$ctr.cancel()"><< Back</button>
+					<button type="button" class="btn btn-primary" ui-sref="foodSetup.inventory">Edit</button>
+					<button type="button" class="btn btn-primary" ng-click="$ctr.clear()">Clear</button>
+                    <button ng-if="$ctr.selected_vendor != null" type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</script>
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>
+
+<style>
+#content-table-section {
+    max-height: 55vh;
+    overflow-y: scroll;
+}
+
+.adjust-pad {
+    padding-right: 2px;
+    padding-top: 0
+}
+
+#top-section {
+    position: absolute;
+}
+
+.bottomless {
+	padding-bottom: 0;
+	border-bottom: 0;
+}
+</style>
+
+<script>
+    $(document).ready(function () {
+        setTimeout(function () {
+            var height = document.getElementById('top-section').clientHeight;
+            $('#content-table-section').css('margin-top', height + 'px');
+        }, 2000);
+    });
+</script>

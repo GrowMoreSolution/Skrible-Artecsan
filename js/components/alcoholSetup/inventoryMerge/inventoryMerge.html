@@ -1,0 +1,219 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['62'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+		
+		<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Merge/Edit/Delete Items</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+		
+        <div class="wrapper wrapper-content  animated fadeInRight">
+			<div class="row" id="top-section">
+				<div class="row">
+					<div class="col-sm-12">
+						<div class="float-e-margins bottomless">
+							<div class="ibox-content overflow-x-auto ir bottomless">
+								<div class="row">
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Action</label>
+											<div class="input-group date">
+												<select ng-model="$ctr.mode" ng-change="$ctr.changeAction()">
+													<option value="merge">Merge/Unmerge</option>
+													<option value="activate">Activate/Deactivate</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Vendor</label>
+											<div class="input-group date">
+												<select style="width: 100%" ng-model="$ctr.currentVendor.id" ng-options="item.id as item.vendor_name for item in $ctr.vendors"ng-change="$ctr.selectVendor($ctr.currentVendor)"></select>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Category</label>
+											<div class="input-group date">
+												<select style="width: 100%" ng-model="$ctr.searchModel.category" ng-options="item as item for item in $ctr.SKU_categories" ng-change="$ctr.search(true)"></select>
+											</div>
+										</div>
+									</div>
+									<div ng-if="$ctr.mode == 'activate'" class="col-sm-2">
+										<div class="form-group">
+											<label class="font-noraml">Status</label>
+											<div class="input-group date">
+												<select ng-model="$ctr.activate_mode" ng-change="$ctr.selectActiveInactive()">
+													<option value="active">Active Items</option>
+													<option value="inactive">Inactive Items</option>
+												</select>
+											</div>
+										</div>
+									</div>
+									<div class="col-sm-1" ng-if="$ctr.loading">
+										<div class="form-group">
+											<label class="font-noraml"></label>
+											<div class="input-group date">
+												<a class="btn btn-danger btn-circle" title="Loading..."><i class="fa fa-refresh fa-spin" disabled></i></a>
+											</div>
+										</div>
+									</div>
+									<!--<div class="col-sm-3 search-button float-right">
+										<div class="form-group">
+												<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-click="$ctr.downloadCSV()" ng-if="!$ctr.export_loading && !$ctr.mode == 'review'">Export Report
+												</button>
+												<button scroll-top class="btn btn-primary margin-right-10 float-right" ng-disabled="$ctr.export_loading" ng-if="$ctr.export_loading">Exporting...
+												</button>
+										</div>
+									</div>-->
+								</div>
+								
+								<div ng-if="$ctr.mode == 'merge'" class="row">
+									<div class="table-responsive">
+										<table class="footable-custom table-stripped toggle-arrow-tiny table footable-sort">
+											<thead>
+											<tr>
+												<th>
+													<span class="no-wrap">
+														Item SKU
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+												<th>
+													<span class="no-wrap">
+														Item Name
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+												<th>
+													<span class="no-wrap">
+														Primary Parent Item
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+												<th>
+													<span class="no-wrap">
+														Save
+													</span>
+												</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr ng-repeat="i in $ctr.inventoryList track by $index">
+												<td>{{i.vendor_sku}}</td>
+												<td>{{i.item_name}}</td>
+												<td><select class="form-control" ng-change="$ctr.chkIfSubSelected($index)" ng-model="i.substitute_for" ng-options="subs.id as subs.item_name group by subs.vendor_name for subs in $ctr.filterItems(i.id, i.vendor_cat_id) | orderBy:['vendor_name','item_name']"></select></td>
+												<td><button ng-click="$ctr.submit($index)" class="btn btn-primary">Save</button></td>
+											</tr>
+											<tr ng-show="!$ctr.inventoryList.length">
+												<td colspan="3" class="text-center">
+													<b>This vendor doesn't have any inventories</b>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<div ng-if="$ctr.mode == 'activate'" class="row">
+									<div class="table-responsive">
+										<table class="footable-custom table-stripped toggle-arrow-tiny table footable-sort">
+											<thead>
+											<tr>
+												<th>
+													<span class="no-wrap">
+														Item SKU
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+												<th>
+													<span class="no-wrap">
+														Item Name
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+												<th>
+													<span class="no-wrap">
+														Action
+														<!--<span class="footable-sort-indicator"></span>-->
+													</span>
+												</th>
+											</tr>
+											</thead>
+											<tbody>
+											<tr ng-repeat="i in $ctr.inventoryList track by $index">
+												<td>{{i.vendor_sku}}</td>
+												<td>{{i.item_name}}</td>
+												<td>
+													<button ng-if="$ctr.activate_mode == 'active'" class="btn btn-danger" ng-click="$ctr.actInactItem(i)">Make Inactive</button>
+													<button ng-if="$ctr.activate_mode == 'inactive'" class="btn btn-info" ng-click="$ctr.actInactItem(i)">Make Active</button>
+													<button class="btn btn-danger" ng-click="$ctr.deleteItem(i)">Delete</button>
+												</td>
+											</tr>
+											<tr ng-show="!$ctr.inventoryList.length">
+												<td colspan="3" class="text-center">
+													<b>This vendor doesn't have any inventories</b>
+												</td>
+											</tr>
+											</tbody>
+										</table>
+									</div>
+								</div>
+								
+								<!--<div class="clearfix m-b-lg m-t-lg">
+									<div class="pull-right">
+										<ul uib-pagination total-items="$ctr.searchModel.paginationTotal"
+											ng-model="$ctr.searchModel.paginationOffset"
+											max-size="10"
+											class="pagination-sm"
+											items-per-page="$ctr.searchModel.paginationCount"
+											ng-change="$ctr.search(false, false)"
+											boundary-link-numbers="true"
+											rotate="false"></ul>
+									</div>
+								</div>-->
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

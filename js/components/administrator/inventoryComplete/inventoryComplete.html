@@ -1,0 +1,71 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Great job, your setup is complete.</h2>
+                <p class="padding-top-5">
+                    Now for the final step. An actual physical
+                    inventory count has to be done before we can generate your first report. An inventory is
+                    not required to receive a weekly report however it is required in order for us to begin
+                    the process. To start your inventory now simply click below. To begin your inventory
+                    later simply select "Count Inventory Later" and from your home screen you'll select
+                    Inventory -> Food Begin -> Inventory Count.
+                </p>
+            </div>
+
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" onclick="window.history.go(-1); return false;">&lt;&lt;
+                                        Back
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-16 col-md-4 col-md-offset-2 col-lg-3 col-lg-offset-3"
+                                     ui-sref="foodSetup.foodInventory">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Begin Inventory Now</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-16 col-md-4 col-lg-3"
+                                     ng-click="main.isRegistration = false; main.isFoodSetup=false;"
+                                     ui-sref="admin.homeMenu">
+                                    <div class="widget style1 lazur-bg">
+                                        <div class="text-center button-element">
+                                            <a class="pos-title">Count Inventory Later</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

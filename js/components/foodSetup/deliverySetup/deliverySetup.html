@@ -1,0 +1,171 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['10'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-6">
+                <h2>Order Schedule</h2>
+            </div>
+			<div class="col-lg-6" style="padding-top: 20px;">
+                <span class="float-right"><a ng-click="$ctr.showInfo()"><i class="fa fa-2x fa-question-circle" aria-hidden="true"></i> Help</a></span>
+            </div>
+        </div>
+
+        <div class="wrapper wrapper-content  animated fadeInRight owner-profile">
+			<form novalidate autocomplete="off" name="form" ng-submit="$ctr.saveAllDeliveries(form)">
+				<div class="row">
+					<div class="col-xs-12">
+						<div class="ibox float-e-margins">
+							<div class="ibox-content">
+								<div class="row">
+									<div class="col-xs-12">
+										<h3 class="text-center">Preferred Order Days</h3>
+									</div>
+									<div class="col-xs-12">
+										<div class="table-responsive">
+											<table class="table table-stripped" data-page-size="8">
+												<thead>
+													<tr>
+														<th>Category</th>
+														<th>Sun</th>
+														<th>Mon</th>
+														<th>Tue</th>
+														<th>Wed</th>
+														<th>Thu</th>
+														<th>Fri</th>
+														<th>Sat</th>
+													</tr>
+												</thead>
+												<tbody>
+													<tr ng-repeat="d in $ctr.deliveries track by $index">
+														<td>{{d.category}}</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_sunday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_monday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_tuesday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_wednesday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_thursday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_friday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+														<td>
+															<input
+															  type="checkbox"
+															  ng-readonly="!$ctr.permissions['10'].w"
+															  ng-model="d.is_on_saturday"
+															  ng-true-value="1" ng-false-value="0"
+															/>
+														</td>
+													</tr>
+													<tr ng-show="!$ctr.deliveries.length">
+														<td colspan="5" class="text-center">
+															<span class="m-t-lg m-b-lg">No results</span>
+														</td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+
+									<div class="col-xs-6 text-left">
+										<button scroll-top class="btn btn-primary" ui-sref="alcoholSetup.menu">
+											&lt;&lt; Back
+										</button>
+									</div>
+									<div class="col-xs-6">
+										<button ng-if="$ctr.emp_id == 3 && $ctr.isCompleted == 0" scroll-top class="btn btn-primary margin-right-10 float-right"
+												ui-sref="setupFirstAudit">Next - Audit
+										</button>
+										<button ng-if="$ctr.emp_id != 3 && $ctr.sub_type == 3 && $ctr.isCompleted == 0" scroll-top class="btn btn-primary margin-right-10 float-right"
+												ui-sref="alcoholSetup.vendor">Next - Alcohol Setup
+										</button>
+										<button ng-if="$ctr.emp_id != 3 && $ctr.sub_type == 2 && $ctr.isCompleted == 0" scroll-top class="btn btn-primary margin-right-10 float-right"
+												ui-sref="administrator.posSync">Next - POS Sync
+										</button>
+										<button type="submit" class="btn btn-primary margin-right-10 float-right">Save</button>
+									</div>
+									<!--<div class="col-xs-6" ng-show="!$ctr.isCompleted">
+										<button scroll-top class="btn btn-primary margin-right-10 float-right"
+												ui-sref="alcoholSetup.confirmation">Next - Setup Confirmation
+										</button>
+									</div>-->
+									
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+
+<script type="text/ng-template" id="quick_tutorial.html">
+    <div class="inmodal" style="margin-top:80px;">
+		<div class="modal-body">
+			<h4 class="text-center modal-title">{{qt.q_title}}</h4>
+			<fieldset>
+				<div style="font-size:15px;" ng-bind-html="qt.q_texts"></div>
+			</fieldset>
+		</div>
+		
+		<div class="modal-footer">
+			<button type="button" class="btn btn-white" ng-click="qt.skip()">Close</button>
+		</div>
+	</div>
+</script>

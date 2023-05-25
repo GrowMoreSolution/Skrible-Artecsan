@@ -1,0 +1,131 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <header-component></header-component>
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg {{$state.current.name}}">
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Select Restaurant</h2>
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <form novalidate autocomplete="off" name="$ctr.form.search"
+                                      ng-submit="$ctr.search()">
+                                    <div class="col-md-5 padding-top-5">
+                                        <input type="text" class="form-control" id="filter" ng-model="$ctr.m.search_by"
+                                               placeholder="Restaurant Name">
+                                    </div>
+									<div ng-if="$ctr.is_su" class="col-md-2 padding-top-5">
+                                        <select class="form-control"
+											ng-model="$ctr.m.sub_type"
+											ng-options="item for item in $ctr.sub_types">
+										</select>
+                                    </div>
+                                    <div class="col-md-2 padding-top-5">
+                                        <button class="btn btn-primary">Search</button>
+                                    </div>
+                                </form>
+                                <div class="col-md-2 float-right padding-top-5">
+                                    <button class="btn btn-primary" ui-sref="subscription">Add new Restaurant</button>
+                                </div>
+                            </div>
+                            <div class="table-responsive">
+                                <table class="footable footable-custom table-stripped toggle-arrow-tiny table"
+                                       data-page-size="25">
+                                    <thead>
+                                    <tr>
+                                        <th style="cursor: pointer" data-sort-ignore="true" ng-click="$ctr.search('id')"
+                                            ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'id' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'id' && $ctr.m.order_way == 'ASC')}">
+                                            #
+                                            <span class="footable-sort-indicator"></span>
+                                        </th>
+                                        <th style="cursor: pointer" data-sort-ignore="true"
+                                            ng-click="$ctr.search('name')"
+                                            ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'name' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'name' && $ctr.m.order_way == 'ASC')}">
+                                            Restaurant Name
+                                            <span class="footable-sort-indicator"></span>
+                                        </th>
+                                        <th style="cursor: pointer" data-sort-ignore="true"
+                                            ng-click="$ctr.search('address')"
+                                            ng-class="{'footable-sorted-desc': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'DESC'), 'footable-sorted': ($ctr.m.order_by == 'address' && $ctr.m.order_way == 'ASC')}">
+                                            Address
+                                            <span class="footable-sort-indicator"></span>
+                                        </th>
+                                        <th data-sort-ignore="true" class="center width-240">Action</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr ng-repeat="restaurant in $ctr.restaurantsList">
+                                        <td>{{restaurant.id}}</td>
+                                        <td>{{restaurant.restaurant_name}}</td>
+                                        <td>{{restaurant.address}}</td>
+                                        <td class="center">
+                                            <button class="btn btn-primary" ng-disabled="!restaurant.is_setup_completed"
+                                                    ng-click="$ctr.selectRestaurant(restaurant)">Select
+                                            </button>
+                                            <button class="btn btn-primary" ng-click="$ctr.editRestaurant(restaurant)"
+                                                    ng-disabled="restaurant.is_setup_completed">Setup Process
+                                            </button>
+                                        </td>
+                                    </tr>
+                                    <tr ng-show="!$ctr.restaurantsList.length">
+                                        <td colspan="4" class="text-center">
+                                            <b>You haven't any restaurants yet. <span ng-if="$ctr.permissions['2'].r">Now you can <a
+                                                    href="" ui-sref="registration">add new</a></span></b>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    <tfoot>
+                                    <tr>
+                                        <td colspan="5">
+                                            <nav>
+                                                <div class="clearfix">
+                                                    <nav class="pull-right">
+                                                        <ul uib-pagination total-items="$ctr.m.paginationTotal"
+                                                            max-size="5"
+                                                            next-text="{{'Next'}}"
+                                                            boundary-link-numbers="true"
+                                                            previous-text="{{'Previous'}}"
+                                                            items-per-page="$ctr.m.paginationCount"
+                                                            ng-model="$ctr.m.paginationOffset"
+                                                            ng-change="$ctr.search()">
+                                                        </ul>
+                                                        <!--  <ul class="pagination" ng-show="$ctr.paginationTotal > $ctr.m.paginationCount">
+                                                              <li class="pagination-page">
+                                                                  <a href=""
+                                                                     ng-click="$ctr.m.paginationOffset = 0; $ctr.m.paginationCount = $ctr.paginationTotal; $ctr.search()"
+                                                                     class="ng-binding">Show All ({{$ctr.paginationTotal}})</a>
+                                                              </li>
+                                                          </ul>-->
+                                                    </nav>
+                                                </div>
+                                            </nav>
+                                        </td>
+                                    </tr>
+                                    </tfoot>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+    </div>
+    <!-- End page wrapper-->
+</div>
+<!-- End wrapper-->

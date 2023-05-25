@@ -1,0 +1,242 @@
+<!--<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10">
+        <h2>Home Page</h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>-->
+<div class="wrapper wrapper-content  animated fadeInRight">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-lg-12">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Sales vs Forecast</h5>
+                                        From: <input type="date" ng-model="start_date" />
+                                        To: <input type="date" ng-model="end_date" />
+                                        <button ng-click="loadLineGraph()">Filter</button>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div id="chart"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Pie Chart</h5>
+                                    </div>
+                                    <div class="clearfix">
+                                        <c3chart bindto-id="pie-plot1-chart">
+                                            <chart-column column-id="{{v.column_id}}"
+                                                          column-values="{{v.column_values}}"
+                                                          column-type="pie" ng-repeat="v in pieData"/>
+                                            <chart-pie expand="true"/>
+                                        </c3chart>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="clearfix">
+                                        <h5 class="text-center">Units sold by Category</h5>
+                                        From: <input type="date" placeholder="YYYY-MM-DD" required 
+                                                     pattern="(?:19|20)[0-9]{2}-(?:(?:0[1-9]|1[0-2])-(?:0[1-9]|1[0-9]|2[0-9])|(?:(?!02)(?:0[1-9]|1[0-2])-(?:30))|(?:(?:0[13578]|1[02])-31))"  ng-model="Bar_From_date" />
+                                        To: <input type="date" ng-model="Bar_To_date" />
+                                        <button ng-click="loadBarGraph()">Search</button>
+                                    </div>
+                                    <div class="clearfix">
+                                        <div id="bar"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--<div class="col-xs-12">-->
+                <!--<div class="ibox float-e-margins">-->
+                <!--<div class="ibox-title">-->
+                <!--<h5>Sales Monthly</h5>-->
+                <!--</div>-->
+                <!--<div class="ibox-content">-->
+                <!--<div class="row">-->
+                <!--<div class="col-sm-12">-->
+                <!---->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+                <!--</div>-->
+            </div>
+            <!--<div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Sales Forecast</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table">
+                                <thead>
+                                    <tr>
+                                        <th>Sales MTD</th>
+                                        <th>Sales Mthly <br> Forecast Remaining</th>
+                                        <th>Total Projected <br> Mthly Sales</th>
+                                        <th>Today's <br> Forecast</th>
+                                        <th>Yesterday's <br> Forecast</th>
+                                        <th>Yesterdays <br> Actual</th>
+                                        <th>Yesterdays <br> Variance</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Inventory Analysis</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>Inventory <br> Purchases MTD</th>
+                                    <th>Inventory Usage <br> MTD</th>
+                                    <th>Spending -vs <br> Usage</th>
+                                    <th>EOM Additional <br> Inventory Required</th>
+                                    <th>Yesterday's <br> Forecast Usage</th>
+                                    <th>Yesterdays <br> Actual Usage</th>
+                                    <th>Yesterdays <br> Variance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Budget Analysis</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>MTD Actual <br> Spending</th>
+                                    <th>MTD Projected <br> Spending</th>
+                                    <th>Mthly Spending <br> Variance</th>
+                                    <th>Forecast Additional <br> Funding Required</th>
+                                    <th>Actual Spending <br> Budget %</th>
+                                    <th>Forecasted Spending <br> %</th>
+                                    <th>% Variance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="ibox float-e-margins">
+                <div class="ibox-title">
+                    <h5>Payroll Analysis</h5>
+                </div>
+                <div class="ibox-content">
+                    <div class="row">
+                        <div class="col-sm-12 table-responsive">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th>MTD Actual <br> Payroll</th>
+                                    <th>MTD Forecast <br> Payroll</th>
+                                    <th>Payroll Cost <br> Variance</th>
+                                    <th>Payroll Performance <br> % of Sales</th>
+                                    <th>Budgeted % <br> of Sales</th>
+                                    <th>Forecasted % <br> Budget %</th>
+                                    <th>Variance</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                    <td>$117,425 </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>-->
+        </div>
+        <!--<div class="col-md-4">
+            <div class="ibox ">
+                <div class="ibox-content">
+                    <div class="tab-content">
+                        <div class="tab-pane active">
+                            <div class="row">
+                                <div class="col-lg-12 text-center">
+                                    <h4>Helpful Tip</h4>
+                                    <hr/>
+                                </div>
+                            </div>
+                            <div class="">
+                                <div class="full-height-scroll" full-scroll>
+                                    <strong>Notes</strong>
+                                    <p class="padding-top-5">
+                                        Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+                                        tempor incididunt ut labore et dolore magna aliqua.
+                                    </p>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>-->
+    </div>
+</div>

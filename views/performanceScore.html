@@ -1,0 +1,117 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+    <!--<div ng-include="'js/components/header/header.html'"></div>-->
+    <header-component></header-component>
+
+    <!-- Navigation -->
+    <!--<div ng-include="'js/components/navigation/navigation.html'"></div>-->
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg {{$state.current.name}}">
+        <!--<div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-10">
+                <h2>Performance Score</h2>
+            </div>
+            <div class="col-lg-2">
+
+            </div>
+        </div>-->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-md-10 col-md-offset-1 col-lg-8 col-lg-offset-2">
+                                    <div class="table-responsive">
+                                        <table class="table table-bordered">
+                                            <thead class="th-text-center">
+                                            <tr>
+                                                <th>Performance Score</th>
+                                                <th>4/4</th>
+                                                <th>4/11</th>
+                                                <th>4/18</th>
+                                                <th>4/25</th>
+                                                <th class="width-100">Industry Benchmark</th>
+                                            </tr>
+                                            </thead>
+                                            <tbody class="text-center">
+                                            <tr>
+                                                <td class="performance-table-color text-left">Sales Performance</td>
+                                                <td>79</td>
+                                                <td>93</td>
+                                                <td>95</td>
+                                                <td>82</td>
+                                                <td>93</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Food Cost Performance</td>
+                                                <td>90</td>
+                                                <td>93</td>
+                                                <td>99</td>
+                                                <td>97</td>
+                                                <td>98</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Alcohol Cost Performance</td>
+                                                <td>72</td>
+                                                <td>89</td>
+                                                <td>93</td>
+                                                <td>96</td>
+                                                <td>91</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Labor Performance</td>
+                                                <td>90</td>
+                                                <td>94</td>
+                                                <td>91</td>
+                                                <td>92</td>
+                                                <td>94</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Budget Performance</td>
+                                                <td>80</td>
+                                                <td>90</td>
+                                                <td>93</td>
+                                                <td>97</td>
+                                                <td>89</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">Consumer Reviews</td>
+                                                <td>96</td>
+                                                <td>98</td>
+                                                <td>94</td>
+                                                <td>88</td>
+                                                <td>91</td>
+                                            </tr>
+                                            <tr>
+                                                <td class="performance-table-color text-left">TOTAL AVERAGE SCORE</td>
+                                                <td>84</td>
+                                                <td>93</td>
+                                                <td>94</td>
+                                                <td>92</td>
+                                                <td>93</td>
+                                            </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

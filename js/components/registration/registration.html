@@ -1,0 +1,65 @@
+<!-- Wrapper-->
+<div id="wrapper">
+
+   <header-component></header-component>
+    <!-- Navigation -->
+    <!--<div ng-include="'views/common/navigation.html'"></div>-->
+
+    <!-- Page wraper -->
+    <!-- ng-class with current state name give you the ability to extended customization your view -->
+    <div id="page-wrapper" class="white-bg navigation-hide" ng-class="{'navigation-hide' : !main.isFoodSetup && main.isRegistration}">
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>POS Selection</h2>
+                <!--<p class="padding-top-5">
+                    Please select the P.O.S. system that your restaurant currently uses. If you do not
+                    see your P.O.S. unfortunately our system will not work for you however we're
+                    consistently adding new connections but feel free to contact us with your brand of POS
+                    and we'll expedite the process.
+                </p>-->
+            </div>
+        </div>
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row"  ng-if="!main.isRegistration">
+                                <div class="col-xs-12">
+                                    <a href="" ui-sref="subscription" class="btn btn-primary">&lt;&lt; Back</a>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-repeat="pos in $ctr.posList track by $index" ng-click="$ctr.selectPos(pos)">
+                                    <div class="widget style1 navy-bg pos_item cursor-pointer" ng-class="{'selected': $ctr.model.pos_id == pos.id}">
+                                        <div class="text-center pos-element">
+                                            <img src="" ng-src="{{$ctr.base_api_url}}{{pos.logo_content_item_url}}" alt="{{pos.name}}" class="pos_logo">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3" ng-click="$ctr.selectPos({id:0})">
+                                    <div class="widget style1 navy-bg pos_item soon">
+                                        <div class="text-center pos-element">
+                                            <a class="pos-title" style="cursor: pointer;">Other Connections</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->

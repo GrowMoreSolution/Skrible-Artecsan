@@ -1,0 +1,111 @@
+<!-- Wrapper-->
+<div id="wrapper" ng-if="$ctr.permissions['45'].r || $ctr.permissions['46'].r">
+
+    <header-component></header-component>
+
+    <navigation-component></navigation-component>
+
+    <!-- Page wraper -->
+    <div id="page-wrapper" class="white-bg">
+
+        <!-- Main view  -->
+        <div class="wrapper wrapper-content  animated fadeInRight">
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="ibox float-e-margins">
+                        <div class="ibox-content">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <button class="btn btn-primary" ui-sref="reports.reportsCategory">&lt;&lt; Back</button>
+                                    <button class="btn btn-primary" ui-sref="reports.food.foodDetail">Overview</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodCostOfSummary">Inventory Count</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodOnHand">On-Hand</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodSalesReport">Sales</button>
+                                    <button class="btn btn-primary active" ui-sref="reports.batchReport">Batches</button>
+									<button class="btn btn-primary" ui-sref="reports.analytics({typeInventory: 'food'})">Usage</button>
+									<button class="btn btn-primary" ui-sref="reports.pmix({typeInventory: 'food'})">PMIX</button>
+									<button class="btn btn-primary" ui-sref="reports.foodCostChangeReport">Cost Change</button>
+                                    <button class="btn btn-primary" ui-sref="reports.foodUsageVsPurchase">Purchases</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			<div class="row wrapper border-bottom white-bg page-heading">
+				<div class="col-lg-10">
+					<h3 ng-if="$ctr.mode == 'On Hand'">On Hand Status for {{$ctr.mydate | date:'yyyy-MM-dd'}} for {{$ctr.category}}</h3>
+					<h3 ng-if="$ctr.mode == 'Waste Report'">Waste Report for {{$ctr.category}}</h3>
+				</div>
+				<div class="col-lg-2">
+
+				</div>
+			</div>
+            <div class="row">
+                <div class="col-xs-3 col-md-6 col-lg-12 ir">
+                    <select ng-model="$ctr.cat_id" ng-change="$ctr.changeCat()" ng-options="value.r_type_id as value.category for value in $ctr.recipe_categories">
+                    </select>
+					<button class="btn btn-primary" ng-click="$ctr.loadOH()">On Hand</button>
+                    <button class="btn btn-primary" ng-click="$ctr.loadWaste()">Waste Report</button>
+					<label ng-if="$ctr.mode === 'Waste Report'">Begin:</label> <input ng-if="$ctr.mode === 'Waste Report'" type="date" ng-model="$ctr.start_date"/>
+                    <label ng-if="$ctr.mode === 'Waste Report'">End:</label> <input ng-if="$ctr.mode === 'Waste Report'" type="date" ng-model="$ctr.end_date"/>
+					<button ng-if="$ctr.mode === 'Waste Report'" ng-click="$ctr.loadWaste()">Go</button>
+                    <table ng-if="$ctr.mode === 'On Hand'" class="table table-bordered table-sm" style="margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <td>Recipe Name</td>
+								<td>Creation Date</td>
+								<td>Ounces On-Hand</td>
+								<td>Ounces in a Full Batch</td>
+                                <td>Good For (Days)</td>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="item in $ctr.items">
+                            <tr>
+                                <td>{{item.recipe_name}}</td>
+                                <td>{{item.date_of_creation}}</td>
+                                <td>{{item.servings_on_hand}}</td>
+								<td>{{item.total_servings}}</td>
+								<td>{{item.good_for_days}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+					<table ng-if="$ctr.mode === 'Waste Report'" class="table table-bordered table-sm" style="margin-top: 10px">
+                        <thead>
+                            <tr>
+                                <td>Recipe Name</td>
+								<td>Date of Wastage</td>
+								<td>Ounces Wasted</td>
+								<td>Ounces in a Full Batch</td>
+								<td>Creation Date</td>
+                            </tr>
+                        </thead>
+                        <tbody ng-repeat="item in $ctr.items">
+                            <tr>
+                                <td>{{item.recipe_name}}</td>
+                                <td>{{item.date_on_hand}}</td>
+                                <td>{{item.servings_on_hand}}</td>
+								<td>{{item.total_servings}}</td>
+								<td>{{item.date_of_creation}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    </div>
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir select, .ir input {
+    height: 35px;
+    padding: 5px;
+    margin-bottom: 10px;
+}
+</style>
