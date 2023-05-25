@@ -1163,5 +1163,20 @@ a.list-group-item.sticky {
  .restaurant-table table{
     margin-bottom: 0px;
  }
+ .employeelist{
+    min-width: 2000px;
+ }
+ .employeelist thead th{
+    white-space: nowrap;
+ }
 
- 
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
