@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html ng-app="inspinia">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title set in pageTitle directive -->
+    <title page-title>Artecsan powered by Skrible</title>
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css?ver=1487663280076" rel="stylesheet">
+
+    <!-- Font awesome -->
+    <link href="font-awesome/css/font-awesome.css?ver=1487663280076" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="css/plugins/sweetalert/sweetalert.css?ver=1487663280076" rel="stylesheet">
+
+    <!-- Main Inspinia CSS files -->
+    <link href="css/animate.css?ver=1487663280076" rel="stylesheet">
+    <link id="loadBefore" href="css/style.css?ver=1487663280076" rel="stylesheet">
+
+    <link href="css/Artecsan.css?ver=1487663280076" rel="stylesheet">
+
+</head>
+
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+
+<!-- Main view  -->
+<div ui-view></div>
+
+<!-- jQuery and Bootstrap -->
+<script src="js/jquery/jquery-2.1.1.min.js?ver=1487663280076"></script>
+<script src="js/plugins/jquery-ui/jquery-ui.js?ver=1487663280076"></script>
+<script src="js/bootstrap/bootstrap.min.js?ver=1487663280076"></script>
+
+<!-- MetisMenu -->
+<script src="js/plugins/metisMenu/jquery.metisMenu.js?ver=1487663280076"></script>
+
+<!-- SlimScroll -->
+<script src="js/plugins/slimscroll/jquery.slimscroll.min.js?ver=1487663280076"></script>
+
+<!-- Peace JS -->
+<script src="js/plugins/pace/pace.min.js?ver=1487663280076"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="js/inspinia.js?ver=1487663280076"></script>
+
+<!-- Main Angular scripts-->
+<script src="js/angular/angular.min.js?ver=1487663280076"></script>
+<script src="js/angular/angular-sanitize.min.js?ver=1487663280076"></script>
+<script src="js/plugins/oclazyload/dist/ocLazyLoad.min.js?ver=1487663280076"></script>
+<script src="js/ui-router/angular-ui-router.min.js?ver=1487663280076"></script>
+<script src="js/bootstrap/ui-bootstrap-tpls-1.1.2.min.js?ver=1487663280076"></script>
+<script src="js/plugins/angular-idle/angular-idle.js?ver=1487663280076"></script>
+<script src="js/plugins/datetime-picker.js?ver=1487663280076"></script>
+
+
+<!-- Thirty part libs -->
+<script src="js/plugins/angular-local-storage.min.js?ver=1487663280076"></script>
+<script src="js/plugins/sweetalert/sweetalert.min.js?ver=1487663280076"></script>
+<script src="js/plugins/sweetalert/angular-sweetalert.min.js?ver=1487663280076"></script>
+
+<!-- Angular App Script -->
+<script src="js/app.js?ver=1487663280076"></script>
+<script src="js/config.js?ver=1487663280076"></script>
+<script src="js/directives.js?ver=1487663280076"></script>
+<script src="js/controllers.js?ver=1487663280076"></script>
+
+
+<!-- main controllers -->
+<script src="js/controllers/homeMenuController.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/inventorySetup/addUniqueItems/addUniqueItems.controller.js?ver=1487663280076"></script>
+
+<!-- services -->
+<script src="js/services/interceptor.js?ver=1487663280076"></script>
+<script src="js/services/core.js?ver=1487663280076"></script>
+<script src="js/services/auth.js?ver=1487663280076"></script>
+<script src="js/services/api.js?ver=1487663280076"></script>
+<script src="js/services/alertService.js?ver=1487663280076"></script>
+<script src="js/services/restaurant.js?ver=1487663280076"></script>
+<script src="js/services/utils.js?ver=1487663280076"></script>
+
+<!-- directives -->
+<script src="js/directives/onlyDigits.js?ver=1487663280076"></script>
+<script src="js/directives/compareTo.js?ver=1487663280076"></script>
+<script src="js/directives/acPassword.js?ver=1487663280076"></script>
+<script src="js/directives/acPhone.js?ver=1487663280076"></script>
+<script src="js/directives/scrollTop.js?ver=1487663280076"></script>
+<script src="js/directives/uniqueSku.js?ver=1487663280076"></script>
+
+<!-- components -->
+<script src="js/components/foodSetup/addPosHere/addPosHere.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/posSync/posSync.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/deliverySetup/deliverySetup.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/deliverySetup/deliverySetup.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/menuSetup/menuSetup.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/menuSetup/menuSetup.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/recipeSetup/recipeSetup.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/recipeSetup/recipeSetup.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/inventorySetup/inventorySetup.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/inventorySetup/inventorySetup.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/vendorSetup/vendorSetup.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/vendorSetup/vendorSetup.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/foodSetup.js?ver=1487663280076"></script>
+<script src="js/components/registration/invite/invite.js?ver=1487663280076"></script>
+<script src="js/components/registration/invite/invite.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/terms/terms.js?ver=1487663280076"></script>
+<script src="js/components/registration/terms/terms.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/payment/payment.js?ver=1487663280076"></script>
+<script src="js/components/registration/payment/payment.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/restaurantProfile/restaurantProfile.js?ver=1487663280076"></script>
+<script src="js/components/registration/restaurantProfile/restaurantProfile.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/restaurantUserProfile/restaurantUserProfile.js?ver=1487663280076"></script>
+<script src="js/components/registration/restaurantUserProfile/restaurantUserProfile.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/subscription/subscription.js?ver=1487663280076"></script>
+<script src="js/components/registration/subscription/subscription.component.js?ver=1487663280076"></script>
+<script src="js/components/login/login.js?ver=1487663280076"></script>
+<script src="js/components/login/login.component.js?ver=1487663280076"></script>
+<script src="js/components/registration/registration.js?ver=1487663280076"></script>
+<script src="js/components/registration/registration.component.js?ver=1487663280076"></script>
+<script src="js/components/header/header.component.js?ver=1487663280076"></script>
+<script src="js/components/home/home.component.js?ver=1487663280076"></script>
+<script src="js/components/home/home.js?ver=1487663280076"></script>
+<script src="js/components/navigation/navigation.component.js?ver=1487663280076"></script>
+<script src="js/components/administrator/menu/menu.js?ver=1487663280076"></script>
+<script src="js/components/administrator/inventoryComplete/inventoryComplete.js?ver=1487663280076"></script>
+<script src="js/components/administrator/administrator.js?ver=1487663280076"></script>
+<script src="js/components/administrator/posSync/posSync.js?ver=1487663280076"></script>
+<script src="js/components/administrator/posSync/posSync.component.js?ver=1487663280076"></script>
+<script src="js/components/administrator/invite/invite.js?ver=1487663280076"></script>
+<script src="js/components/administrator/invite/invite.component.js?ver=1487663280076"></script>
+<script src="js/components/administrator/addPosHere/addPosHere.js?ver=1487663280076"></script>
+<script src="js/components/administrator/addPosHere/addPosHere.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/foodInventory/foodInventory.component.js?ver=1487663280076"></script>
+<script src="js/components/foodSetup/foodInventory/foodInventory.js?ver=1487663280076"></script>
+
+
+<script src="js/components/administrator/restaurantPayment/restaurantPayment.js?ver=1487663280076"></script>
+<script src="js/components/administrator/restaurantProfile/restaurantProfile.js?ver=1487663280076"></script>
+<script src="js/components/reports/menuItemsMapping/menuItemsMapping.component.js?ver=1487663280076"></script>
+<script src="js/components/reports/menuItemsMapping/menuItemsMapping.js?ver=1487663280076"></script>
+<script src="js/components/reports/reports.js?ver=1487663280076"></script>
+<script src="js/components/reports/reportsCategory/reportsCategory.js?ver=1487663280076"></script>
+
+
+<!-- filters -->
+<script src="js/filters/recipeTypesFilter.js?ver=1487663280076"></script>
+
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='https://cdn.jsdelivr.net/g/lodash@4(lodash.min.js+lodash.fp.min.js)'></script>
+</body>
+</html>

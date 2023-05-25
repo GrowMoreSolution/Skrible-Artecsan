@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html ng-app="inspinia">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Language" content="en">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title set in pageTitle directive -->
+    <title page-title>CooksTime</title>
+	
+	<!-- Favicon -->
+	<link rel='shortcut icon' type='image/x-icon' href='/img/favicon.ico' />
+
+    <!-- Bootstrap -->
+    <link href="css/bootstrap.min.css?ver=@@hash" rel="stylesheet">
+
+    <!-- Font awesome -->
+    <link href="font-awesome/css/font-awesome.css?ver=@@hash" rel="stylesheet">
+
+    <!-- Plugins -->
+    <link href="css/plugins/sweetalert/sweetalert.css?ver=@@hash" rel="stylesheet">
+
+    <!-- Main Inspinia CSS files -->
+    <link href="css/animate.css?ver=@@hash" rel="stylesheet">
+    <link id="loadBefore" href="css/style.css?ver=@@hash" rel="stylesheet">
+
+    <link href="css/Artecsan.css?ver=@@hash" rel="stylesheet">
+        <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
+        <script>
+            Stripe.setPublishableKey('pk_live_b4jLJ0ypL1P4tympngeegzwc');
+        </script>
+</head>
+
+<!-- ControllerAs syntax -->
+<!-- Main controller with serveral data used in Inspinia theme on diferent view -->
+<body ng-controller="MainCtrl as main" class="{{$state.current.data.specialClass}}" landing-scrollspy id="page-top">
+
+<!-- Main view  -->
+<div ui-view></div>
+
+
+<script src="dist/main.js?ver=@@hash"></script>
+
+
+<script src='https://www.google.com/recaptcha/api.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.4/lodash.js'></script>
+</body>
+</html>
