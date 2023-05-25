@@ -1,0 +1,324 @@
+<!-- Wrapper-->
+<div id="wrapper">       <!-- Change permission when establish a number for this-->
+
+    <!--<header-component></header-component>
+
+    <navigation-component></navigation-component>-->
+
+    <!-- Page wraper -->
+    <!--<div id="page-wrapper" class="gray-bg">-->
+
+
+        <!-- Main view  -->
+
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-lg-12">
+                <h2>Employee Profile</h2>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="restaurant-title text-center">
+                    <h2>Restaurant Name</h2>
+                    <h4>Employee Profile</h4>
+                    <p>Print Date 4-3-2023</p>
+                </div>
+                <div class="employee-action">
+                    <div class="form-group">
+                        <label class="col-form-label">Employee</label>
+                        <select class="form-control">
+                            <option>Stacy Harris</option>
+                            <option>Karl</option>
+                            <option>Randy</option>
+                            <option>Hector</option>
+                            <option>Janice</option>
+                            <option>Mike P.</option>
+                        </select>
+                    </div>
+                    <div class="action-btn">
+                        <button type="button" class="btn">Save</button>
+                        <button type="button" class="btn">Print</button>
+                        <!-- <button ng-click="printDiv()">Print</button> -->
+                    </div>
+                </div>
+                <div class="employee-Title text-center">
+                    <p>Employee Profile</p>
+                </div>
+                <div class="employee_profiledetails">
+                    <div class="form-group">
+                        <label class="col-form-label">Start Date</label>
+                        <input type="date" ng-model="start_date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Terminate</label>
+                        <input type="date" ng-model="end_date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Active</label>
+                        <select class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Cause</label>
+                        <select class="form-control">
+                            <option>Resigned</option>
+                            <option>Poor productivity</option>
+                            <option>Poor attendance</option>
+                            <option>Misconduct</option>
+                            <option>Downsizing</option>
+                            <option>Closing Business</option>
+
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Rehirable</label>
+                        <select class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Emp ID</label>
+                        <input type="text" class="form-control">
+                    </div>
+                </div>  
+            </div>
+         </div>
+         <div class="row">        
+            <div class="col-lg-4">
+                <div class="employee-Title text-center">
+                    <p>Contact Info</p>
+                </div>
+                <div class="contact-infodetail">
+                    <div class="form-group">
+                        <label class="col-form-label">Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Address</label>
+                        <textarea type="textarea" class="form-control"></textarea>
+                    </div>
+                    <div class="state-inputs" style="display: flex; gap: 12px; align-items: center;">
+                        <div class="form-group">
+                            <label class="col-form-label">City</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">State</label>
+                            <input type="text" class="form-control">
+                        </div>
+                        <div class="form-group">
+                            <label class="col-form-label">Zip</label>
+                            <input type="text" class="form-control">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Phone</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        <input type="text" class="form-control">
+                    </div> 
+                </div>
+            </div>
+            <div class="col-lg-8">
+                <div class="employee-Title text-center">
+                    <p>Do Not Schedule</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="footable footable-custom table-stripped table schedule-table">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                                <th>Saturday</th>
+                                <th>Sunday</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="text-nowrap">Do Not Schedule Before</td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                            <tr>
+                                <td class="text-nowrap">Do Not Schedule After</td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                                <td><input type="text" class="form-control"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>        
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="employee-Title text-center">
+                    <p>Emergency Contact</p>
+                </div>
+                <div class="emergency-infodetail">
+                    <div class="form-group">
+                        <label class="col-form-label">Name</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Relationship</label>
+                        <input type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">Phone</label>
+                        <input type="text" class="form-control">
+                    </div> 
+                    <div class="form-group">
+                        <label class="col-form-label">Email</label>
+                        <input type="text" class="form-control">
+                    </div> 
+                </div>
+            </div>
+            <div class="col-lg-4">
+                <div class="employee-Title text-center">
+                    <p>Employee Role and Pay Rate</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="footable footable-custom table-stripped table employeepay-table">
+                        <thead>
+                            <tr>
+                                <th class="text-nowrap">Role</th>
+                                <th class="text-nowrap">Salary or Hourly</th>
+                                <th class="text-nowrap">Rate</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <select class="form-control">
+                                        <option>Hostess</option>
+                                        <option>Bartender</option>
+                                        <option>Waitress</option>
+                                    </select> 
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option>Hourly</option>
+                                        <option>Salary</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" value="$15.50" class="form-control"></td>
+                                <td><button type="button" class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="Currentcolor" viewBox="0 0 256 256"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg></button></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <select class="form-control">
+                                        <option>Bartender</option>
+                                        <option>Waitress</option>
+                                        <option>Hostess</option>
+                                        
+                                    </select> 
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option>Hourly</option>
+                                        <option>Salary</option>
+                                    </select>
+                                </td>
+                                <td><input type="text" value="$15.50" class="form-control"></td>
+                                <td><button type="button" class="close-btn"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="Currentcolor" viewBox="0 0 256 256"><path d="M165.66,101.66,139.31,128l26.35,26.34a8,8,0,0,1-11.32,11.32L128,139.31l-26.34,26.35a8,8,0,0,1-11.32-11.32L116.69,128,90.34,101.66a8,8,0,0,1,11.32-11.32L128,116.69l26.34-26.35a8,8,0,0,1,11.32,11.32ZM232,128A104,104,0,1,1,128,24,104.11,104.11,0,0,1,232,128Zm-16,0a88,88,0,1,0-88,88A88.1,88.1,0,0,0,216,128Z"></path></svg></button></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div> 
+                <div class="employeepay-btn">
+                    <button type="button" class="btn">Add New</button>
+                </div> 
+            </div>
+            <div class="col-lg-4">
+                <div class="employee-Title text-center">
+                    <p>Notes</p>
+                </div>
+                <div class="notes-input">
+                    <div class="notes-detail">
+                        <p>Can Someone claim you on their taxes</p>
+                        <select class="form-control">
+                            <option>Yes</option>
+                            <option>No</option>
+                        </select>  
+                    </div>
+                    <div class="notes-detail">
+                        <p>Status</p>
+                        <select class="form-control">
+                            <option>Married</option>
+                            <option>Single</option>
+                            <option>Head of House</option>
+                        </select>  
+                    </div>
+                    <div class="notes-detail">
+                        <p>Can Someone claim you on their taxes</p>
+                        <input type="text" value="2" class="form-control"> 
+                    </div>
+                    <div class="notes-detail">
+                        <p>Can Someone claim you on their taxes</p>
+                        <input type="text" value="5158" class="form-control"> 
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-4">
+                <div class="employee-Title text-center">
+                    <p>Miscellaneous Notes</p>
+                </div>
+                <textarea type="textarea" class="form-control"></textarea>
+            </div>
+        </div>
+        <div class="review">
+            <div class="review-detail">
+                <label class="text-nowrap font-noraml">Employee Review</label>
+                <textarea type="textarea" class="form-control "></textarea>
+            </div>
+            <div class="review-detail">
+                <label class="font-noraml">Date:</label>
+                <input type="date" class="form-control width-180"> 
+            </div>
+        </div>
+        <div class="profileupdate-btn">
+            <button type="button" class="btn">Add New Review</button>
+            <button type="button" class="btn btn-danger">Delete</button>
+            <!-- <button ng-click="printDiv()">Print</button> -->
+        </div>
+        
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    <!--</div>-->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir canvas {
+    height: 400px !important;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+</style>
