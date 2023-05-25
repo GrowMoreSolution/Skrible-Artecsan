@@ -1367,3 +1367,51 @@ background-color: #ed5565;
 ::-webkit-scrollbar-track {
     background: #f1f1f1;
 }
+/******/
+.budget-table table thead tr th{
+    text-align: center;
+    vertical-align: bottom;
+}
+.budget-table table tbody tr td,
+.budget-table table tfoot tr td{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+    padding: 4px 8px;
+}
+.budget-table table tbody tr:last-child td{
+border-bottom: 2px solid #000;
+}
+.budget-table table thead tr th:first-child,
+.budget-table table thead tr th:nth-child(2),
+.budget-table table tbody tr td:first-child,
+.budget-table table tbody tr td:nth-child(2),
+.budget-table table tfoot tr td:first-child,
+.budget-table table tfoot tr td:nth-child(2){
+    min-width: 150px;
+    position: sticky;
+    left: 0px;
+    background-color: #fff;
+    text-align: start;
+}
+.budget-table table thead tr th:nth-child(2),
+.budget-table table tbody tr td:nth-child(2),
+.budget-table table tfoot tr td:nth-child(2){
+    left: 150px;
+}
+.budget-table table tbody tr td .form-control{
+    padding: 5px;
+    font-size: 13px;
+    height: 30px;
+}
+@media (max-width: 540px){
+    .budget-table table thead tr th:first-child,
+    .budget-table table thead tr th:nth-child(2),
+    .budget-table table tbody tr td:first-child,
+    .budget-table table tbody tr td:nth-child(2),
+    .budget-table table tfoot tr td:first-child,
+    .budget-table table tfoot tr td:nth-child(2){
+        position: static;
+        
+    }    
+}
