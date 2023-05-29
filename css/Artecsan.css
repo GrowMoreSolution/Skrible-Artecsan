@@ -1404,6 +1404,130 @@ border-bottom: 2px solid #000;
     font-size: 13px;
     height: 30px;
 }
+.addnewrole{
+    display: flex;
+    justify-content: end;
+}
+.vertical-alignment-helper {
+    display:table;
+    height: 100%;
+    width: 100%;
+}
+.vertical-align-center {
+    display: table-cell;
+    vertical-align: middle;
+}
+.modal-content {
+    width:inherit;
+    height:inherit;
+    margin: 0 auto;
+}
+.employee-sched{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+.employeetitle{
+    width: 50%;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    font-weight: 600;
+    color: #2f4050;
+}
+.employeetitle p{
+    margin-bottom: 0px;
+}
+.employeeview{
+width: 50%;
+}
+.employeeview .form-group{
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    margin-bottom: 0px;
+}
+.employeeview select{
+    max-width: 200px;
+}
+.employeeview label{
+    margin-bottom:0px;
+}
+.employeetimeseet{
+    display: flex;
+    align-items: stretch;
+    gap: 10px;
+    margin-bottom: 10px;
+}
+
+.employee-date{
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 10px;
+}
+.employeetoday{
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    margin-left: 16px;
+    font-size: 14px;
+}
+.employeetoday p{
+    margin-bottom: 0px;
+}
+.payperiod{
+display: flex;
+gap: 10px;
+align-items: center;
+margin-bottom: 8px;
+}
+.payperiod .btn{
+    display: inline-flex;
+    background-color: #2f4050;
+    color: #fff;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+.pay-day{
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    padding-left: 90px;
+}
+.totalhours-table .table tr td{
+    border: 0px;
+    padding: 1px 4px;
+    text-align: right;
+}
+.payperiod p{
+margin-bottom: 0px;
+}
+.clockin-box{
+    flex: none;
+    height: 150px;
+    width: 150px;
+    padding: 16px;
+    background-color: #3681c1;
+    color: #fff;
+    text-align: center;
+}
+.clockin-box h4{
+    font-size: 18px;
+    line-height: 24px;
+    font-weight: 600;
+}
+.clockin-box p{
+    font-size: 14px;
+    font-weight: 600;
+}
+
+
 @media (max-width: 540px){
     .budget-table table thead tr th:first-child,
     .budget-table table thead tr th:nth-child(2),
@@ -1414,4 +1538,20 @@ border-bottom: 2px solid #000;
         position: static;
         
     }    
+    .employee-sched{
+        flex-wrap: wrap;
+    }
+    .employeetitle{
+        width: 100%;
+    }
+    .employeeview{
+        width: 100%;
+    }
+    .employeetimeseet{
+        flex-wrap: wrap;
+    }
+    .clockin-box{
+        height: 100%;
+        width: 100%;
+    }
 }
