@@ -1,0 +1,545 @@
+<!-- Wrapper-->
+<div id="wrapper">       <!-- Change permission when establish a number for this-->
+
+    <!--<header-component></header-component>
+
+    <navigation-component></navigation-component>-->
+
+    <!-- Page wraper -->
+    <!--<div id="page-wrapper" class="gray-bg">-->
+
+
+        <!-- Main view  -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="top-headingbar">
+                    <div id="collapseExample" class="collapse in" style="width: 100%;">
+                        <div class="title-heading">
+                            <div></div>
+                            <div class="action-btn">
+                                <a href="#/!" class="btn">Export</a>
+                                <a href="#/!" class="btn">Print</a>
+                                <!-- <button ng-click="printDiv()">Print</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="down-arrow">
+                        <button type="button" class="triangle " data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="m-b-lg">
+                    <div class="employee-action" style="justify-content: flex-start;">
+                        <div class="payperiod mb-0">
+                            <button type="button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg></button>
+                            <div class="form-group">
+                                <label class="col-form-label">Pay Period Start</label>
+                                <input type="date" ng-model="start_date" class="form-control">
+                            </div>
+                            <div class="form-group">
+                                <label class="col-form-label">Pay Period End</label>
+                                <input type="date" ng-model="end_date" class="form-control">
+                            </div>
+                            <button type="button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg></button>
+                        </div>
+                        <div class="payperiod mb-0">
+                            <div class="form-group">
+                                <label class="col-form-label">Pay Day</label>
+                                <input type="date" ng-model="end_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="payperiod mb-0">
+                            <div class="form-group">
+                                <label class="col-form-label">Todays Date</label>
+                                <input type="date" ng-model="end_date" class="form-control">
+                            </div>
+                        </div>
+                        <div class="action-btn">
+                            <button type="button" class="btn">COPY LAST PAY PERIOD</button>
+                            <button type="button" class="btn">PRINT</button>
+                            <button type="button" class="btn">SAVE CHANGES</button>
+                            <button type="button" class="btn">FINAL SAVE & SUBMIT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="employee-Title text-center">
+                    <p>SCHEDULE</p>
+                </div>   
+                <div class="table-responsive m-b-lg employeeschedule">
+                    <table class="table table-stripped table font-noraml">
+                        <thead>
+                            <tr>
+                                <th colspan="4">
+                                    <div class="payperiod mb-0">
+                                        <div class="form-group">
+                                            <input type="checkbox" class="">
+                                            <label class="col-form-label">Show all hours</label>
+                                        </div>
+                                    </div>
+                                </th>
+                                <th colspan="4" class="text-center">Monday</th>
+                                <th colspan="4" class="text-center">Tuesday</th>
+                                <th colspan="4" class="text-center">Wednesday</th>
+                                <th colspan="4" class="text-center">Thursday</th>
+                                <th colspan="4" class="text-center">Friday</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                                <th colspan="4" class="text-center">2-Apr</th>
+                                <th colspan="4" class="text-center">3-Apr</th>
+                                <th colspan="4" class="text-center">4-Apr</th>
+                                <th colspan="4" class="text-center">5-Apr</th>
+                                <th colspan="4" class="text-center">6-Apr</th>
+                            </tr>
+                            <tr>
+                                <th colspan="4"></th>
+                                <th colspan="4" class="text-center">Break</th>
+                                <th colspan="4" class="text-center">Break</th>
+                                <th colspan="4" class="text-center">Break</th>
+                                <th colspan="4" class="text-center">Break</th>
+                                <th colspan="4" class="text-center">Break</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th>Employee</th>
+                                <th>Role</th>
+                                <th>Total Hours</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <div class="deleteicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option value="Karl">Karl</option>
+                                        <option value="Randy">Randy</option>
+                                        <option value="Hector">Hector</option>
+                                    </select>
+                                </td>
+                                <td>Busser</td>
+                                <td>5</td>
+                                <td>9am</td>
+                                <td>11:30</td>
+                                <td>12:30</td>
+                                <td>3pm</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="deleteicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option value="Randy">Randy</option>
+                                        <option value="Karl">Karl</option>
+                                        <option value="Hector">Hector</option>
+                                    </select>
+                                </td>
+                                <td>Dishwasher</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="deleteicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option value="Hector">Hector</option>
+                                        <option value="Randy">Randy</option>
+                                        <option value="Karl">Karl</option>
+                                    </select>
+                                </td>
+                                <td>Dishwasher</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="deleteicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option value="Hector">Hector</option>
+                                        <option value="Randy">Randy</option>
+                                        <option value="Karl">Karl</option>
+                                    </select>
+                                </td>
+                                <td>Hostess</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <div class="deleteicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M205.66,194.34a8,8,0,0,1-11.32,11.32L128,139.31,61.66,205.66a8,8,0,0,1-11.32-11.32L116.69,128,50.34,61.66A8,8,0,0,1,61.66,50.34L128,116.69l66.34-66.35a8,8,0,0,1,11.32,11.32L139.31,128Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="form-control">
+                                        <option value="Hector">Hector</option>
+                                        <option value="Randy">Randy</option>
+                                        <option value="Karl">Karl</option>
+                                    </select>
+                                </td>
+                                <td>Bartender</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="24">
+                                    <div class="action-btn">
+                                        <button type="button" class="btn">Add New</button>
+                                    </div>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total Hours</td>
+                                <td>5</td>
+                                <td colspan="4" class="text-center">5</td>
+                                <td colspan="4" class="text-center">0</td>
+                                <td colspan="4" class="text-center">0</td>
+                                <td colspan="4" class="text-center">0</td>
+                                <td colspan="4" class="text-center">0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Forecasted Revenue</td>
+                                <td>$3,345</td>
+                                <td colspan="4" class="text-center">$3,345</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Total Labor Cost</td>
+                                <td>$3,345</td>
+                                <td colspan="4" class="text-center">$3,345</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Forecasted Gross Margin</td>
+                                <td>$3,345</td>
+                                <td colspan="4" class="text-center">$3,345</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3">Labor Budget</td>
+                                <td>$3,345</td>
+                                <td colspan="4" class="text-center">$3,345</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="3"> +/- Cost vs Budget</td>
+                                <td>$3,345</td>
+                                <td colspan="4" class="text-center">$3,345</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                                <td colspan="4" class="text-center">$0</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+
+                <div class="table-responsive m-b-lg">
+                    <table class="table table-stripped table font-noraml">
+                        <thead>
+                            <tr>
+                                <th></th>
+                                <th></th>
+                                <th>Monday</th>
+                                <th>Tuesday</th>
+                                <th>Wednesday</th>
+                                <th>Thursday</th>
+                                <th>Friday</th>
+                            </tr>
+                            <tr>
+                                <th>Schedule vs Budget</th>
+                                <th></th>
+                                <th>2-Apr</th>
+                                <th>3-Apr</th>
+                                <th>4-Apr</th>
+                                <th>5-Apr</th>
+                                <th>6-Apr</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Busser $ Budgeted</td>
+                                <td>$97</td>
+                                <td>$97</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Busser $ Scheduled</td>
+                                <td>$75</td>
+                                <td>$75</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Busser Variance</td>
+                                <td class="text-danger">-$22</td>
+                                <td class="text-danger">-$22</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr>
+                                <td>Dishwasher $ Budgeted</td>
+                                <td>$140</td>
+                                <td>$140</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Dishwasher $ Scheduled</td>
+                                <td>$210</td>
+                                <td>$210</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Dishwasher Variance</td>
+                                <td>$70</td>
+                                <td>$70</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr>
+                                <td>Hostess $ Budgeted</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Hostess $ Scheduled</td>
+                                <td>$120</td>
+                                <td>$120</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Hostess Varaince</td>
+                                <td>$120</td>
+                                <td>$120</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td colspan="7"></td>
+                            </tr>
+                            <tr>
+                                <td>Manager $ Budgeted</td>
+                                <td>$175</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Manager $ Scheduled</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                            <tr>
+                                <td>Manager Varaince</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                                <td>$0</td>
+                            </tr>
+                        </tbody>
+                        
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    <!--</div>-->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir canvas {
+    height: 400px !important;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+</style>

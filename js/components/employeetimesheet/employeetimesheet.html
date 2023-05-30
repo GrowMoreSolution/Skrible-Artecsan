@@ -1,0 +1,412 @@
+<!-- Wrapper-->
+<div id="wrapper">       <!-- Change permission when establish a number for this-->
+
+    <!--<header-component></header-component>
+
+    <navigation-component></navigation-component>-->
+
+    <!-- Page wraper -->
+    <!--<div id="page-wrapper" class="gray-bg">-->
+
+
+        <!-- Main view  -->
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="top-headingbar">
+                    <div id="collapseExample" class="collapse in" style="width: 100%;">
+                        <div class="title-heading">
+                            <div></div>
+                            <div class="action-btn">
+                                <a href="#/!" class="btn">Export</a>
+                                <a href="#/!" class="btn">Print</a>
+                                <!-- <button ng-click="printDiv()">Print</button> -->
+                            </div>
+                        </div>
+                    </div>
+                    <div class="down-arrow">
+                        <button type="button" class="triangle " data-toggle="collapse" data-target="#collapseExample" aria-expanded="true" aria-controls="collapseExample"></button>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="restaurant-table">
+                    <div class="restaurant-title text-center">
+                        <h2>Restaurant Name</h2>
+                        <h4>Employee Timesheet</h4>
+                        <p>3-15-2023 THRU 3-22-2023</p>
+                    </div>
+                    <div class="employee-Title text-center">
+                        <p>Employee Time Sheet</p>
+                    </div>
+                    <div class="employee-action">
+                        <div class="form-group">
+                            <label class="col-form-label">Employee</label>
+                            <select class="form-control">
+                                <option value="All Employees">All Employees</option>
+                                <option value="Stacy Harris">Stacy Harris</option>
+                                <option value="Karl">Karl</option>
+                                <option value="Randy">Randy</option>
+                                <option value="Hector">Hector</option>
+                                <option value="Janice">Janice</option>
+                                <option value="Mike P.">Mike P.</option>
+                            </select>
+                        </div>
+                        <div class="action-btn">
+                            <button type="button" class="btn">PRINT</button>
+                            <button type="button" class="btn">SAVE</button>
+                            <button type="button" class="btn">FINAL SAVE</button>
+                            <!-- <button ng-click="printDiv()">Print</button> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="payperiod">
+                    <button type="button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M165.66,202.34a8,8,0,0,1-11.32,11.32l-80-80a8,8,0,0,1,0-11.32l80-80a8,8,0,0,1,11.32,11.32L91.31,128Z"></path></svg></button>
+                    <div class="form-group">
+                        <label class="col-form-label">Start Date</label>
+                        <input type="date" ng-model="start_date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="col-form-label">End Date</label>
+                        <input type="date" ng-model="end_date" class="form-control">
+                    </div>
+                    <button type="button" class="btn"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M181.66,133.66l-80,80a8,8,0,0,1-11.32-11.32L164.69,128,90.34,53.66a8,8,0,0,1,11.32-11.32l80,80A8,8,0,0,1,181.66,133.66Z"></path></svg></button>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="payperiod">
+                    <div class="form-group">
+                        <label class="col-form-label">Pay Day</label>
+                        <input type="date" ng-model="end_date" class="form-control">
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12">
+                <div class="employees-table">
+                    <h4>Stacy Harris</h4>
+                    <div class="employee-salary">
+                        <div class="form-group">
+                            <label class="col-form-label">Salary</label>
+                            <input type="text" class="form-control">
+                        </div>    
+                    </div>  
+                </div>
+                <div class="table-responsive timesheet-table">
+                    <table class="table table-stripped table font-noraml">
+                        <thead>
+                            <tr>
+                                <th>Date</th>
+                                <th>Day</th>
+                                <th>Role</th>
+                                <th>Rate</th>
+                                <th>Modify</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>In</th>
+                                <th>Out</th>
+                                <th>Bonus & Commission</th>
+                                <th>Vacation Hours</th>
+                                <th>Total Tips Claimed</th>
+                                <th>Tips Owed on Checks</th>
+                                <th>Regular Time</th>
+                                <th>Overtime Hours</th>
+                                <th>Total Hours</th>
+                                <th>Other Pay</th>
+                                <th>Regular Pay</th>
+                                <th>Overtime Pay</th>
+                                <th>Total Payroll Owed</th>
+                                <th>Total Payroll w/tips</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>3/15/2023</td>
+                                <td>Tuesday</td>
+                                <td>Hostess</td>
+                                <td>15.5</td>
+                                <td>
+                                    <div class="actionicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M219.31,80,176,36.69A15.86,15.86,0,0,0,164.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V91.31A15.86,15.86,0,0,0,219.31,80ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H164.69L208,91.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>3pm</td>
+                                <td>9pm</td>
+                                <td>9:30pm</td>
+                                <td>12am</td>
+                                <td></td>
+                                <td></td>
+                                <td>$25.00</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td>0</td>
+                                <td>131.75</td>
+                                <td>0.0</td>
+                                <td>131.8</td>
+                                <td>156.8</td>
+                            </tr>
+                            <tr>
+                                <td>3/15/2023</td>
+                                <td>Tuesday</td>
+                                <td>Hostess</td>
+                                <td>15.5</td>
+                                <td>
+                                    <div class="actionicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M219.31,80,176,36.69A15.86,15.86,0,0,0,164.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V91.31A15.86,15.86,0,0,0,219.31,80ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H164.69L208,91.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>3pm</td>
+                                <td>9pm</td>
+                                <td>9:30pm</td>
+                                <td>12am</td>
+                                <td></td>
+                                <td></td>
+                                <td>$25.00</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td>0</td>
+                                <td>131.75</td>
+                                <td>0.0</td>
+                                <td>131.8</td>
+                                <td>156.8</td>
+                            </tr>
+                            <tr>
+                                <td>3/15/2023</td>
+                                <td>Tuesday</td>
+                                <td>Hostess</td>
+                                <td>15.5</td>
+                                <td>
+                                    <div class="actionicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M219.31,80,176,36.69A15.86,15.86,0,0,0,164.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V91.31A15.86,15.86,0,0,0,219.31,80ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H164.69L208,91.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>3pm</td>
+                                <td>9pm</td>
+                                <td>9:30pm</td>
+                                <td>12am</td>
+                                <td></td>
+                                <td></td>
+                                <td>$25.00</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td>0</td>
+                                <td>131.75</td>
+                                <td>0.0</td>
+                                <td>131.8</td>
+                                <td>156.8</td>
+                            </tr>
+                            <tr>
+                                <td>3/15/2023</td>
+                                <td>Tuesday</td>
+                                <td>Hostess</td>
+                                <td>15.5</td>
+                                <td>
+                                    <div class="actionicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M219.31,80,176,36.69A15.86,15.86,0,0,0,164.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V91.31A15.86,15.86,0,0,0,219.31,80ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H164.69L208,91.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>3pm</td>
+                                <td>9pm</td>
+                                <td>9:30pm</td>
+                                <td>12am</td>
+                                <td></td>
+                                <td></td>
+                                <td>$25.00</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td>0</td>
+                                <td>131.75</td>
+                                <td>0.0</td>
+                                <td>131.8</td>
+                                <td>156.8</td>
+                            </tr>
+                            <tr>
+                                <td>3/15/2023</td>
+                                <td>Tuesday</td>
+                                <td>Hostess</td>
+                                <td>15.5</td>
+                                <td>
+                                    <div class="actionicon-btn">
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M227.31,73.37,182.63,28.68a16,16,0,0,0-22.63,0L36.69,152A15.86,15.86,0,0,0,32,163.31V208a16,16,0,0,0,16,16H92.69A15.86,15.86,0,0,0,104,219.31L227.31,96a16,16,0,0,0,0-22.63ZM51.31,160,136,75.31,152.69,92,68,176.68ZM48,179.31,76.69,208H48Zm48,25.38L79.31,188,164,103.31,180.69,120Zm96-96L147.31,64l24-24L216,84.68Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M219.31,80,176,36.69A15.86,15.86,0,0,0,164.69,32H48A16,16,0,0,0,32,48V208a16,16,0,0,0,16,16H208a16,16,0,0,0,16-16V91.31A15.86,15.86,0,0,0,219.31,80ZM168,208H88V152h80Zm40,0H184V152a16,16,0,0,0-16-16H88a16,16,0,0,0-16,16v56H48V48H164.69L208,91.31ZM160,72a8,8,0,0,1-8,8H96a8,8,0,0,1,0-16h56A8,8,0,0,1,160,72Z"></path></svg></button>
+                                        <button type="button"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="Currentcolor" viewBox="0 0 256 256"><path d="M216,48H176V40a24,24,0,0,0-24-24H104A24,24,0,0,0,80,40v8H40a8,8,0,0,0,0,16h8V208a16,16,0,0,0,16,16H192a16,16,0,0,0,16-16V64h8a8,8,0,0,0,0-16ZM96,40a8,8,0,0,1,8-8h48a8,8,0,0,1,8,8v8H96Zm96,168H64V64H192ZM112,104v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Zm48,0v64a8,8,0,0,1-16,0V104a8,8,0,0,1,16,0Z"></path></svg></button>
+                                    </div>
+                                </td>
+                                <td>3pm</td>
+                                <td>9pm</td>
+                                <td>9:30pm</td>
+                                <td>12am</td>
+                                <td></td>
+                                <td></td>
+                                <td>$25.00</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td></td>
+                                <td>8.50</td>
+                                <td>0</td>
+                                <td>131.75</td>
+                                <td>0.0</td>
+                                <td>131.8</td>
+                                <td>156.8</td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td>
+                                    <div class="action-btn">
+                                        <button type="button" class="btn">Add New</button>
+                                    </div>
+                                </td>
+                                <td colspan="8" style="text-align: right;">
+                                    Total Hours
+                                </td>
+                                <td style="border-top: 1px solid black;">$1,500.00</td>
+                                <td style="border-top: 1px solid black;">5</td>
+                                <td style="border-top: 1px solid black;">$165.00 </td>
+                                <td style="border-top: 1px solid black;">$75.00</td>
+                                <td style="border-top: 1px solid black;">40.00</td>
+                                <td style="border-top: 1px solid black;">51</td>
+                                <td style="border-top: 1px solid black;">11.00</td>
+                                <td style="border-top: 1px solid black;">1550.00</td> 
+                                <td style="border-top: 1px solid black;">2080.55</td> 
+                                <td style="border-top: 1px solid black;">206.44</td> 
+                                <td style="border-top: 1px solid black;">3911.99</td> 
+                                <td style="border-top: 1px solid black;">4076.99</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="col-lg-12">
+                <div class="employee-Title text-center">
+                    <p>All Data</p>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-stripped table font-noraml">
+                        <thead>
+                            <tr>
+                                <th>Role</th>
+                                <th>Average Rate</th>
+                                <th>Regular Hours</th>
+                                <th>Overtime Hours</th>
+                                <th>Total Hours</th>
+                                <th>Total Tips</th>
+                                <th>Payroll Owed</th>
+                                <th>Total Payroll w/tips</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Bartender</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Waitress</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Hostess</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Cook</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Hostess</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                            <tr>
+                                <td>Vacation</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td style="text-align: right;">Total</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        
+        
+        
+
+        <!-- Footer -->
+        <div ng-include="'views/common/footer.html'"></div>
+
+    <!--</div>-->
+    <!-- End page wrapper-->
+
+</div>
+<!-- End wrapper-->
+<style>
+.ir canvas {
+    height: 400px !important;
+    border-bottom: 1px solid #ccc;
+    padding: 0 0 20px 0;
+    margin: 20px 0 20px 0;
+}
+</style>

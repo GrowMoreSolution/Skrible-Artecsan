@@ -1135,7 +1135,9 @@ a.list-group-item.sticky {
 }
 .action-btn{
     display: flex;
-    align-items: center
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 2px;
 }
 .action-btn .btn{
     display: inline-block;
@@ -1171,6 +1173,7 @@ a.list-group-item.sticky {
  }
  .employee-action{
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: space-between; 
     gap: 8px;
@@ -1215,7 +1218,14 @@ a.list-group-item.sticky {
     flex-grow: 1;
     margin-bottom: 0px;
  }
- .employee_profiledetails .form-group label{
+ .payperiod .form-group{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0px;
+ }
+ .employee_profiledetails .form-group label,
+ .payperiod .form-group label{
     white-space: nowrap;
     margin-bottom: 0px;
     font-weight: 400;
@@ -1482,6 +1492,7 @@ width: 50%;
 .payperiod{
 display: flex;
 gap: 10px;
+flex-wrap: wrap;
 align-items: center;
 margin-bottom: 8px;
 }
@@ -1526,8 +1537,120 @@ margin-bottom: 0px;
     font-size: 14px;
     font-weight: 600;
 }
+.employees-table{
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin: 10px 0px;
+}
+.employees-table h4{
+    font-size: 16px;
+    font-weight: 600;
+}
+.employee-salary .form-group{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 0px;
+}
+.employee-salary .form-group label{
+    margin-bottom: 0px;
+    font-weight: 400;
+    font-size: 14px;
+}
+.actionicon-btn{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.actionicon-btn button{
+    display: inline-flex;
+    background-color: #2f4050;
+    color: #fff;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    padding: 4px;
+}
+.deleteicon-btn button{
+    display: inline-flex;
+    background-color: #2f4050;
+    color: #fff;
+    text-transform: uppercase;
+    align-items: center;
+    justify-content: center;
+    padding: 2px;
+    margin-top: 7px;
+}
+.deleteicon-btn button svg{
+    height: 12px;
+    width: 12px;
+}
 
-
+.timesheet-table table thead tr th{
+    text-align: center;
+    vertical-align: bottom;
+}
+.timesheet-table table tbody tr td,
+.timesheet-table table tfoot tr td{
+    text-align: center;
+    vertical-align: middle;
+    font-size: 13px;
+    padding: 6px 8px;
+}
+.timesheet-table table thead tr th:first-child,
+.timesheet-table table thead tr th:nth-child(2),
+.timesheet-table table thead tr th:nth-child(3),
+.timesheet-table table thead tr th:nth-child(4),
+.timesheet-table table thead tr th:nth-child(5),
+.timesheet-table table tbody tr td:first-child,
+.timesheet-table table tbody tr td:nth-child(2),
+.timesheet-table table tbody tr td:nth-child(3),
+.timesheet-table table tbody tr td:nth-child(4),
+.timesheet-table table tbody tr td:nth-child(5),
+.timesheet-table table tfoot tr td:first-child,
+.timesheet-table table tfoot tr td:nth-child(2){
+    min-width: 120px;
+    position: sticky;
+    left: 0px;
+    background-color: #fff;
+    text-align: start;
+}
+.timesheet-table table thead tr th:nth-child(2),
+.timesheet-table table tbody tr td:nth-child(2),
+.timesheet-table table tfoot tr td:nth-child(2){
+    left: 120px;
+}
+.timesheet-table table thead tr th:nth-child(3),
+.timesheet-table table tbody tr td:nth-child(3){
+    left: 240px;
+}
+.timesheet-table table thead tr th:nth-child(4),
+.timesheet-table table tbody tr td:nth-child(4){
+    left: 360px;
+}
+.timesheet-table table thead tr th:nth-child(5),
+.timesheet-table table tbody tr td:nth-child(5){
+    left: 480px;
+}
+.mb-0{
+    margin-bottom: 0px;
+}
+.employeeschedule table thead tr:first-child th,
+.employeeschedule table thead tr:nth-child(2) th,
+.employeeschedule table thead tr:nth-child(3) th{
+border: 0px;
+padding: 4px;
+}
+.employeeschedule .table tbody tr td{
+    vertical-align: middle;
+}
+.employeeschedule .table tbody tr td select{
+    padding: 2px 4px;
+    width: 200px;
+}
 @media (max-width: 540px){
     .budget-table table thead tr th:first-child,
     .budget-table table thead tr th:nth-child(2),
@@ -1536,8 +1659,7 @@ margin-bottom: 0px;
     .budget-table table tfoot tr td:first-child,
     .budget-table table tfoot tr td:nth-child(2){
         position: static;
-        
-    }    
+    }  
     .employee-sched{
         flex-wrap: wrap;
     }
@@ -1554,4 +1676,18 @@ margin-bottom: 0px;
         height: 100%;
         width: 100%;
     }
+}
+@media (max-width: 1200px){
+    .timesheet-table table thead tr th:first-child,
+    .timesheet-table table thead tr th:nth-child(2),
+    .timesheet-table table thead tr th:nth-child(3),
+    .timesheet-table table thead tr th:nth-child(4),
+    .timesheet-table table thead tr th:nth-child(5),
+    .timesheet-table table tbody tr td:first-child,
+    .timesheet-table table tbody tr td:nth-child(2),
+    .timesheet-table table tbody tr td:nth-child(3),
+    .timesheet-table table tbody tr td:nth-child(4),
+    .timesheet-table table tbody tr td:nth-child(5){
+        position: static;
+    }  
 }
